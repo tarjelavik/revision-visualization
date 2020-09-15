@@ -10,8 +10,12 @@
     "start": "(tsc && node dist/server/src/app.js) & cd client && npm run start",
     "startClient": "cd client && npm run start",
     "conc": "concurrently \"npm run start\" \"npm run startClient \"",
+    "lint": "tslint -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "pre-commit": [
+    "lint"
+],
   "repository": {
     "type": "git",
     "url": "git@git.app.uib.no:revision/revision-visualization.git"
