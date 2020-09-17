@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize} from 'react-sigma';
+import {Sigma, RandomizeNodePositions, RelativeSize, LoadGEXF, LoadJSON} from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink';
 
 type SigmaProps = {
@@ -22,13 +22,15 @@ const sigma = ({graph}: SigmaProps) => {
     console.log(graph);
 
     return (
-        <div>
-            <Sigma graph={graph} settings={{drawEdges: true, clone: false}} style={{width:'600px', height:'600px'}}>
-            <RelativeSize initialSize={1}/>
-            <ForceLink background easing='cubicInOut'/>
-            <RandomizeNodePositions/>
-            </Sigma>
-        </div>
+            <div style={{width:'auto', height:'auto'}}>
+                <Sigma rendered='canvas' settings={{clone: false}}>
+                    <LoadGEXF path='miserables.gexf'>
+                        <ForceLink/>
+                        <RandomizeNodePositions/>
+                        <RelativeSize initialSize={15}/>
+                    </LoadGEXF>
+                </Sigma>
+            </div>
     );
 };
 

@@ -3,8 +3,9 @@ import './App.css';
 
 import Sigma from './Components/Sigma/Sigma';
 
-class App extends Component {
 
+
+class App extends Component {
   state = {
     exampleGraph: {
       nodes:[
@@ -17,7 +18,7 @@ class App extends Component {
       ],
       edges:[
         {id:'e1',source:'n1',target:'n2',label:'SEES'},
-        {id:'e2',source:'n3',target:'n2',label:'SEES'},
+        {id:'e2',source:'n3',target:'n2',label:'Label?'},
         {id:'e3',source:'n4',target:'n2',label:'SEES'},
         {id:'e4',source:'n5',target:'n6',label:'SEES'}
       ]
@@ -28,7 +29,9 @@ class App extends Component {
     const sigma = <Sigma graph = {this.state.exampleGraph}/>;
     return (
       <div className='App'>
-        {sigma}
+        <div>
+          {sigma}
+        </div>
       </div>
     );
   }
