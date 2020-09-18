@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, LoadGEXF, LoadJSON} from 'react-sigma';
+import {Sigma, RandomizeNodePositions, RelativeSize, LoadGEXF} from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink';
 
 type SigmaProps = {

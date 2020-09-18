@@ -3,8 +3,6 @@ import './App.css';
 
 import Sigma from './Components/Sigma/Sigma';
 
-
-
 class App extends Component {
   state = {
     exampleGraph: {
