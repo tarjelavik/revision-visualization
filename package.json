@@ -11,7 +11,7 @@
     "start:dev:server": "nodemon",
     "start:client": "cd client && npm run start",
     "start:server": "tsc && node dist/server/src/app.js",
-    "conc": "concurrently \"npm run start\" \"npm run startClient \"",
+    "conc": "concurrently \"npm run start:server\" \"npm run start:client \"",
     "lint": "tslint -p .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -35,8 +35,6 @@
   "dependencies": {
     "axios": "^0.20.0",
     "concurrently": "^5.3.0",
-    "express": "^4.17.1",
-    "fetch-sparql-endpoint": "^1.7.0",
-    "sparqlxml-parse": "^1.4.0"
+    "express": "^4.17.1"
   }
 }
