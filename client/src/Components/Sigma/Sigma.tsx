@@ -14,8 +14,8 @@ type SigmaProps = {
                 target: string,
                 label: string
             }[]
-    },
-  };
+    }
+};
 
 const sigma = ({graph}: SigmaProps) => {
 

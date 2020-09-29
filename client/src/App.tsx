@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import Form from './Components/Form/Form';
 import Sigma from './Components/Sigma/Sigma';
 
 class App extends Component {
@@ -20,15 +21,26 @@ class App extends Component {
         {id:'e3',source:'n4',target:'n2',label:'SEES'},
         {id:'e4',source:'n5',target:'n6',label:'SEES'}
       ]
-    }
+    },
+    displayGraph: false
   };
+
+
+  setDisplayGraph = (bool: boolean) => {
+    this.setState({
+      displayGraph: bool
+    });
+  }
+
 
   render () {
     const sigma = <Sigma graph = {this.state.exampleGraph}/>;
+    const form = <Form props = {this.setDisplayGraph}/>;
     return (
       <div className='App'>
         <div>
-          {sigma}
+          {form}
+          {this.state.displayGraph ? sigma : null}
         </div>
       </div>
     );
