@@ -37,7 +37,7 @@ const sigmaGraphObject: SigmaGraph = {
         nodes: [
             {
                 id: '1337',
-                label: 'Gothmog'
+                label: 'Gothmog',
             }
         ],
         edges: [
@@ -51,6 +51,6 @@ const sigmaGraphObject: SigmaGraph = {
     }
 };
 
-test('parseToSigmaFormat', () => {
+test('parseToSigmaFormat should return a SigmaGraph object', () => {
     expect(parseToSigmaFormat(dummyGraphData)).toMatchObject(sigmaGraphObject);
 });
