@@ -19,7 +19,7 @@ export const parseToSigmaFormat = (graphData: RawGraphData) => {
                     id: object.personId.value || null,
                     source: object.personId.value || null,
                     target: object.associatedPlaceId.value || null,
-                    label: object.personName.value
+                    label: object.associatedPlaceName.value
                 });
     });
 
