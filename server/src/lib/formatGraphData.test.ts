@@ -1,5 +1,6 @@
 import { parseToSigmaFormat } from './formatGraphData';
 import RawGraphData from '../../../model/RawGraphData';
+import SigmaGraph from '../../../model/SigmaGraph';
 
 const dummyGraphData: RawGraphData = {
     head: {
@@ -31,7 +32,25 @@ const dummyGraphData: RawGraphData = {
     }
 };
 
+const sigmaGraphObject: SigmaGraph = {
+    graph: {
+        nodes: [
+            {
+                id: '1337',
+                label: 'Gothmog'
+            }
+        ],
+        edges: [
+            {
+                id: '1337',
+                source: '1337',
+                target: '1338',
+                label: 'Angband'
+            }
+        ]
+    }
+};
 
 test('parseToSigmaFormat', () => {
-    expect(parseToSigmaFormat(dummyGraphData)).toBeTruthy();
+    expect(parseToSigmaFormat(dummyGraphData)).toMatchObject(sigmaGraphObject);
 });
