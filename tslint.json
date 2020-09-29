@@ -13,5 +13,8 @@
         "no-trailing-whitespace": [true, "ignore-comments"],
         "quotemark": [true, "single", "avoid-escape"]
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": ["./model/*"]
+    }
 }

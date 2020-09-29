@@ -27,7 +27,7 @@ app.get('/api/fetch', async(req, res) => {
       ?sub schema:location ?associatedPlace .
       ?associatedPlace schema:name ?associatedPlaceName .
       ?associatedPlace o:id ?associatedPlaceId .
-    } LIMIT 10`
+    } LIMIT 2`
   };
 
   try {

@@ -1,92 +1,34 @@
-
-interface RawGraphData {
-    head: {
-        vars: string[]
-    };
-    results: {
-        bindings: [
-                {
-                    personName: {
-                        type: 'string',
-                        value: 'string'
-                    },
-                    personId: {
-                        type: 'literal',
-                        datatype: 'string',
-                        value: 'string'
-                    }
-                    associatedPlaceName: {
-                        type: 'string',
-                        value: 'string'
-                    },
-                    associatedPlaceId: {
-                        type: 'literal',
-                        datatype: 'string',
-                        value: 'string'
-                    }
-                }
-        ]
-    };
-}
-
-interface SigmaGraph {
-        nodes: [
-            {
-                id: string,
-                label: string
-            }
-        ];
-        edges: [
-            {
-                id: string,
-                source: string,
-                target: string,
-                label: string
-            }
-        ];
-}
-
+import RawGraphData from '../../../model/RawGraphData';
+import SigmaGraph from '../../../model/SigmaGraph';
+import Node from '../../../model/Node';
+import Edge from '../../../model/Edge';
 
 export const parseToSigmaFormat = (graphData: RawGraphData) => {
-    // console.log(graphData.results.bindings);
 
-    const sigmaGraph = graphData.results.bindings.map(object => {
-        console.log(object);
-        const graph: SigmaGraph = {
-            nodes: [
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+
+    graphData.results.bindings.map(object => {
+        nodes.push(
                 {
                     id: object.personId.value || object.associatedPlaceId.value || null,
                     label: object.personName.value || object.associatedPlaceName.value || null
-                }
-            ],
-            edges: [
+                });
+        edges.push(
                 {
                     id: object.personId.value || null,
                     source: object.personId.value || null,
                     target: object.associatedPlaceId.value || null,
                     label: object.personName.value
-                }
-            ]
-        };
-        return graph;
+                });
     });
 
-/*     const sigmaGraph: sigmaGraph = {
-        nodes: [
-            {
-                id: '',
-                label: ''
-            }
-        ],
-        edges: [
-            {
-                id: '',
-                source: '',
-                target: '',
-                label: ''
-            }
-        ]
-    }; */
+    const sigmaGraph: SigmaGraph = {
+        graph: {
+            'nodes': nodes,
+            'edges': edges
+        }
+    };
 
     return sigmaGraph;
 

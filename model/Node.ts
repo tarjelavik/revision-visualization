@@ -1,0 +1,1 @@
+export default interface Node { id: string; label: string } [];
