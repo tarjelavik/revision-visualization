@@ -11,14 +11,14 @@ export const parseToSigmaFormat = (graphData: RawGraphData) => {
     graphData.results.bindings.map(object => {
         nodes.push(
                 {
-                    id: object.personId.value || object.associatedPlaceId.value || null,
-                    label: object.personName.value || object.associatedPlaceName.value || null
+                    id: object.personId.value || object.associatedPlaceId.value,
+                    label: object.personName.value || object.associatedPlaceName.value
                 });
         edges.push(
                 {
-                    id: object.personId.value || null,
-                    source: object.personId.value || null,
-                    target: object.associatedPlaceId.value || null,
+                    id: object.personId.value,
+                    source: object.personId.value,
+                    target: object.associatedPlaceId.value,
                     label: object.associatedPlaceName.value
                 });
     });
