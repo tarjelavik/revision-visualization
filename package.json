@@ -12,11 +12,15 @@
     "start:client": "cd client && npm run start",
     "start:server": "tsc && node dist/server/src/app.js",
     "conc": "concurrently \"npm run start:server\" \"npm run start:client \"",
+    "pre-lint-msg": "Echo 'Linting project...' && exit 0",
     "lint": "tslint -p .",
+    "pre-test-msg": "Echo 'running test suite...' && exit 0",
     "test": "npx jest"
   },
   "pre-commit": [
+    "pre-lint-msg",
     "lint",
+    "pre-test-msg",
     "test"
   ],
   "repository": {
