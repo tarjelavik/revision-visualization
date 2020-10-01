@@ -11,7 +11,7 @@ const formStyle = {
 }
 
 const buttonStyle = {
-  marginTop: "1rem"
+  marginTop: '1rem'
 }
 
 

@@ -194,7 +194,6 @@ module.exports = {
                 "rules": {
                     "import-spacing": true,
                     "no-console": false,
-                    "semicolon": [true, "always"],
                     "no-irregular-whitespace": true,
                     "indent": [true, "spaces", 4],
                     "import-spacing": true,
