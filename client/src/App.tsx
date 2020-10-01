@@ -22,9 +22,30 @@ class App extends Component {
         {id:'e4',source:'n5',target:'n6',label:'SEES'}
       ]
     },
-    displayGraph: false
-  };
+    displayGraph: false,
+      graph: {
+        nodes:[ {
+          id: '',
+          label: ''
+        }],
+        edges:[ {
+          id: '',
+          source: '',
+          target: '',
+          label: ''
+        }]
+      }
+    };
 
+  async componentDidMount() {
+    const url = 'http://localhost:3000/api/fetch';
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    this.setState({
+      graph: data
+    });
+  }
 
   setDisplayGraph = (bool: boolean) => {
     this.setState({
@@ -39,7 +60,7 @@ class App extends Component {
 
   };
 
-    const sigma = <Sigma graph = {this.state.exampleGraph}/>;
+    const sigma = <Sigma graph = {this.state.graph}/>;
     const form = <Form displayGraph = {this.state.displayGraph} setDisplayGraph = {this.setDisplayGraph}/>;
 
     return (

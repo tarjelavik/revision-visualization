@@ -1,9 +1,12 @@
 import express from 'express';
+import cors from 'cors';
 import SigmaGraph from '../../model/SigmaGraph';
 import { queryData } from './lib/getGraphData';
 
 const app = express();
 const port = 3000;
+
+app.use(cors());
 
 app.get('/', (_req, res) => {
     res.send('The sedulous hyena ate the antelope!');
