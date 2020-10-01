@@ -1,5 +1,4 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -7,38 +6,31 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-  }),
-);
+const formStyle = {
+  marginTop: '10rem'
+}
+
+const buttonStyle = {
+  marginTop: "1rem"
+}
 
 
 export default function SimpleSelect(props: any) {
-    const classes = useStyles();
-    // const [age, setAge] = React.useState('');
 
     const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
       console.log(event);
     };
 
-    const handleOnClick = () => {
-        props.setDisplayGraph(true);
+    const handleOnClick = (props: any) => { 
+      props.setDisplayGraph(true);
     };
 
     return (
       <div>
-        <FormControl variant='outlined' className={classes.formControl}>
+        {!props.displayGraph ? 
+        <FormControl variant='outlined' style={formStyle}>
           <InputLabel id='demo-simple-select-outlined-label'>Age</InputLabel>
           <Select
-            labelId='demo-simple-select-outlined-label'
-            id='demo-simple-select-outlined'
             onChange={handleChange}
             label='Age'
           >
@@ -49,10 +41,11 @@ export default function SimpleSelect(props: any) {
             <MenuItem value={20}>Twenty</MenuItem>
             <MenuItem value={30}>Thirty</MenuItem>
           </Select>
-        </FormControl>
-        <Button variant='contained' color='primary' onClick={handleOnClick}>
+        <Button style={buttonStyle} variant='contained' color='primary' onClick={() => handleOnClick(props)}>
             Create graph
         </Button>
+        </FormControl>
+        : null}
       </div>
     );
   }

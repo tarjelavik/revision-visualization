@@ -17,13 +17,26 @@ type SigmaProps = {
     }
 };
 
+const containerStyle = {
+    top: '0',
+    bottom: '0',
+    left: '0',
+    right: '0',
+    position: 'absolute' as 'absolute'
+}
+
+const sigmaStyle = {
+    width: '50%',
+    height: '100%',
+}
+
 const sigma = ({graph}: SigmaProps) => {
 
     console.log(graph);
 
     return (
-            <div style={{width:'auto', height:'auto'}}>
-                <Sigma rendered='canvas' settings={{clone: false}}>
+            <div style={containerStyle}>
+                <Sigma style={sigmaStyle} rendered='canvas' settings={{clone: false}}>
                     <LoadGEXF path='miserables.gexf'>
                         <ForceLink/>
                         <RandomizeNodePositions/>

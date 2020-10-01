@@ -34,11 +34,17 @@ class App extends Component {
 
 
   render () {
+
+  const appStyle = {
+
+  };
+
     const sigma = <Sigma graph = {this.state.exampleGraph}/>;
-    const form = <Form props = {this.setDisplayGraph}/>;
+    const form = <Form displayGraph = {this.state.displayGraph} setDisplayGraph = {this.setDisplayGraph}/>;
+
     return (
       <div className='App'>
-        <div>
+        <div style={appStyle}>
           {form}
           {this.state.displayGraph ? sigma : null}
         </div>
