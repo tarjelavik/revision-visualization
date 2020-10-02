@@ -1,8 +1,7 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize} from 'react-sigma';
-import ForceLink from 'react-sigma/lib/ForceLink';
+import {Sigma, RandomizeNodePositions, RelativeSize, Filter, ForceAtlas2 } from 'react-sigma';
 
-type SigmaProps = {
+/* type SigmaProps = {
     graph: {
         nodes: {
             id: string,
@@ -15,7 +14,7 @@ type SigmaProps = {
                 label: string
         }[]
     }
-};
+}; */
 
 const containerStyle = {
     top: '0',
@@ -30,14 +29,26 @@ const sigmaStyle = {
     height: '100%',
 };
 
-const sigma = ({graph}: SigmaProps) => {
+const onOverNodeHandler = () => {
+    console.log('im hovering over a node');
+}
 
-    console.log(graph);
+const onClickNodeHandler = (event: any) => {
+    console.log('im clicking a node');
+    console.log(event);
+}
+
+
+const sigma = (props: any) => {
+
+    console.log(props.graph.graph);
+    console.log(props.exampleGraph)
 
     return (
             <div style={containerStyle}>
-                <Sigma style={sigmaStyle} graph={graph} rendered='canvas' settings={{drawEdges: true, clone: false}}>
-                        <ForceLink/>
+                <Sigma style={sigmaStyle} graph={props.graph.graph} onOverNode={onOverNodeHandler} onClickNode={(event: any) => onClickNodeHandler(event)} rendered='canvas' settings={{drawLabels: true, clone: false}}>
+                        <ForceAtlas2 background easing="cubicInOut"/>
+                        <Filter/>
                         <RandomizeNodePositions/>
                         <RelativeSize initialSize={15}/>
                 </Sigma>

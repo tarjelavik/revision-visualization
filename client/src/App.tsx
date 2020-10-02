@@ -23,7 +23,7 @@ class App extends Component {
       ]
     },
     displayGraph: false,
-      graph: {
+    graph: {
         nodes:[ {
           id: '',
           label: ''
@@ -60,8 +60,8 @@ class App extends Component {
 
   };
 
-    const sigma = <Sigma graph = {this.state.graph}/>;
-    const form = <Form displayGraph = {this.state.displayGraph} setDisplayGraph = {this.setDisplayGraph}/>;
+    const sigma = <Sigma graph={this.state.graph} exampleGraph={this.state.exampleGraph}/>;
+    const form = <Form displayGraph={this.state.displayGraph} setDisplayGraph={this.setDisplayGraph}/>;
 
     return (
       <div className='App'>

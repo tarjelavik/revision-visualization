@@ -36,15 +36,19 @@ const sigmaGraphObject: SigmaGraph = {
     graph: {
         nodes: [
             {
-                id: '1337',
+                id: 'node_1337',
                 label: 'Gothmog',
+            },
+            {
+                id: 'node_1338',
+                label: 'Angband',
             }
         ],
         edges: [
             {
-                id: '1337',
-                source: '1337',
-                target: '1338',
+                id: 'edge_1337',
+                source: 'node_1337',
+                target: 'node_1338',
                 label: 'Angband'
             }
         ]
