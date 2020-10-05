@@ -17,29 +17,28 @@ const buttonStyle = {
 
 export default function SimpleSelect(props: any) {
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-      console.log(event);
+    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, props: any) => {
+      props.handleFormData(event.target.value)
     };
 
-    const handleOnClick = (props: any) => { 
+    const handleOnClick = (props: any) => {
       props.setDisplayGraph(true);
     };
 
+    const handleSubmit = () => {
+      console.log('submitted');
+    }
+
     return (
       <div>
-        {!props.displayGraph ? 
-        <FormControl variant='outlined' style={formStyle}>
-          <InputLabel id='demo-simple-select-outlined-label'>Age</InputLabel>
+        {!props.displayGraph ?
+        <FormControl variant='outlined' style={formStyle} onSubmit={() => handleSubmit()}>
+          <InputLabel id=''>Choose a field</InputLabel>
           <Select
-            onChange={handleChange}
-            label='Age'
+            onChange={(event) => handleChange(event, props)}
+            label='Choose a field'
           >
-            <MenuItem value=''>
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            <MenuItem value='Syon'>Syon</MenuItem>
           </Select>
         <Button style={buttonStyle} variant='contained' color='primary' onClick={() => handleOnClick(props)}>
             Create graph

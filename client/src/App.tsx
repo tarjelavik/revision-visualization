@@ -6,22 +6,6 @@ import Sigma from './Components/Sigma/Sigma';
 
 class App extends Component {
   state = {
-    exampleGraph: {
-      nodes:[
-        {id:'n1', label:'Alice Rade'},
-        {id:'n2', label:'Syon Abbey'},
-        {id:'n3', label: 'Alys Hastyngs'},
-        {id:'n4', label: 'Elizabeth Edward'},
-        {id:'n5', label: 'James Grenehalgh'},
-        {id:'n6', label: 'Sheen Charterhouse'}
-      ],
-      edges:[
-        {id:'e1',source:'n1',target:'n2',label:'SEES'},
-        {id:'e2',source:'n3',target:'n2',label:'Label?'},
-        {id:'e3',source:'n4',target:'n2',label:'SEES'},
-        {id:'e4',source:'n5',target:'n6',label:'SEES'}
-      ]
-    },
     displayGraph: false,
     graph: {
         nodes:[ {
@@ -34,14 +18,16 @@ class App extends Component {
           target: '',
           label: ''
         }]
-      }
-    };
+      },
+    formData: {
+      value: ''
+    }
+  };
 
   async componentDidMount() {
     const url = 'http://localhost:3000/api/fetch';
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     this.setState({
       graph: data
     });
@@ -53,6 +39,16 @@ class App extends Component {
     });
   }
 
+  handleFormData = async(data: any) => {
+    let formValue = this.state.formData;
+    formValue.value = await data;
+    this.setState({
+      formData: {
+        value: formValue.value
+      }
+    });
+    console.log(this.state.formData)
+  }
 
   render () {
 
@@ -60,8 +56,8 @@ class App extends Component {
 
   };
 
-    const sigma = <Sigma graph={this.state.graph} exampleGraph={this.state.exampleGraph}/>;
-    const form = <Form displayGraph={this.state.displayGraph} setDisplayGraph={this.setDisplayGraph}/>;
+    const sigma = <Sigma graph={this.state.graph} />;
+    const form = <Form displayGraph={this.state.displayGraph} handleFormData={this.handleFormData} setDisplayGraph={this.setDisplayGraph}/>;
 
     return (
       <div className='App'>
