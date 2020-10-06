@@ -40,10 +40,6 @@ const onClickNodeHandler = (event: any) => {
 
 
 const sigma = (props: any) => {
-
-    console.log(props.graph.graph);
-    console.log(props.exampleGraph)
-
     return (
             <div style={containerStyle}>
                 <Sigma style={sigmaStyle} graph={props.graph.graph} onOverNode={onOverNodeHandler} onClickNode={(event: any) => onClickNodeHandler(event)} rendered='canvas' settings={{drawLabels: true, clone: false}}>

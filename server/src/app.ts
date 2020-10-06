@@ -1,10 +1,14 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import SigmaGraph from '../../model/SigmaGraph';
 import { queryData } from './lib/getGraphData';
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors());
 
@@ -42,6 +46,10 @@ app.get('/api/fetch', async(req, res) => {
     }
 });
 
+app.post('/api/form', (req, res) => {
+    console.log(req.body);
+    res.json('hello');
+});
 
 app.listen(port, () => {
     return console.log(`server is listening on ${port}`);

@@ -1,8 +1,8 @@
 import React from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 
@@ -29,20 +29,25 @@ export default function SimpleSelect(props: any) {
       console.log('submitted');
     }
 
+
+    // TODOS: MenuItems are to be based on dropdowns populated with data from Omeka APIs. Create own components for it?
+
     return (
       <div>
         {!props.displayGraph ?
-        <FormControl variant='outlined' style={formStyle} onSubmit={() => handleSubmit()}>
-          <InputLabel id=''>Choose a field</InputLabel>
-          <Select
-            onChange={(event) => handleChange(event, props)}
-            label='Choose a field'
-          >
-            <MenuItem value='Syon'>Syon</MenuItem>
-          </Select>
-        <Button style={buttonStyle} variant='contained' color='primary' onClick={() => handleOnClick(props)}>
-            Create graph
-        </Button>
+        <FormControl style={formStyle}>
+            <InputLabel id=''>Choose a field</InputLabel>
+            <Select
+              variant='outlined'
+              onChange={(e) => handleChange(e, props)}
+              label='Choose a field'
+              value={ props.formValue || '' }
+            >
+              <MenuItem value='Syon'>Syon</MenuItem>
+            </Select>
+          <Button style={buttonStyle} variant='contained' color='primary' onClick={() => {handleOnClick(props); handleSubmit()}}>
+              Create graph
+          </Button>
         </FormControl>
         : null}
       </div>
