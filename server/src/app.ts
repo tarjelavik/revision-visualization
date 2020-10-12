@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import SigmaGraph from '../../model/SigmaGraph';
 import { queryData } from './lib/getGraphData';
+import { getResourceTemplates } from './lib/getResourceTemplates';
 
 const app = express();
 const port = 3000;
@@ -13,7 +14,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.get('/', (_req, res) => {
-    res.send('The sedulous hyena ate the antelope!');
+    res.send('Revision-visualization server is running');
+});
+
+app.get('/api/resource_templates', async(_req, res) => {
+
+    try {
+        const data = await getResourceTemplates();
+        res.json(data);
+    } catch (error) {
+        res.json(error);
+    }
 });
 
 app.get('/api/fetch', async(req, res) => {

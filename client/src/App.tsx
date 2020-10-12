@@ -6,6 +6,7 @@ import Sigma from './Components/Sigma/Sigma';
 
 class App extends Component {
   state = {
+    resourceTemplates: [],
     displayGraph: false,
     graph: {
         nodes:[ {
@@ -31,6 +32,15 @@ class App extends Component {
     this.setState({
       graph: data
     });
+
+    const rtResponse = await fetch('http://localhost:3000/api/resource_templates');
+    const rtData = await rtResponse.json();
+    this.setState({
+      resourceTemplates: rtData
+    });
+
+    console.log(rtData);
+
   }
 
   setDisplayGraph = (bool: boolean) => {
@@ -56,7 +66,7 @@ class App extends Component {
     const url = 'http://localhost:3000/api/form';
 
     fetch(url, {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
