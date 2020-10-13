@@ -35,8 +35,6 @@ interface RawResourceTemplateData {
 
 export const formatResourceTemplate = (rawResourceTemplate): ResourceTemplate[] => {
 
-    console.log(rawResourceTemplate)
-
     const resourceTemplates: ResourceTemplate[] = [];
 
     try {

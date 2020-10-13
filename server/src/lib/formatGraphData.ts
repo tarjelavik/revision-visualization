@@ -5,6 +5,8 @@ import Edge from '../../../model/Edge';
 
 export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
 
+    console.log(graphData.results.bindings)
+
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 

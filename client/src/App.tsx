@@ -38,9 +38,6 @@ class App extends Component {
     this.setState({
       resourceTemplates: rtData
     });
-
-    console.log(rtData);
-
   }
 
   setDisplayGraph = (bool: boolean) => {
@@ -88,7 +85,12 @@ class App extends Component {
   };
 
     const sigma = <Sigma graph={this.state.graph} />;
-    const form = <Form displayGraph={this.state.displayGraph} formValue={this.state.formData.value} handleFormData={this.handleFormData} setDisplayGraph={this.setDisplayGraph}/>;
+    const form = <Form 
+      dropDownData={this.state.resourceTemplates}
+      displayGraph={this.state.displayGraph} 
+      formValue={this.state.formData.value} 
+      handleFormData={this.handleFormData} 
+      setDisplayGraph={this.setDisplayGraph}/>;
 
     return (
       <div className='App'>

@@ -1,9 +1,7 @@
 import React from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import { FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+
+import DropDownOption from '../DropDown/DropDown';
 
 
 const formStyle = {
@@ -29,26 +27,25 @@ export default function SimpleSelect(props: any) {
       console.log('submitted');
     }
 
-
-    // TODOS: MenuItems are to be based on dropdowns populated with data from Omeka APIs. Create own components for it?
-
     return (
       <div>
         {!props.displayGraph ?
-        <FormControl style={formStyle}>
-            <InputLabel id=''>Choose a field</InputLabel>
-            <Select
-              variant='outlined'
+        <form style={formStyle}>
+            <select
               onChange={(e) => handleChange(e, props)}
-              label='Choose a field'
-              value={ props.formValue || '' }
-            >
-              <MenuItem value='Syon'>Syon</MenuItem>
-            </Select>
+              value={ props.formValue || '' }>
+                
+              {props.dropDownData.map((dropDownOption: any, index: number) => {
+                if (props.dropDownData.length) {
+                  return <DropDownOption dropDownData={dropDownOption} key={index}/>
+                }
+                return null;
+              })}
+            </select>
           <Button style={buttonStyle} variant='contained' color='primary' onClick={() => {handleOnClick(props); handleSubmit()}}>
               Create graph
           </Button>
-        </FormControl>
+        </form>
         : null}
       </div>
     );
