@@ -1,22 +1,32 @@
 import { createRequest } from './getGraphData';
 
 
-interface SearchTerm {
+/* interface SearchTerm {
     value: string
+} */
+
+enum SearchCategory {
+    Action = 'ACTION',
+    Place = 'PLACE',
+    Person = 'PERSON',
+    BookObject = 'BOOKOBJECT'
 }
 
-export const searchHandler = async(search: SearchTerm) => {
-    switch (search.value) {
+export const searchHandler = async(search: string) => {
+
+    let data: any = '';
+
+    switch (search) {
         case "https://birgitta.test.uib.no/api/resource_templates/14":
-            createRequest(search.value)
+            data = await createRequest(search, SearchCategory.Place)
             break;
         case "https://birgitta.test.uib.no/api/resource_templates/21":
-            createRequest(search.value)
+            data = await createRequest(search, SearchCategory.Action)
             break;
-    
+
         default:
             break;
     }
-    
-    return search;
+
+    return data;
 }

@@ -56,5 +56,5 @@ const sigmaGraphObject: SigmaGraph = {
 };
 
 test('parseToSigmaFormat should return a SigmaGraph object', () => {
-    expect(parseToSigmaFormat(dummyGraphData)).toMatchObject(sigmaGraphObject);
+    expect(parseToSigmaFormat(dummyGraphData, 'Place')).toMatchObject(sigmaGraphObject);
 });

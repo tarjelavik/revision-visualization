@@ -52,16 +52,21 @@ app.get('/api/fetch', async(req, res) => {
     };
 
     try {
-        const data: SigmaGraph | void = await queryData(req.params);
+        // MAGIC STRING: THIS NEEDS TO BE SENT TO searchHandler function, NOT directly to queryData
+        const data: SigmaGraph | void = await queryData(req.params, 'PLACE');
         res.json(data);
     } catch (error) {
         res.json(error);
     }
 });
 
-app.post('/api/form', async(req, res) => {
-    const searchResult = await searchHandler(req.body);
-    res.json(searchResult);
+app.get('/api/form/:query', async(req, res) => {
+    try {
+        const searchResult = await searchHandler(req.params.query);
+        res.json(searchResult);
+    } catch (error) {
+        res.json(error);
+    }
 });
 
 app.listen(port, () => {

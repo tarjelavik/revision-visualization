@@ -3,9 +3,66 @@ import SigmaGraph from '../../../model/SigmaGraph';
 import Node from '../../../model/Node';
 import Edge from '../../../model/Edge';
 
-export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
+// TODO: Make this function a function that triages incoming requests based on searchCategory, and then calls
+// that specific function.
+export const parseToSigmaFormat = (graphData: RawGraphData, searchCategory: any): SigmaGraph | any => {
 
-    console.log(graphData.results.bindings)
+    if (searchCategory === 'ACTION') {
+        return parsetoActionGraph(graphData);
+    };
+
+    if (searchCategory === 'PLACE') {
+        return parsetoPlaceGraph(graphData);
+    };
+
+};
+
+// TODO: Write interface for return type which is to be ActionGraph
+export const parsetoActionGraph = (graphData: any): any => {
+    const nodes: Node[] = [];
+    const edges: Edge[] = [];
+
+    graphData.results.bindings.map(object => {
+        if (object.s.value) {
+            nodes.push(
+                {
+                    id: `node_${object.s.value}`,
+                    label: object.s.value
+                });
+        }
+        if (object.o.value) {
+            nodes.push(
+                {
+                    id: `node_${object.o.value}`,
+                    label: object.o.value
+                });
+        }
+
+        edges.push(
+            {
+                id: `edge_${object.s.value}`,
+                source: `node_${object.s.value}`,
+                target: `node_${object.o.value}`,
+                label: object.o.value
+            });
+    });
+
+    const actionGraph: SigmaGraph = {
+        graph: {
+            nodes,
+            edges
+        }
+    };
+
+        // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
+    // the associated place of each person, which is often the same place.
+    actionGraph.graph.nodes = actionGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
+
+
+    return actionGraph;
+}
+
+function parsetoPlaceGraph(graphData: RawGraphData): SigmaGraph {
 
     const nodes: Node[] = [];
     const edges: Edge[] = [];
@@ -35,7 +92,7 @@ export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
             });
     });
 
-    const sigmaGraph: SigmaGraph = {
+    const placeGraph: SigmaGraph = {
         graph: {
             nodes,
             edges
@@ -45,8 +102,6 @@ export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
 
     // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
     // the associated place of each person, which is often the same place.
-    sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-
-    return sigmaGraph;
-
-};
+    placeGraph.graph.nodes = placeGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
+    return placeGraph;
+}

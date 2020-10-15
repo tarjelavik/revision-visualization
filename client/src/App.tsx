@@ -58,24 +58,19 @@ class App extends Component {
     this.postFormDataToServer();
   }
 
-  postFormDataToServer = () => {
-    const data = this.state.formData;
-    const url = 'http://localhost:3000/api/form';
+  postFormDataToServer = async() => {
+    const data = encodeURIComponent(this.state.formData.value);
+    const url = `http://localhost:3000/api/form/${data}`;
 
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+   const response = await fetch(url);
+   const responseData = await response.json();
+
+   this.setState({
+    graph: responseData
+  });
+
+  console.log(this.state.graph)
+
   }
 
   render () {
@@ -85,11 +80,11 @@ class App extends Component {
   };
 
     const sigma = <Sigma graph={this.state.graph} />;
-    const form = <Form 
+    const form = <Form
       dropDownData={this.state.resourceTemplates}
-      displayGraph={this.state.displayGraph} 
-      formValue={this.state.formData.value} 
-      handleFormData={this.handleFormData} 
+      displayGraph={this.state.displayGraph}
+      formValue={this.state.formData.value}
+      handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}/>;
 
     return (

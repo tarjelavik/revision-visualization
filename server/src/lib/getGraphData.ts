@@ -4,7 +4,7 @@ import { parseToSigmaFormat } from './formatGraphData';
 
 
 
-export const createRequest = async(req: any) => {
+export const createRequest = async(req: any, searchCategory: any) => {
     const namespaces = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -19,17 +19,16 @@ export const createRequest = async(req: any) => {
         } LIMIT 100`
     };
 
-    const result = await queryData(namespaces);
-    console.log(result);
-
+    const result = await queryData(namespaces, searchCategory);
+    return result;
 }
 
 
-export const queryData = async(req: Record<string, unknown>): Promise<SigmaGraph | void> => {
-    
+export const queryData = async(req: Record<string, unknown>, searchCategory: any): Promise<SigmaGraph | void> => {
+
     try {
         const sigmaGraph = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/sparql-results+json'}})
-            .then((res) => {console.log(res.data); return parseToSigmaFormat(res.data);})
+            .then((res) => {return parseToSigmaFormat(res.data, searchCategory);})
             .catch(Error => console.log(Error));
         return sigmaGraph;
     } catch (Error) {
