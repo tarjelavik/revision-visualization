@@ -1,3 +1,4 @@
+import SigmaGraph from '../../../model/SigmaGraph';
 import { createRequest } from './getGraphData';
 
 
@@ -5,23 +6,23 @@ import { createRequest } from './getGraphData';
     value: string
 } */
 
-enum SearchCategory {
-    Action = 'ACTION',
-    Place = 'PLACE',
-    Person = 'PERSON',
-    BookObject = 'BOOKOBJECT'
-}
 
 export const searchHandler = async(search: string) => {
 
-    let data: any = '';
+    enum SearchCategory {
+        Action = 'ACTION',
+        Place = 'PLACE',
+        Person = 'PERSON',
+        BookObject = 'BOOKOBJECT'
+    }
+    let data: void | SigmaGraph;
 
     switch (search) {
-        case "https://birgitta.test.uib.no/api/resource_templates/14":
-            data = await createRequest(search, SearchCategory.Place)
+        case 'https://birgitta.test.uib.no/api/resource_templates/14':
+            data = await createRequest(search, SearchCategory.Place);
             break;
-        case "https://birgitta.test.uib.no/api/resource_templates/21":
-            data = await createRequest(search, SearchCategory.Action)
+        case 'https://birgitta.test.uib.no/api/resource_templates/21':
+            data = await createRequest(search, SearchCategory.Action);
             break;
 
         default:
@@ -29,4 +30,4 @@ export const searchHandler = async(search: string) => {
     }
 
     return data;
-}
+};

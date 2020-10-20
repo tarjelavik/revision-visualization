@@ -1,20 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, Filter, ForceAtlas2 } from 'react-sigma';
-
-/* type SigmaProps = {
-    graph: {
-        nodes: {
-            id: string,
-            label: string
-        }[],
-        edges: {
-                id: string,
-                source: string,
-                target: string,
-                label: string
-        }[]
-    }
-}; */
+import {Sigma, RandomizeNodePositions, RelativeSize, Filter, ForceAtlas2, DragNodes } from 'react-sigma';
 
 const containerStyle = {
     top: '0',
@@ -42,10 +27,29 @@ const onClickNodeHandler = (event: any) => {
 const sigma = (props: any) => {
     return (
             <div style={containerStyle}>
-                <Sigma style={sigmaStyle} graph={props.graph.graph} onOverNode={onOverNodeHandler} onClickNode={(event: any) => onClickNodeHandler(event)} rendered='canvas' settings={{drawLabels: true, clone: false}}>
+                <Sigma 
+                style={sigmaStyle} 
+                graph={props.graph.graph} 
+                onOverNode={onOverNodeHandler} 
+                onClickNode={(event: any) => onClickNodeHandler(event)} 
+                renderer='canvas' 
+                settings={
+                    {
+                    drawLabels: true, 
+                    clone: false,
+                    defaultNodeColor: '#3388AA',
+                    }
+                    }>
                         <ForceAtlas2 background easing="cubicInOut"/>
                         <Filter/>
-                        <RandomizeNodePositions/>
+                        <RandomizeNodePositions>
+                        <DragNodes
+                        onDrag={function noRefCheck() {}}
+                        onDragend={function noRefCheck() {}}
+                        onDrop={function noRefCheck() {}}
+                        onStartdrag={function noRefCheck() {}}
+                        />
+                        </RandomizeNodePositions>
                         <RelativeSize initialSize={15}/>
                 </Sigma>
             </div>

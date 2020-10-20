@@ -26,6 +26,12 @@ const dummyGraphData: RawGraphData = {
                     type: 'literal',
                     datatype: 'http://www.w3.org/2001/XMLSchema#integer',
                     value: '1338'
+                },
+                s: {
+                    value: ''
+                },
+                o: {
+                    value: ''
                 }
             }
         ]

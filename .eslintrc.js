@@ -152,7 +152,7 @@ module.exports = {
         "no-irregular-whitespace": "error",
         "no-new-wrappers": "error",
         "no-shadow": [
-            "error",
+            "warn",
             {
                 "hoist": "all"
             }

@@ -23,6 +23,12 @@ export default interface RawGraphData {
                         datatype: string,
                         value: string
                     }
+                    s: {
+                        value: string
+                    }
+                    o: {
+                        value: string
+                    }
                 }
         ]
     };

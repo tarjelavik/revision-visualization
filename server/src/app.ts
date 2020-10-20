@@ -22,7 +22,7 @@ app.get('/', (_req, res) => {
 app.get('/api/resource_templates', async(_req, res) => {
 
     try {
-        const data = await getResourceTemplates();
+        const data: any = await getResourceTemplates();
         res.json(data);
     } catch (error) {
         res.json(error);
@@ -62,7 +62,7 @@ app.get('/api/fetch', async(req, res) => {
 
 app.get('/api/form/:query', async(req, res) => {
     try {
-        const searchResult = await searchHandler(req.params.query);
+        const searchResult: any = await searchHandler(req.params.query);
         res.json(searchResult);
     } catch (error) {
         res.json(error);

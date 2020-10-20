@@ -5,20 +5,19 @@ import Edge from '../../../model/Edge';
 
 // TODO: Make this function a function that triages incoming requests based on searchCategory, and then calls
 // that specific function.
-export const parseToSigmaFormat = (graphData: RawGraphData, searchCategory: any): SigmaGraph | any => {
+export const parseToSigmaFormat = (graphData: RawGraphData, searchCategory: any): any => {
 
     if (searchCategory === 'ACTION') {
         return parsetoActionGraph(graphData);
-    };
+    }
 
     if (searchCategory === 'PLACE') {
         return parsetoPlaceGraph(graphData);
-    };
+    }
 
 };
 
-// TODO: Write interface for return type which is to be ActionGraph
-export const parsetoActionGraph = (graphData: any): any => {
+export const parsetoActionGraph = (graphData: RawGraphData): SigmaGraph => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
@@ -54,15 +53,14 @@ export const parsetoActionGraph = (graphData: any): any => {
         }
     };
 
-        // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
+    // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
     // the associated place of each person, which is often the same place.
     actionGraph.graph.nodes = actionGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
 
-
     return actionGraph;
-}
+};
 
-function parsetoPlaceGraph(graphData: RawGraphData): SigmaGraph {
+export const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
 
     const nodes: Node[] = [];
     const edges: Edge[] = [];
@@ -104,4 +102,4 @@ function parsetoPlaceGraph(graphData: RawGraphData): SigmaGraph {
     // the associated place of each person, which is often the same place.
     placeGraph.graph.nodes = placeGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
     return placeGraph;
-}
+};
