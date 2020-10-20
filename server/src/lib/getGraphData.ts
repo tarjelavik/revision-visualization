@@ -5,6 +5,7 @@ import { parseToSigmaFormat } from './formatGraphData';
 
 
 export const createRequest = async(req: string, searchCategory: any) => {
+
     const namespaces = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
@@ -15,7 +16,11 @@ export const createRequest = async(req: string, searchCategory: any) => {
         PREFIX o: <http://omeka.org/s/vocabs/o#>
         SELECT ?s ?o WHERE {
             ?s ?p <${req}> .
-            ?s bdm2:hasType/dcterms:title ?o
+
+            OPTIONAL { ?s bdm2:hasType/dcterms:title ?bookTitle }
+            OPTIONAL { ?s schema:name ?name }
+            OPTIONAL { ?s o:title ?resourceTitle }
+            BIND(coalesce(?resourceTitle, ?bookTitle, ?name) AS ?o)
         } LIMIT 100`
     };
 
@@ -28,7 +33,7 @@ export const queryData = async(req: Record<string, unknown>, searchCategory: any
 
     try {
         const sigmaGraph: Promise<SigmaGraph | void> = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/sparql-results+json'}})
-            .then((res) => {return parseToSigmaFormat(res.data, searchCategory) as SigmaGraph;})
+            .then((res) => {return parseToSigmaFormat(res.data, searchCategory);})
             .catch(Error => console.log(Error));
         return sigmaGraph;
     } catch (Error) {
