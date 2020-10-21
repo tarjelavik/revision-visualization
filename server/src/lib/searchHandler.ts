@@ -25,7 +25,7 @@ export const searchHandler = async(search: string) => {
 
     switch (search) {
         case 'https://birgitta.test.uib.no/api/resource_templates/13':
-            data = await createRequest(search, SearchCategory.Person);
+            data = await createRequest(search, 'blalba');
             break;
         case 'https://birgitta.test.uib.no/api/resource_templates/14':
             data = await createRequest(search, SearchCategory.Place);

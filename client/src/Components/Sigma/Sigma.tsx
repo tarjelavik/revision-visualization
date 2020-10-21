@@ -27,15 +27,16 @@ const onClickNodeHandler = (event: any) => {
 const sigma = (props: any) => {
     return (
             <div style={containerStyle}>
-                <Sigma 
-                style={sigmaStyle} 
-                graph={props.graph.graph} 
-                onOverNode={onOverNodeHandler} 
-                onClickNode={(event: any) => onClickNodeHandler(event)} 
-                renderer='canvas' 
+                <Sigma
+                style={sigmaStyle}
+                graph={props.graph.graph}
+                onOverNode={onOverNodeHandler}
+                onClickNode={(event: any) => onClickNodeHandler(event)}
+                renderer='canvas'
                 settings={
                     {
-                    drawLabels: true, 
+                    drawEdgeLabels: true,
+                    drawLabels: true,
                     clone: false,
                     defaultNodeColor: '#3388AA',
                     }

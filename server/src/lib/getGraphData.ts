@@ -5,8 +5,8 @@ import { parseToSigmaFormat } from './formatGraphData';
 
 
 export const createRequest = async(req: string, searchCategory: any) => {
-
-    const namespaces = {
+    console.log(req)
+/*     const namespaces = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX schema: <http://schema.org/>
@@ -22,12 +22,29 @@ export const createRequest = async(req: string, searchCategory: any) => {
             OPTIONAL { ?s o:title ?resourceTitle }
             BIND(coalesce(?resourceTitle, ?bookTitle, ?name) AS ?o)
         } LIMIT 100`
+    }; */
+
+    const personsAndBookObjects = {
+        'query': `
+        PREFIX dcterms: <http://purl.org/dc/terms/>
+        PREFIX schema: <http://schema.org/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX bdm2: <http://purl.org/bdm2>
+        PREFIX o: <http://omeka.org/s/vocabs/o#>
+        SELECT ?bookObject ?action ?instigator ?recipient WHERE {
+            ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
+            ?s schema:object/o:title ?bookObject .
+            ?s bdm2:hasType/o:title ?action .
+            ?s schema:creator/o:title ?instigator .
+            OPTIONAL { ?s schema:recipient/o:title ?recipient}
+        } LIMIT 100`
     };
 
-    const result = await queryData(namespaces, searchCategory);
+
+    const result = await queryData(personsAndBookObjects, searchCategory);
     return result;
 };
-
 
 export const queryData = async(req: Record<string, unknown>, searchCategory: any): Promise<SigmaGraph | void> => {
 

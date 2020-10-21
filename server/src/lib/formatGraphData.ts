@@ -70,7 +70,6 @@ const parsetoActionGraph = (graphData: RawGraphData): SigmaGraph => {
 };
 
 const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
-
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
@@ -113,32 +112,48 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
     return placeGraph;
 };
 
-const parseToGraph = (graphData: RawGraphData): SigmaGraph => {
+const parseToGraph = (graphData: any): SigmaGraph => {
+    const vars = graphData.head.vars;
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
     graphData.results.bindings.map(object => {
-        if (object.s.value) {
+        if (object[vars[0]].value) {
             nodes.push(
                 {
-                    id: `node_${object.s.value}`,
-                    label: object.s.value
+                    id: `node_${object[vars[0]].value}`,
+                    label: object[vars[0]].value
                 });
         }
-        if (object.o.value) {
+        if (object[vars[1]].value) {
             nodes.push(
                 {
-                    id: `node_${object.o.value}`,
-                    label: object.o.value
+                    id: `node_${object[vars[1]].value}`,
+                    label: object[vars[1]].value
                 });
         }
+        if (object[vars[2]].value) {
+            nodes.push(
+                {
+                    id: `node_${object[vars[2]].value}`,
+                    label: object[vars[2]].value
+                });
+        }
+        // this one fails because it is optional. Why...? the if-test..?
+/*         if (object[vars[3]].value) {
+            nodes.push(
+                {
+                    id: `node_${object[vars[3]].value}`,
+                    label: object[vars[3]].value
+                });
+        } */
 
         edges.push(
             {
-                id: `edge_${object.s.value}`,
-                source: `node_${object.s.value}`,
-                target: `node_${object.o.value}`,
-                label: object.o.value
+                id: `edge_${object[vars[0]].value}`,
+                source: `node_${object[vars[0]].value}`,
+                target: `node_${object[vars[2]].value}`,
+                label: object[vars[1]].value
             });
     });
 

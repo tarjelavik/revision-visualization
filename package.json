@@ -7,7 +7,7 @@
     "install:server": "npm install",
     "install:client": "cd client && npm install",
     "installAll": "npm run install:server && npm run install:client",
-    "start": "(tsc && node dist/server/src/app.js) & cd client && npm run start",
+    "start": "(tsc && node dist/server/src/app.js) && cd client && npm run start",
     "start:dev:server": "nodemon",
     "start:client": "cd client && npm run start",
     "start:server": "tsc && node dist/server/src/app.js",

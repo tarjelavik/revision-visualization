@@ -55,11 +55,14 @@ class App extends Component {
       }
     });
 
+    console.log(this.state.formData.value)
+
     this.postFormDataToServer();
   }
 
   postFormDataToServer = async() => {
     const data = encodeURIComponent(this.state.formData.value);
+    console.log(data)
     const url = `http://localhost:3000/api/form/${data}`;
 
    const response = await fetch(url);
@@ -68,8 +71,6 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
-
-  console.log(this.state.graph)
 
   }
 
