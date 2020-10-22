@@ -6,7 +6,7 @@ import { parseToSigmaFormat } from './formatGraphData';
 
 export const createRequest = async(req: string, searchCategory: any) => {
     console.log(req)
-/*     const namespaces = {
+    /*     const namespaces = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX schema: <http://schema.org/>
@@ -24,7 +24,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
         } LIMIT 100`
     }; */
 
-    const personsAndBookObjects = {
+/*     const personsAndBookObjects = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX schema: <http://schema.org/>
@@ -32,24 +32,58 @@ export const createRequest = async(req: string, searchCategory: any) => {
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX bdm2: <http://purl.org/bdm2>
         PREFIX o: <http://omeka.org/s/vocabs/o#>
-        SELECT ?bookObject ?action ?instigator ?recipient WHERE {
+        SELECT ?bookObject ?bookObjectId ?action ?actionId ?instigator ?instigatorId ?recipient ?recipientId WHERE {
             ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
             ?s schema:object/o:title ?bookObject .
+            ?s schema:object/o:id ?bookObjectId.
             ?s bdm2:hasType/o:title ?action .
+            ?s bdm2:hasType/o:id ?actionId .
             ?s schema:creator/o:title ?instigator .
+            ?s schema:creator/o:id ?instigatorId .
+            ?s schema:recipient/o:id ?recipientId
             OPTIONAL { ?s schema:recipient/o:title ?recipient}
         } LIMIT 100`
+    }; */
+
+    const construct = {
+        'query': ` 
+        PREFIX dcterms: <http://purl.org/dc/terms/>
+        PREFIX schema: <http://schema.org/>
+        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX bdm2: <http://purl.org/bdm2>
+        PREFIX o: <http://omeka.org/s/vocabs/o#>
+        CONSTRUCT {
+          ?s o:bookObjectId ?bookObjectId .
+          ?s o:bookObjectTitle ?bookObject .
+          ?s o:actionTitle ?action .
+          ?s o:actionId ?actionId .
+          ?s o:creatorId ?instigatorId .
+          ?s o:creatorName ?instigator
+        } 
+        WHERE {
+          ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
+          ?s schema:object/o:title ?bookObject .
+          ?s schema:object/o:id ?bookObjectId.
+          ?s bdm2:hasType/o:title ?action .
+          ?s bdm2:hasType/o:id ?actionId .
+          ?s schema:creator/o:title ?instigator .
+          ?s schema:creator/o:id ?instigatorId .
+          ?s schema:recipient/o:id ?recipientId
+          OPTIONAL { ?s schema:recipient/o:title ?recipient}
+        }`
     };
 
-
-    const result = await queryData(personsAndBookObjects, searchCategory);
+    let searchcat = searchCategory;
+    searchcat = 'blabal'
+    const result = await queryData(construct, searchcat);
     return result;
 };
 
 export const queryData = async(req: Record<string, unknown>, searchCategory: any): Promise<SigmaGraph | void> => {
 
     try {
-        const sigmaGraph: Promise<SigmaGraph | void> = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/sparql-results+json'}})
+        const sigmaGraph: Promise<SigmaGraph | void> = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/ld+json'}})
             .then((res) => {return parseToSigmaFormat(res.data, searchCategory);})
             .catch(Error => console.log(Error));
         return sigmaGraph;

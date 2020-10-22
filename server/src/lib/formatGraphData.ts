@@ -113,49 +113,16 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
 };
 
 const parseToGraph = (graphData: any): SigmaGraph => {
-    const vars = graphData.head.vars;
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
+    // const vars = graphData.head.vars;
+    let nodes: Node[] = [];
+    let edges: Edge[] = [];
 
-    graphData.results.bindings.map(object => {
-        if (object[vars[0]].value) {
-            nodes.push(
-                {
-                    id: `node_${object[vars[0]].value}`,
-                    label: object[vars[0]].value
-                });
-        }
-        if (object[vars[1]].value) {
-            nodes.push(
-                {
-                    id: `node_${object[vars[1]].value}`,
-                    label: object[vars[1]].value
-                });
-        }
-        if (object[vars[2]].value) {
-            nodes.push(
-                {
-                    id: `node_${object[vars[2]].value}`,
-                    label: object[vars[2]].value
-                });
-        }
-        // this one fails because it is optional. Why...? the if-test..?
-/*         if (object[vars[3]].value) {
-            nodes.push(
-                {
-                    id: `node_${object[vars[3]].value}`,
-                    label: object[vars[3]].value
-                });
-        } */
+    // let edgeId = 0;
+    // console.log(JSON.stringify(graphData, null, 2))
+    // Send in one triple for testing
+    nodes = createNode(graphData['@graph'][0]);
+    edges = createEdges(nodes)
 
-        edges.push(
-            {
-                id: `edge_${object[vars[0]].value}`,
-                source: `node_${object[vars[0]].value}`,
-                target: `node_${object[vars[2]].value}`,
-                label: object[vars[1]].value
-            });
-    });
 
     const sigmaGraph: SigmaGraph = {
         graph: {
@@ -170,6 +137,66 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     return sigmaGraph;
 };
+
+const createEdges = (nodes: any): Edge[] => {
+    let edges: Edge[] = [];
+    console.log(nodes)
+
+    return edges
+}
+
+const createNode = (triple: any): Node[] => {
+
+    const nodes: Node[] = [];
+    
+    // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost
+    const flattenedTriples: any = flattenTriples(triple)
+
+    try {
+        nodes.push({
+            id: flattenedTriples['o:bookObjectId'],
+            label: flattenedTriples.bookObjectTitle
+        })
+    } catch (error) {
+        console.log('not found')
+    }
+
+    try {
+        nodes.push({
+            id: flattenedTriples['o:actionId'],
+            label: flattenedTriples.actionTitle
+        })
+    } catch (error) {
+        console.log('not found')
+    }
+
+    try {
+        nodes.push({
+            id: flattenedTriples['o:creatorId'],
+            label: flattenedTriples.creatorName
+        })
+    } catch (error) {
+        console.log('not found')
+    }
+
+    return nodes;
+}
+
+const flattenTriples = (triple) => {
+
+   let customNode: any = {}
+   for (const key of Object.keys(triple)) {
+        if (typeof(triple[key]) === 'object') {
+            triple[key].forEach(element => {
+                customNode[key] = element
+            });
+
+        } else {
+            customNode[key] = triple[key]
+        }
+    }
+    return customNode;
+}
 
 const parseToBookObjectGraph = (graphData: RawGraphData): SigmaGraph => {
     const nodes: Node[] = [];
