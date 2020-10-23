@@ -3,6 +3,8 @@ import SigmaGraph from '../../../model/SigmaGraph';
 import Node from '../../../model/Node';
 import Edge from '../../../model/Edge';
 
+import { generateId } from './generateId';
+
 // TODO: Make this function a function that triages incoming requests based on searchCategory, and then calls
 // that specific function.
 export const parseToSigmaFormat = (graphData: RawGraphData, searchCategory: any): SigmaGraph => {
@@ -113,15 +115,153 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
 };
 
 const parseToGraph = (graphData: any): SigmaGraph => {
+    console.log(graphData['@graph'])
     // const vars = graphData.head.vars;
     let nodes: Node[] = [];
     let edges: Edge[] = [];
 
-    // let edgeId = 0;
-    // console.log(JSON.stringify(graphData, null, 2))
-    // Send in one triple for testing
-    nodes = createNode(graphData['@graph'][0]);
-    edges = createEdges(nodes)
+    // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost. Now we splice away the troublesome elements.
+    const flattenedTriples: any = graphData['@graph'].splice(4, 23)
+    
+    flattenedTriples.forEach(object => {
+        try {
+            nodes.push({
+                id: object['o:bookObject'],
+                label: object.bookObjectTitle
+            })
+        } catch (error) {
+            console.log('not found')
+        }
+
+/*         try {
+            nodes.push({
+                id: object['o:actionId'],
+                label: object.actionTitle
+            })
+        } catch (error) {
+            console.log('not found')
+        } */
+
+        try {
+            nodes.push({
+                id: object['o:creatorId'],
+                label: object.creatorName
+            })
+        } catch (error) {
+            console.log('not found')
+        }
+        if (object['o:recipientId']) {
+            try {
+                nodes.push({
+                    id: object['o:recipientId'],
+                    label: object.recipientName
+                })
+            } catch (error) {
+                console.log('not found')
+            }
+        }
+        if (object['locationCreated:Id']) {
+            try {
+                nodes.push({
+                    id: object['locationCreated:Id'],
+                    label: object.locationCreated
+                })
+            } catch (error) {
+                console.log('not found')
+            }
+        }
+        if (object['o:toLocation']) {
+            try {
+                nodes.push({
+                    id: object.toLocationId,
+                    label: object.toLocation
+                })
+            } catch (error) {
+                console.log('not found')
+            }
+        }
+        // IF YOU WANT TO INCLUDE ACTIONS AS SEPARATE NODES, UNCOMMENT THIS
+/*         try {
+            edges.push({
+                id: generateId(),
+                source: object['o:bookObjectId'],
+                target: object['o:actionId'],
+                label: object.actionTitle
+            })
+            edges.push({
+                id: generateId(),
+                source: object['o:actionId'],
+                target: object['o:creatorId'],
+                label: object.actionTitle
+            })
+            edges.push({
+                id: generateId(),
+                source: object['o:bookObjectId'],
+                target: object['o:creatorId'],
+                label: ''
+            })
+            if (object['o:recipientId']) {
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObjectId'],
+                    target: object['o:recipientId'],
+                    label: ''
+                })
+                edges.push({
+                    id: generateId(),
+                    source: object['o:recipientId'],
+                    target: object['o:creatorId'],
+                    label: ''
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        } */
+        // ACTION AS LABEL:
+ 
+        try {
+            edges.push({
+                id: generateId(),
+                source: object['o:bookObject'],
+                target: object['o:creatorId'],
+                label: object.actionTitle
+            })
+            if (object['o:recipientId']) {
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObject'],
+                    target: object['o:recipientId'],
+                    label: object.actionTitle
+                })
+               edges.push({
+                    id: generateId(),
+                    source: object['o:recipientId'],
+                    target: object['o:creatorId'],
+                    label: object.actionTitle
+                }) 
+            }
+/*             if (object['locationCreated:Id']) {
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObject'],
+                    target: object.locationCreated,
+                    label: ''
+                })
+            }
+            if (object['o:toLocation']) {
+                    edges.push({
+                        id: generateId(),
+                        source: object['o:bookObject'],
+                        target: object.toLocation,
+                        label: ''
+                    })
+            } */
+        } catch (error) {
+            console.log(error)
+        }
+       
+    });
+    
 
 
     const sigmaGraph: SigmaGraph = {
@@ -135,68 +275,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     // the associated place of each person, which is often the same place.
     sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
 
+    // console.log(JSON.stringify(sigmaGraph, null, 2))
     return sigmaGraph;
 };
-
-const createEdges = (nodes: any): Edge[] => {
-    let edges: Edge[] = [];
-    console.log(nodes)
-
-    return edges
-}
-
-const createNode = (triple: any): Node[] => {
-
-    const nodes: Node[] = [];
-    
-    // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost
-    const flattenedTriples: any = flattenTriples(triple)
-
-    try {
-        nodes.push({
-            id: flattenedTriples['o:bookObjectId'],
-            label: flattenedTriples.bookObjectTitle
-        })
-    } catch (error) {
-        console.log('not found')
-    }
-
-    try {
-        nodes.push({
-            id: flattenedTriples['o:actionId'],
-            label: flattenedTriples.actionTitle
-        })
-    } catch (error) {
-        console.log('not found')
-    }
-
-    try {
-        nodes.push({
-            id: flattenedTriples['o:creatorId'],
-            label: flattenedTriples.creatorName
-        })
-    } catch (error) {
-        console.log('not found')
-    }
-
-    return nodes;
-}
-
-const flattenTriples = (triple) => {
-
-   let customNode: any = {}
-   for (const key of Object.keys(triple)) {
-        if (typeof(triple[key]) === 'object') {
-            triple[key].forEach(element => {
-                customNode[key] = element
-            });
-
-        } else {
-            customNode[key] = triple[key]
-        }
-    }
-    return customNode;
-}
 
 const parseToBookObjectGraph = (graphData: RawGraphData): SigmaGraph => {
     const nodes: Node[] = [];
