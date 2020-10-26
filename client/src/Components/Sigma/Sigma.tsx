@@ -2,6 +2,7 @@ import React from 'react';
 import {Sigma, RandomizeNodePositions, RelativeSize, Filter, ForceAtlas2, DragNodes } from 'react-sigma';
 
 const containerStyle = {
+    maxWidth: '100%',
     top: '0',
     bottom: '0',
     left: '0',
@@ -10,7 +11,7 @@ const containerStyle = {
 };
 
 const sigmaStyle = {
-    width: '50%',
+    width: '100%',
     height: '100%',
 };
 
@@ -35,6 +36,7 @@ const sigma = (props: any) => {
                 renderer='canvas'
                 settings={
                     {
+                    scalingMode: 'outside',
                     drawEdgeLabels: true,
                     drawLabels: true,
                     clone: false,

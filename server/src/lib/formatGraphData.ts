@@ -150,7 +150,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
         } catch (error) {
             console.log('not found')
         }
-        if (object['o:recipientId']) {
+        if (object.recipientName) {
             try {
                 nodes.push({
                     id: object['o:recipientId'],
@@ -170,10 +170,10 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 console.log('not found')
             }
         }
-        if (object['o:toLocation']) {
+        if (object.toLocation) {
             try {
                 nodes.push({
-                    id: object.toLocationId,
+                    id: object['toLocation:Id'],
                     label: object.toLocation
                 })
             } catch (error) {
@@ -218,7 +218,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             console.log(error)
         } */
         // ACTION AS LABEL:
- 
+        
         try {
             edges.push({
                 id: generateId(),
@@ -231,7 +231,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: generateId(),
                     source: object['o:bookObject'],
                     target: object['o:recipientId'],
-                    label: object.actionTitle
+                    label: ''
                 })
                edges.push({
                     id: generateId(),
@@ -240,30 +240,28 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     label: object.actionTitle
                 }) 
             }
-/*             if (object['locationCreated:Id']) {
+            if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
                     source: object['o:bookObject'],
-                    target: object.locationCreated,
+                    target: object['locationCreated:Id'],
                     label: ''
                 })
             }
-            if (object['o:toLocation']) {
+            if (object.toLocation) {
                     edges.push({
                         id: generateId(),
                         source: object['o:bookObject'],
-                        target: object.toLocation,
+                        target: object['toLocation:Id'],
                         label: ''
                     })
-            } */
+            }
         } catch (error) {
             console.log(error)
         }
        
     });
     
-
-
     const sigmaGraph: SigmaGraph = {
         graph: {
             nodes,
