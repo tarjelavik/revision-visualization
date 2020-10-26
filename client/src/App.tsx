@@ -26,12 +26,6 @@ class App extends Component {
   };
 
   async componentDidMount() {
-/*     const url = 'http://localhost:3000/api/fetch';
-    const response = await fetch(url);
-    const data = await response.json();
-    this.setState({
-      graph: data
-    }); */
 
     const rtResponse = await fetch('http://localhost:3000/api/resource_templates');
     const rtData = await rtResponse.json();
@@ -60,35 +54,14 @@ class App extends Component {
   postFormDataToServer = async() => {
 
     const data = encodeURIComponent(this.state.formData.value);
-    console.log(data)
     const url = `http://localhost:3000/api/form/${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
-   console.log(responseData)
-
-/*    const dummyGraph = {
-     graph: {
-       edges: [
-         {id: "edge_Dublin, Archbishop Marsh's Library Z.4.4.3", source: "node_Dublin, Archbishop Marsh's Library Z.4.4.3", target: "node_Secondhand bookseller", label: "[Sale]"},
-         {id: "buy", source: "node_Dublin, Archbishop Marsh's Library Z.4.4.3", target: "node_Syon Abbey", label: "Buyer"}
-        ],
-       nodes: [
-         {id: "node_Dublin, Archbishop Marsh's Library Z.4.4.3", label: "Dublin, Archbishop Marsh's Library Z.4.4.3"},
-         {id: "node_[Sale]", label: "[Sale]"},
-         {id: "node_Secondhand bookseller", label: "Secondhand bookseller"},
-         {id: "node_Syon Abbey", label: "Syon Abbey"}
-        ]
-     }
-   } */
-
 
    this.setState({
     graph: responseData
   });
-
-    console.log(this.state.graph);
-
   }
 
   render () {

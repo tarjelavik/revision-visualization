@@ -53,7 +53,7 @@ const sigma = (props: any) => {
                         onStartdrag={function noRefCheck() {}}
                         />
                         </RandomizeNodePositions>
-                        <RelativeSize initialSize={15}/>
+                        <RelativeSize initialSize={5}/>
                 </Sigma>
             </div>
     );
