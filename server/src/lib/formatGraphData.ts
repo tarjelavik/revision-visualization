@@ -115,14 +115,14 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
 };
 
 const parseToGraph = (graphData: any): SigmaGraph => {
-    console.log(graphData['@graph'])
+    // console.log(graphData['@graph'])
     // const vars = graphData.head.vars;
     let nodes: Node[] = [];
     let edges: Edge[] = [];
 
     // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost. Now we splice away the troublesome elements.
     const flattenedTriples: any = graphData['@graph'].splice(4, 23)
-    
+
     flattenedTriples.forEach(object => {
         try {
             nodes.push({
@@ -218,7 +218,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             console.log(error)
         } */
         // ACTION AS LABEL:
-        
+
         try {
             edges.push({
                 id: generateId(),
@@ -238,7 +238,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:recipientId'],
                     target: object['o:creatorId'],
                     label: object.actionTitle
-                }) 
+                })
             }
             if (object['locationCreated:Id']) {
                 edges.push({
@@ -259,9 +259,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
         } catch (error) {
             console.log(error)
         }
-       
+
     });
-    
+
     const sigmaGraph: SigmaGraph = {
         graph: {
             nodes,

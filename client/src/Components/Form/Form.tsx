@@ -5,7 +5,8 @@ import DropDownOption from '../DropDown/DropDown';
 
 
 const formStyle = {
-  marginTop: '10rem'
+  marginTop: '10rem',
+  marginLeft: '40vw'
 }
 
 const buttonStyle = {
@@ -34,7 +35,7 @@ export default function SimpleSelect(props: any) {
             <select
               onChange={(e) => handleChange(e, props)}
               value={ props.formValue || '' }>
-                
+
               {props.dropDownData.map((dropDownOption: any, index: number) => {
                 if (props.dropDownData.length) {
                   return <DropDownOption dropDownData={dropDownOption} key={index}/>

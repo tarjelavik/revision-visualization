@@ -46,7 +46,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
     }; */
 
     const construct = {
-        'query': ` 
+        'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX schema: <http://schema.org/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -66,7 +66,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
             ?s o:locationCreatedId ?locationCreatedId .
             ?s o:toLocationId ?toLocationId .
             ?s o:toLocation ?toLocation
-          } 
+          }
           WHERE {
             ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
             ?s schema:object/o:title ?bookObject .
@@ -78,14 +78,14 @@ export const createRequest = async(req: string, searchCategory: any) => {
             OPTIONAL { ?s schema:recipient/o:title ?recipientName }
             OPTIONAL { ?s schema:recipient/o:id ?recipientId }
             OPTIONAL { ?s schema:locationCreated/o:title ?locationCreated }
-            OPTIONAL { ?s schema:locationCreated/o:id ?locationCreatedId } 
+            OPTIONAL { ?s schema:locationCreated/o:id ?locationCreatedId }
             OPTIONAL { ?s schema:toLocation/o:title ?toLocation }
             OPTIONAL { ?s schema:toLocation/o:id ?toLocationId }
           }`
     };
 
    /*  const genericConstruct = {
-        'query': ` 
+        'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>
         PREFIX schema: <http://schema.org/>
         PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -105,7 +105,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
             ?s o:locationCreatedId ?locationCreatedId .
             ?s o:toLocationId ?toLocationId .
             ?s o:toLocation ?toLocation
-          } 
+          }
           WHERE {
             ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
             ?s schema:object/o:title ?bookObject .
@@ -114,7 +114,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
             ?s bdm2:hasType/o:id ?actionId .
             ?s schema:creator/o:title ?instigator .
             ?s schema:creator/o:id ?instigatorId .
-            OPTIONAL { 
+            OPTIONAL {
               ?s schema:recipient/o:title ?recipientName .
               ?s schema:recipient/o:id ?recipientId .
               ?s schema:locationCreated/o:title ?locationCreated .
@@ -133,7 +133,6 @@ export const createRequest = async(req: string, searchCategory: any) => {
 };
 
 export const queryData = async(req: Record<string, unknown>, searchCategory: any): Promise<SigmaGraph | void> => {
-
     try {
         const sigmaGraph: Promise<SigmaGraph | void> = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/ld+json'}})
             .then((res) => {return parseToSigmaFormat(res.data, searchCategory);})

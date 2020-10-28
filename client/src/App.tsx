@@ -3,6 +3,7 @@ import './App.css';
 
 import Form from './Components/Form/Form';
 import Sigma from './Components/Sigma/Sigma';
+import Databox from './Components/DataBox/DataBox';
 
 class App extends Component {
   state = {
@@ -64,13 +65,31 @@ class App extends Component {
   });
   }
 
+  getClickedNodeData = async(id: any) => {
+
+    // TODO: Make a request to the server. The server then makes a request to the Birgitta API and returns the data.
+
+    const url = `https://birgitta.test.uib.no/api/items/${id}`
+    const options = {
+      headers: {
+          "Access-Control-Allow-Origin": "http://localhost:1234",
+          "Access-Control-Allow-Methods": "GET",
+          "Content-Type": 'application/json'
+      }
+  };
+    const nodeData = await fetch(url, options)
+    console.log(nodeData)
+
+
+  }
+
   render () {
 
   const appStyle = {
 
   };
 
-    const sigma = <Sigma graph={this.state.graph} />;
+    const sigma = <Sigma graph={this.state.graph} getClickedNodeData={this.getClickedNodeData}/>;
     const form = <Form
       dropDownData={this.state.resourceTemplates}
       displayGraph={this.state.displayGraph}
@@ -78,12 +97,15 @@ class App extends Component {
       handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}/>;
 
+    const databox = <Databox />
+
     return (
       <div className='App'>
         <div style={appStyle}>
           {form}
           {this.state.displayGraph ? sigma : null}
         </div>
+        {databox}
       </div>
     );
   }
