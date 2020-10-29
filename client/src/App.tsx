@@ -23,7 +23,8 @@ class App extends Component {
       },
     formData: {
       value: ''
-    }
+    },
+    nodeData: null
   };
 
   async componentDidMount() {
@@ -66,27 +67,24 @@ class App extends Component {
   }
 
   getClickedNodeData = async(id: any) => {
-
-    // TODO: Make a request to the server. The server then makes a request to the Birgitta API and returns the data.
-
-    const url = `https://birgitta.test.uib.no/api/items/${id}`
-    const options = {
-      headers: {
-          "Access-Control-Allow-Origin": "http://localhost:1234",
-          "Access-Control-Allow-Methods": "GET",
-          "Content-Type": 'application/json'
-      }
-  };
-    const nodeData = await fetch(url, options)
-    console.log(nodeData)
-
-
+    const url = `http://localhost:3000/api/graph/node/${id}`
+    const response = await fetch(url);
+    try {
+      const nodeData = await response.json();
+      this.setState({
+        nodeData: nodeData
+      });
+    } catch (error) {
+      // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
+      console.log(error)
+    }
   }
 
   render () {
 
   const appStyle = {
-
+    display: "grid",
+    grid: "auto auto auto"
   };
 
     const sigma = <Sigma graph={this.state.graph} getClickedNodeData={this.getClickedNodeData}/>;
@@ -97,15 +95,15 @@ class App extends Component {
       handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}/>;
 
-    const databox = <Databox />
+    const databox = <Databox nodeData={this.state.nodeData}/>
 
     return (
       <div className='App'>
         <div style={appStyle}>
+          {databox}
           {form}
           {this.state.displayGraph ? sigma : null}
         </div>
-        {databox}
       </div>
     );
   }

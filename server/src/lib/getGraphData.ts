@@ -5,46 +5,7 @@ import { parseToSigmaFormat } from './formatGraphData';
 
 
 export const createRequest = async(req: string, searchCategory: any) => {
-    console.log(req)
-    /*     const namespaces = {
-        'query': `
-        PREFIX dcterms: <http://purl.org/dc/terms/>
-        PREFIX schema: <http://schema.org/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX bdm2: <http://purl.org/bdm2>
-        PREFIX o: <http://omeka.org/s/vocabs/o#>
-        SELECT ?s ?o WHERE {
-            ?s ?p <${req}> .
-
-            OPTIONAL { ?s bdm2:hasType/dcterms:title ?bookTitle }
-            OPTIONAL { ?s schema:name ?name }
-            OPTIONAL { ?s o:title ?resourceTitle }
-            BIND(coalesce(?resourceTitle, ?bookTitle, ?name) AS ?o)
-        } LIMIT 100`
-    }; */
-
-/*     const personsAndBookObjects = {
-        'query': `
-        PREFIX dcterms: <http://purl.org/dc/terms/>
-        PREFIX schema: <http://schema.org/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX bdm2: <http://purl.org/bdm2>
-        PREFIX o: <http://omeka.org/s/vocabs/o#>
-        SELECT ?bookObject ?bookObjectId ?action ?actionId ?instigator ?instigatorId ?recipient ?recipientId WHERE {
-            ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
-            ?s schema:object/o:title ?bookObject .
-            ?s schema:object/o:id ?bookObjectId.
-            ?s bdm2:hasType/o:title ?action .
-            ?s bdm2:hasType/o:id ?actionId .
-            ?s schema:creator/o:title ?instigator .
-            ?s schema:creator/o:id ?instigatorId .
-            ?s schema:recipient/o:id ?recipientId
-            OPTIONAL { ?s schema:recipient/o:title ?recipient}
-        } LIMIT 100`
-    }; */
-
+    req;
     const construct = {
         'query': `
         PREFIX dcterms: <http://purl.org/dc/terms/>

@@ -6,6 +6,7 @@ import SigmaGraph from '../../model/SigmaGraph';
 import { queryData } from './lib/getGraphData';
 import { getResourceTemplates } from './lib/getResourceTemplates';
 import { searchHandler } from './lib/searchHandler';
+import { getNodeData } from './lib/getNodeData';
 
 const app = express();
 const port = 3000;
@@ -63,6 +64,15 @@ app.get('/api/fetch', async(req, res) => {
 app.get('/api/form/:query', async(req, res) => {
     try {
         const searchResult: any = await searchHandler(req.params.query);
+        res.json(searchResult);
+    } catch (error) {
+        res.json(error);
+    }
+});
+
+app.get('/api/graph/node/:id', async(req, res) => {
+    try {
+        const searchResult: any = await getNodeData(req.params.id);
         res.json(searchResult);
     } catch (error) {
         res.json(error);

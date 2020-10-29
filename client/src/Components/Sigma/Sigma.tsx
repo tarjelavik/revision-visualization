@@ -11,7 +11,6 @@ const containerStyle = {
 };
 
 const sigmaStyle = {
-    gridColumn: '0',
     width: '100%',
     height: '100%',
 };
@@ -26,7 +25,6 @@ const onClickNodeHandler = (event: any, props: any) => {
 
 
 const sigma = (props: any) => {
-    console.log(props)
     return (
             <div style={containerStyle}>
                 <Sigma

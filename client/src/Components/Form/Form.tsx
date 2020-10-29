@@ -25,7 +25,6 @@ export default function SimpleSelect(props: any) {
     };
 
     const handleSubmit = () => {
-      console.log('submitted');
     }
 
     return (
