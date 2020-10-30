@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, Filter, ForceAtlas2, DragNodes } from 'react-sigma';
+import {Sigma, RandomizeNodePositions, RelativeSize, DragNodes } from 'react-sigma';
 
 const containerStyle = {
     maxWidth: '100%',
@@ -15,7 +15,8 @@ const sigmaStyle = {
     height: '100%',
 };
 
-const onOverNodeHandler = () => {
+const onOverNodeHandler = (e: any) => {
+    console.log(e)
     console.log('im hovering over a node');
 }
 
@@ -31,20 +32,24 @@ const sigma = (props: any) => {
                 <Sigma
                 style={sigmaStyle}
                 graph={props.graph.graph}
-                onOverNode={onOverNodeHandler}
+                onClickEdge={(e: any) => onOverNodeHandler(e)}
                 onClickNode={(event: any) => onClickNodeHandler(event, props)}
                 renderer='canvas'
                 settings={
                     {
                     scalingMode: 'outside',
+                    defaultLabelSize: 16,
+                    labelThreshold: 0,
                     drawEdgeLabels: true,
                     drawLabels: true,
+                    minArrowSize: 6,
                     clone: false,
                     defaultNodeColor: '#454554',
+                    enableEdgeHovering: true,
+                    edgeHoverPrecision: 5,
+                    minEdgeSize: 10
                     }
                     }>
-                        <ForceAtlas2 background easing="cubicInOut"/>
-                        <Filter/>
                         <RandomizeNodePositions>
                         <DragNodes
                         onDrag={function noRefCheck() {}}

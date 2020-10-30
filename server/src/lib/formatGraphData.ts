@@ -96,7 +96,8 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
                 id: `edge_${object.personId.value}`,
                 source: `node_${object.personId.value}`,
                 target: `node_${object.associatedPlaceId.value}`,
-                label: object.associatedPlaceName.value
+                label: object.associatedPlaceName.value,
+                type: "arrow"
             });
     });
 
@@ -145,9 +146,12 @@ const parseToGraph = (graphData: any): SigmaGraph => {
         try {
             nodes.push({
                 id: object['o:creatorId'],
-                label: object.creatorName
+                label: object.creatorName,
+                type: "star",
+                color: "red"
             })
-        } catch (error) {
+            // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
+        } catch (error) { 
             console.log('not found')
         }
         if (object.recipientName) {
@@ -180,64 +184,29 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 console.log('not found')
             }
         }
-        // IF YOU WANT TO INCLUDE ACTIONS AS SEPARATE NODES, UNCOMMENT THIS
-/*         try {
-            edges.push({
-                id: generateId(),
-                source: object['o:bookObjectId'],
-                target: object['o:actionId'],
-                label: object.actionTitle
-            })
-            edges.push({
-                id: generateId(),
-                source: object['o:actionId'],
-                target: object['o:creatorId'],
-                label: object.actionTitle
-            })
-            edges.push({
-                id: generateId(),
-                source: object['o:bookObjectId'],
-                target: object['o:creatorId'],
-                label: ''
-            })
-            if (object['o:recipientId']) {
-                edges.push({
-                    id: generateId(),
-                    source: object['o:bookObjectId'],
-                    target: object['o:recipientId'],
-                    label: ''
-                })
-                edges.push({
-                    id: generateId(),
-                    source: object['o:recipientId'],
-                    target: object['o:creatorId'],
-                    label: ''
-                })
-            }
-        } catch (error) {
-            console.log(error)
-        } */
-        // ACTION AS LABEL:
-
         try {
+            // Setting the SIZE of the edge enabled me to finally click the edge! Now we need the actionID.
             edges.push({
                 id: generateId(),
                 source: object['o:bookObject'],
                 target: object['o:creatorId'],
-                label: object.actionTitle
+                label: object.actionTitle,
+                type: "arrow",
+                size: 4
             })
             if (object['o:recipientId']) {
                 edges.push({
                     id: generateId(),
                     source: object['o:bookObject'],
                     target: object['o:recipientId'],
-                    label: ''
+                    label: '',
                 })
                edges.push({
                     id: generateId(),
                     source: object['o:recipientId'],
                     target: object['o:creatorId'],
-                    label: object.actionTitle
+                    label: object.actionTitle,
+                    type: "arrow"
                 })
             }
             if (object['locationCreated:Id']) {
@@ -245,7 +214,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: generateId(),
                     source: object['o:bookObject'],
                     target: object['locationCreated:Id'],
-                    label: ''
+                    label: '',
                 })
             }
             if (object.toLocation) {
@@ -253,7 +222,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                         id: generateId(),
                         source: object['o:bookObject'],
                         target: object['toLocation:Id'],
-                        label: ''
+                        label: '',
                     })
             }
         } catch (error) {

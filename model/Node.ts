@@ -1,1 +1,1 @@
-export default interface Node { id: string; label: string } [];
+export default interface Node { id: string; label: string, type?: string, color?: string } [];
