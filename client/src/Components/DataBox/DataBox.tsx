@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 
 interface DisplayData {
     type: string,
@@ -9,7 +9,9 @@ interface DisplayData {
 const displayBoxStyle = {
     boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
     backgroundColor: "#f8fdfe",
-    width: "20vw"
+    width: "20vw",
+    position: "relative" as "relative",
+    zIndex: 1
 }
 
 const listStyle = {
@@ -59,7 +61,7 @@ const dataBox = (props: any) => {
             <ul style={listStyle}>
                 <li style={listElementStyle}>{displayProperties?.name}</li>
                 <li style={listElementStyle}>{displayProperties?.type}</li>
-                <li style={listElementStyle}><a href={displayProperties?.link}>See full resource page</a></li>
+                <li style={listElementStyle}><a href={displayProperties?.link} target="_blank" rel="noopener noreferrer">See full resource page</a></li>
             </ul>
             : <div></div>}
         </div>

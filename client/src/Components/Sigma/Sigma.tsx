@@ -21,6 +21,7 @@ const onOverNodeHandler = () => {
 
 const onClickNodeHandler = (event: any, props: any) => {
     props.getClickedNodeData(event.data.node.id);
+    console.log(event.data)
 }
 
 
