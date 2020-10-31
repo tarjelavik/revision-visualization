@@ -151,7 +151,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 color: "red"
             })
             // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
-        } catch (error) { 
+        } catch (error) {
             console.log('not found')
         }
         if (object.recipientName) {
@@ -192,7 +192,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 target: object['o:creatorId'],
                 label: object.actionTitle,
                 type: "arrow",
-                size: 4
+                size: 4,
+                actionId: object['o:actionId']
             })
             if (object['o:recipientId']) {
                 edges.push({
@@ -200,13 +201,15 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:bookObject'],
                     target: object['o:recipientId'],
                     label: '',
+                    actionId: object['o:actionId']
                 })
                edges.push({
                     id: generateId(),
                     source: object['o:recipientId'],
                     target: object['o:creatorId'],
                     label: object.actionTitle,
-                    type: "arrow"
+                    type: "arrow",
+                    actionId: object['o:actionId']
                 })
             }
             if (object['locationCreated:Id']) {
@@ -215,6 +218,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:bookObject'],
                     target: object['locationCreated:Id'],
                     label: '',
+                    actionId: object['o:actionId']
                 })
             }
             if (object.toLocation) {
@@ -223,6 +227,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                         source: object['o:bookObject'],
                         target: object['toLocation:Id'],
                         label: '',
+                        actionId: object['o:actionId']
                     })
             }
         } catch (error) {
