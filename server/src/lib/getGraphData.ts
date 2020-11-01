@@ -88,7 +88,7 @@ export const createRequest = async(req: string, searchCategory: any) => {
 
 
     let searchcat = searchCategory;
-    searchcat = 'blabal'
+    searchcat = 'blabal';
     const result = await queryData(construct, searchcat);
     return result;
 };

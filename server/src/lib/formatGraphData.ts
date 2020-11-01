@@ -122,16 +122,17 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     let edges: Edge[] = [];
 
     // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost. Now we splice away the troublesome elements.
-    const flattenedTriples: any = graphData['@graph'].splice(4, 23)
+    const flattenedTriples: any = graphData['@graph'].splice(4, 23);
 
     flattenedTriples.forEach(object => {
+        console.log(object)
         try {
             nodes.push({
                 id: object['o:bookObject'],
                 label: object.bookObjectTitle
-            })
+            });
         } catch (error) {
-            console.log('not found')
+            console.log('not found');
         }
 
 /*         try {
@@ -149,19 +150,19 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 label: object.creatorName,
                 type: "star",
                 color: "red"
-            })
+            });
             // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
         } catch (error) {
-            console.log('not found')
+            console.log('not found');
         }
         if (object.recipientName) {
             try {
                 nodes.push({
                     id: object['o:recipientId'],
                     label: object.recipientName
-                })
+                });
             } catch (error) {
-                console.log('not found')
+                console.log('not found');
             }
         }
         if (object['locationCreated:Id']) {
@@ -169,9 +170,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['locationCreated:Id'],
                     label: object.locationCreated
-                })
+                });
             } catch (error) {
-                console.log('not found')
+                console.log('not found');
             }
         }
         if (object.toLocation) {
@@ -179,9 +180,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['toLocation:Id'],
                     label: object.toLocation
-                })
+                });
             } catch (error) {
-                console.log('not found')
+                console.log('not found');
             }
         }
         try {
@@ -193,8 +194,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 label: object.actionTitle,
                 type: "arrow",
                 size: 4,
-                actionId: object['o:actionId']
-            })
+                actionId: object['@id']
+            });
             if (object['o:recipientId']) {
                 edges.push({
                     id: generateId(),
@@ -202,7 +203,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     target: object['o:recipientId'],
                     label: '',
                     actionId: object['o:actionId']
-                })
+                });
                edges.push({
                     id: generateId(),
                     source: object['o:recipientId'],
@@ -210,7 +211,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     label: object.actionTitle,
                     type: "arrow",
                     actionId: object['o:actionId']
-                })
+                });
             }
             if (object['locationCreated:Id']) {
                 edges.push({
@@ -219,7 +220,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     target: object['locationCreated:Id'],
                     label: '',
                     actionId: object['o:actionId']
-                })
+                });
             }
             if (object.toLocation) {
                     edges.push({
@@ -228,10 +229,10 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                         target: object['toLocation:Id'],
                         label: '',
                         actionId: object['o:actionId']
-                    })
+                    });
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
     });
