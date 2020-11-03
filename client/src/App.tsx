@@ -76,11 +76,13 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
+  console.log(this.state.graph)
   }
 
   getClickedNodeData = async(id: any) => {
     const url = `http://localhost:3000/api/graph/node/${id}`
     const response = await fetch(url);
+    console.log(response);
     try {
       const nodeData = await response.json();
       this.setState({
@@ -90,6 +92,7 @@ class App extends Component {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
       console.log(error);
     }
+
   }
 
   render () {

@@ -57,12 +57,12 @@ const getDisplayProperties = (nodeData: any) => {
 function DataBox(props: any) {
 
     // TODO: We need to regain focus after opening drawer. Users must be able to click on other nodes
-    // when drawer is open
+    // when drawer is open. This feature is coming in the next release of chakra.
     const { onClose } = useDisclosure();
     const btnRef = React.useRef(null);
 
     const displayProperties = getDisplayProperties(props.nodeData);
-    console.log(props.nodeData)
+    // TODO: Set property trapFocus={false} when it is released.
     return (
         <div ref={btnRef}>
             {props.nodeData ?
