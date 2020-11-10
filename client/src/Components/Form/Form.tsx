@@ -50,6 +50,7 @@ export default function SimpleSelect(props: any) {
                 Create graph
             </Button>
           </form>
+          <p>This is where we will display what the user have chosen</p>
           </Box>
         </Flex>
         : null}

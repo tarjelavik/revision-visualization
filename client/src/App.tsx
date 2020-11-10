@@ -12,7 +12,7 @@ import Databox from './Components/DataBox/DataBox';
 
 class App extends Component {
   state = {
-    resourceTemplates: [],
+    resourceTemplates: [{id: String, label: String}] as object[],
     displayGraph: false,
     graph: {
         nodes:[ {
@@ -30,7 +30,7 @@ class App extends Component {
       value: ''
     },
     nodeData: null,
-    displayDrawer: false
+    displayDrawer: false,
   };
 
   async componentDidMount() {
@@ -63,6 +63,7 @@ class App extends Component {
       }
     });
     this.postFormDataToServer();
+    this.updateDropDownData(data);
   }
 
   postFormDataToServer = async() => {
@@ -92,8 +93,15 @@ class App extends Component {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
       console.log(error);
     }
+  };
 
-  }
+  updateDropDownData = (id: any) => {
+    const ddData = this.state.resourceTemplates;
+    const filteredDD = ddData.filter((element: any) => element.id !== id)
+    this.setState({
+      resourceTemplates: filteredDD
+    })
+  };
 
   render () {
 
