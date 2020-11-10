@@ -15,15 +15,15 @@ const sigmaStyle = {
     height: '100%',
 };
 
-const onOverNodeHandler = (e: any) => {
-    console.log(e)
-    console.log('im hovering over a node');
-}
+const onClickEdgeHandler = (e: any, props: any) => {
+    props.getClickedNodeData(e.data.edge.actionId);
+    props.setDisplayDrawer(true);
+};
 
 const onClickNodeHandler = (event: any, props: any) => {
     props.getClickedNodeData(event.data.node.id);
-    console.log(event.data)
-}
+    props.setDisplayDrawer(true);
+};
 
 
 const sigma = (props: any) => {
@@ -32,7 +32,7 @@ const sigma = (props: any) => {
                 <Sigma
                 style={sigmaStyle}
                 graph={props.graph.graph}
-                onClickEdge={(e: any) => onOverNodeHandler(e)}
+                onClickEdge={(e: any) => onClickEdgeHandler(e, props)}
                 onClickNode={(event: any) => onClickNodeHandler(event, props)}
                 renderer='canvas'
                 settings={

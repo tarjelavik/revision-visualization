@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import {
+  ThemeProvider,
+  theme,
+  CSSReset
+} from '@chakra-ui/core';
 import './App.css';
 
 import Form from './Components/Form/Form';
@@ -24,7 +29,8 @@ class App extends Component {
     formData: {
       value: ''
     },
-    nodeData: null
+    nodeData: null,
+    displayDrawer: false
   };
 
   async componentDidMount() {
@@ -42,8 +48,14 @@ class App extends Component {
     });
   }
 
+  setDisplayDrawer = (bool: boolean) => {
+    this.setState({
+      displayDrawer: bool
+    });
+  }
+
   handleFormData = async(data: any) => {
-    let formValue = this.state.formData;
+    const formValue = this.state.formData;
     formValue.value = await data;
     this.setState({
       formData: {
@@ -64,11 +76,13 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
+  console.log(this.state.graph)
   }
 
   getClickedNodeData = async(id: any) => {
     const url = `http://localhost:3000/api/graph/node/${id}`
     const response = await fetch(url);
+    console.log(response);
     try {
       const nodeData = await response.json();
       this.setState({
@@ -76,35 +90,43 @@ class App extends Component {
       });
     } catch (error) {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
-      console.log(error)
+      console.log(error);
     }
+
   }
 
   render () {
 
-  const appStyle = {
-    display: "grid",
-    grid: "auto auto auto"
-  };
+    const sigma = <Sigma
+      graph={this.state.graph}
+      getClickedNodeData={this.getClickedNodeData}
+      setDisplayDrawer={this.setDisplayDrawer}/>;
 
-    const sigma = <Sigma graph={this.state.graph} getClickedNodeData={this.getClickedNodeData}/>;
-    const form = <Form
+      const form = <Form
       dropDownData={this.state.resourceTemplates}
       displayGraph={this.state.displayGraph}
       formValue={this.state.formData.value}
       handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}/>;
 
-    const databox = <Databox nodeData={this.state.nodeData}/>
+    const databox = <Databox
+      nodeData={this.state.nodeData}
+      displayDrawer={this.state.displayDrawer}
+      setDisplayDrawer={this.setDisplayDrawer}/>;
 
     return (
+
       <div className='App'>
-        <div style={appStyle}>
-          {databox}
-          {form}
-          {this.state.displayGraph ? sigma : null}
-        </div>
+        <ThemeProvider theme={theme}>
+            <CSSReset />
+            <div>
+              {databox}
+              {form}
+              {this.state.displayGraph ? sigma : null}
+            </div>
+        </ThemeProvider>
       </div>
+
     );
   }
 }
