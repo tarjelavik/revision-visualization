@@ -12,6 +12,7 @@ import {
 interface DisplayData {
     type: string;
     name: string;
+    description: string;
     link: string;
 }
 
@@ -31,26 +32,32 @@ const getDisplayType = (dataType: string) => {
             return 'Book object';
         case 'bdm2:Person':
             return 'Person';
+        case 'bdm2:Action':
+            return 'Action';
         default:
             return '';
     }
 };
 
 const getDisplayProperties = (nodeData: any) => {
+    console.log(nodeData)
     if (!nodeData) return null;
     const displayData: DisplayData = {
         type: '',
         name: '',
+        description: '',
         link: 'https://birgitta.test.uib.no/s/birgitta/item/'
     };
 
     try {
         displayData.name = nodeData['o:title'];
         displayData.type = getDisplayType(nodeData['@type'][1]);
+        displayData.description = nodeData['bdm2:hasType'][0].display_title;
         displayData.link = displayData.link+nodeData['o:id'];
     } catch (error) {
 
     }
+    console.log(displayData)
     return displayData;
 };
 
@@ -73,11 +80,11 @@ function DataBox(props: any) {
                   onClose={onClose}
                   finalFocusRef={btnRef}>
                 <DrawerContent>
-                    <DrawerHeader>{displayProperties?.name}</DrawerHeader>
+                    <DrawerHeader>{displayProperties?.type}</DrawerHeader>
                     <DrawerBody>
                     <ul style={listStyle}>
                         <li style={listElementStyle}>{displayProperties?.name}</li>
-                        <li style={listElementStyle}>{displayProperties?.type}</li>
+                        <li style={listElementStyle}>{displayProperties?.description}</li>
                         <li style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></li>
                     </ul>
                     </DrawerBody>

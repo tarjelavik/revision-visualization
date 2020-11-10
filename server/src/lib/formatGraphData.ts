@@ -117,44 +117,35 @@ const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
 };
 
 const parseToGraph = (graphData: any): SigmaGraph => {
-    // console.log(graphData['@graph'])
-    // const vars = graphData.head.vars;
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
-    // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost. Now we splice away the troublesome elements.
-    const flattenedTriples: any = graphData['@graph'].splice(4, 23);
-
-    flattenedTriples.forEach(object => {
+    // Todo: Make interface for graphData
+    graphData['@graph'].forEach(object => {
         console.log(object)
         try {
-            nodes.push({
-                id: object['o:bookObject'],
-                label: object.bookObjectTitle,
-                type: 'cross',
-                class: 'BookObject'
-            });
+            if (object['o:bookObject']) {
+                nodes.push({
+                    id: object['o:bookObject'],
+                    label: object.bookObjectTitle,
+                    type: 'cross',
+                    class: 'BookObject'
+                });
+            }
         } catch (error) {
             console.log('not found');
         }
 
-        /*         try {
-            nodes.push({
-                id: object['o:actionId'],
-                label: object.actionTitle
-            })
-        } catch (error) {
-            console.log('not found')
-        } */
-
         try {
-            nodes.push({
-                id: object['o:creatorId'],
-                label: object.creatorName,
-                type: 'star',
-                color: 'red'
-            });
-            // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
+            if (object['o:creatorId']) {
+                nodes.push({
+                    id: object['o:creatorId'],
+                    label: object.creatorName,
+                    type: 'star',
+                    color: 'red'
+                });
+                // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
+            }
         } catch (error) {
             console.log('not found');
         }
@@ -192,22 +183,40 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             }
         }
         try {
-            // Setting the SIZE of the edge enabled me to finally click the edge! Now we need the actionID.
-            edges.push({
-                id: generateId(),
-                source: object['o:bookObject'],
-                target: object['o:creatorId'],
-                label: object.actionTitle,
-                type: 'arrow',
-                size: 4,
-                actionId: getActionId(object['@id'])
-            });
+            if (object['o:bookObject']) {
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObject'],
+                    target: object['o:creatorId'],
+                    label: object.actionTitle,
+                    type: 'arrow',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObject'],
+                    target: object['locationCreated:Id'],
+                    label: '',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObject'],
+                    target: object['toLocation:Id'],
+                    label: '',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+            }
             if (object['o:recipientId']) {
                 edges.push({
                     id: generateId(),
                     source: object['o:bookObject'],
                     target: object['o:recipientId'],
                     label: '',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
                 edges.push({
@@ -216,24 +225,27 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     target: object['o:creatorId'],
                     label: object.actionTitle,
                     type: 'arrow',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
             if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
-                    target: object['locationCreated:Id'],
-                    label: '',
+                    source: object['locationCreated:Id'],
+                    target: object['toLocation:Id'],
+                    label: object.actionTitle,
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
-            if (object.toLocation) {
+            if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
-                    target: object['toLocation:Id'],
-                    label: '',
+                    source: object['locationCreated:Id'],
+                    target: object['o:creatorId'],
+                    label: object.actionTitle,
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
@@ -253,6 +265,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
     // the associated place of each person, which is often the same place.
     sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
+
+    // Filter out all spurious edges which either miss target or source
+    sigmaGraph.graph.edges = sigmaGraph.graph.edges.filter(edge => typeof(edge.source) !== 'undefined' && typeof(edge.target) !== 'undefined');
 
     // console.log(JSON.stringify(sigmaGraph, null, 2))
     return sigmaGraph;
@@ -277,7 +292,6 @@ const parseToBookObjectGraph = (graphData: RawGraphData): SigmaGraph => {
                     label: object.o.value
                 });
         }
-
         edges.push(
             {
                 id: `edge_${object.s.value}`,
