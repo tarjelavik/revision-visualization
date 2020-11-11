@@ -18,11 +18,11 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // Todo: Make interface for graphData
     graphData['@graph'].forEach(object => {
-        // console.log(object)
+        console.log(object);
         try {
-            if (object['o:bookObject']) {
+            if (object['o:bookObjectId']) {
                 nodes.push({
-                    id: object['o:bookObject'],
+                    id: object['o:bookObjectId'],
                     label: object.bookObjectTitle,
                     type: 'cross',
                     class: 'BookObject'
@@ -79,10 +79,10 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             }
         }
         try {
-            if (object['o:bookObject']) {
+            if (object['o:bookObjectId']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
+                    source: object['o:bookObjectId'],
                     target: object['o:creatorId'],
                     label: object.actionTitle,
                     type: 'arrow',
@@ -91,7 +91,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
+                    source: object['o:bookObjectId'],
                     target: object['locationCreated:Id'],
                     label: '',
                     size: 4,
@@ -99,7 +99,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
+                    source: object['o:bookObjectId'],
                     target: object['toLocation:Id'],
                     label: '',
                     size: 4,
@@ -109,7 +109,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             if (object['o:recipientId']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
+                    source: object['o:bookObjectId'],
                     target: object['o:recipientId'],
                     label: '',
                     size: 4,

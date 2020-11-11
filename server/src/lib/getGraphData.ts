@@ -14,7 +14,7 @@ export const createRequest = async(req: string): Promise<void | SigmaGraph> => {
 };
 
 export const queryData = async(req: any): Promise<SigmaGraph | void> => {
-    console.log(req);
+    // console.log(req)
     try {
         const sigmaGraph: Promise<SigmaGraph | void> = axios.get('https://sparql.birgitta.uib.no/birgitta-revision-test', { params: req, headers: {'Accept': 'application/ld+json'}})
             .then((res) => {return parseToSigmaFormat(res.data);})

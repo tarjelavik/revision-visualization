@@ -1,5 +1,6 @@
 import { getConstructLocationClause, getWhereLocationClause } from './locationTemplate';
-import { getConstructInstigatorClause, getWhereInstigatorClause } from './instigatorTemplate';
+import { getConstructInstigatorClause, getWhereInstigatorClause } from './personTemplate';
+import { getConstructBookObjectClause, getWhereBookObjectClause } from './bookObjectTemplate';
 
 export const createConstructClause = (searchCategory: string):string => {
     let construct = '';
@@ -18,6 +19,9 @@ export const createConstructClause = (searchCategory: string):string => {
                 break;
             case 'https://birgitta.test.uib.no/api/resource_templates/13':
                 construct = construct.concat(getConstructInstigatorClause());
+                break;
+            case 'https://birgitta.test.uib.no/api/resource_templates/16':
+                construct = construct.concat(getConstructBookObjectClause());
                 break;
             default:
                 construct = '';
@@ -44,6 +48,9 @@ export const createWhereClause = (searchCategory: string):string => {
                 break;
             case 'https://birgitta.test.uib.no/api/resource_templates/13':
                 whereClause = whereClause.concat(getWhereInstigatorClause());
+                break;
+            case 'https://birgitta.test.uib.no/api/resource_templates/16':
+                whereClause = whereClause.concat(getWhereBookObjectClause());
                 break;
             default:
                 whereClause = '';

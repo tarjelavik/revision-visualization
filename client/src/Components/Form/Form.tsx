@@ -24,9 +24,9 @@ export default function SimpleSelect(props: any) {
       props.updateDropDownData(event.target.value)
     };
 
-    const handleOnClick = (props: any) => {
-      props.handleFormData(selectValues)
-      props.setDisplayGraph(true);
+    const handleOnClick = async(props: any) => {
+      await props.handleFormData(selectValues)
+      // props.setDisplayGraph(true);
     };
 
     const handleSubmit = () => {

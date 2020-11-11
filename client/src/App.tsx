@@ -77,6 +77,7 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
+  this.setDisplayGraph(true);
   console.log(this.state.graph)
   }
 
