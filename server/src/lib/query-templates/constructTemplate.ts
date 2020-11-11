@@ -1,28 +1,55 @@
 import { getConstructLocationClause, getWhereLocationClause } from './locationTemplate';
+import { getConstructInstigatorClause, getWhereInstigatorClause } from './instigatorTemplate';
 
 export const createConstructClause = (searchCategory: string):string => {
     let construct = '';
-    switch (searchCategory) {
-        case 'Institution':
-            construct = getConstructLocationClause();
-            break;
-        default:
-            construct = '';
-            break;
+    let searchCategories: string[] = [];
+
+    if (!searchCategory.includes(',')) {
+        searchCategories.push(searchCategory);
+    } else {
+        searchCategories = searchCategory.split(',');
     }
+
+    searchCategories.forEach(category => {
+        switch (category) {
+            case 'https://birgitta.test.uib.no/api/resource_templates/17':
+                construct = construct.concat(getConstructLocationClause());
+                break;
+            case 'https://birgitta.test.uib.no/api/resource_templates/13':
+                construct = construct.concat(getConstructInstigatorClause());
+                break;
+            default:
+                construct = '';
+                break;
+        }
+    });
     return construct;
 };
 
 export const createWhereClause = (searchCategory: string):string => {
     let whereClause = '';
-    switch (searchCategory) {
-        case 'Institution':
-            whereClause = getWhereLocationClause();
-            break;
-        default:
-            whereClause = '';
-            break;
+    let searchCategories: string[] = [];
+
+    if (!searchCategory.includes(',')) {
+        searchCategories.push(searchCategory);
+    } else {
+        searchCategories = searchCategory.split(',');
     }
+
+    searchCategories.forEach(category => {
+        switch (category) {
+            case 'https://birgitta.test.uib.no/api/resource_templates/17':
+                whereClause = whereClause.concat(getWhereLocationClause());
+                break;
+            case 'https://birgitta.test.uib.no/api/resource_templates/13':
+                whereClause = whereClause.concat(getWhereInstigatorClause());
+                break;
+            default:
+                whereClause = '';
+                break;
+        }
+    });
     return whereClause;
 };
 
@@ -48,10 +75,6 @@ export const constructTemplate = (searchParameter: string): Query => {
         ?s bdm2:hasType/o:title ?action .
         ?s bdm2:hasType/o:id ?actionId .
         ${createWhereClause(searchParameter)}
-        ?s schema:locationCreated/o:title ?locationCreated .
-        ?s schema:locationCreated/o:id ?locationCreatedId .
-        OPTIONAL {?s schema:toLocation/o:title ?toLocation } .
-        OPTIONAL {?s schema:toLocation/o:id ?toLocationId }
       }`
     };
     return query;

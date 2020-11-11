@@ -26,9 +26,10 @@ class App extends Component {
           label: ''
         }]
       },
-    formData: {
+/*     formData: {
       value: ''
-    },
+    }, */
+    formData: [] as string[],
     nodeData: null,
     displayDrawer: false,
   };
@@ -55,20 +56,19 @@ class App extends Component {
   }
 
   handleFormData = async(data: any) => {
-    const formValue = this.state.formData;
-    formValue.value = await data;
+    console.log(data)
+    let formValue = this.state.formData;
+    formValue.push(data);
     this.setState({
       formData: {
-        value: formValue.value
+        value: formValue
       }
     });
     this.postFormDataToServer();
-    this.updateDropDownData(data);
   }
 
   postFormDataToServer = async() => {
-
-    const data = encodeURIComponent(this.state.formData.value);
+    const data = encodeURIComponent(this.state.formData[0]);
     const url = `http://localhost:3000/api/form/${data}`;
 
    const response = await fetch(url);
@@ -83,7 +83,6 @@ class App extends Component {
   getClickedNodeData = async(id: any) => {
     const url = `http://localhost:3000/api/graph/node/${id}`
     const response = await fetch(url);
-    console.log(response);
     try {
       const nodeData = await response.json();
       this.setState({
@@ -113,9 +112,10 @@ class App extends Component {
       const form = <Form
       dropDownData={this.state.resourceTemplates}
       displayGraph={this.state.displayGraph}
-      formValue={this.state.formData.value}
+      formValue={this.state.formData}
       handleFormData={this.handleFormData}
-      setDisplayGraph={this.setDisplayGraph}/>;
+      setDisplayGraph={this.setDisplayGraph}
+      updateDropDownData={this.updateDropDownData}/>;
 
     const databox = <Databox
       nodeData={this.state.nodeData}
