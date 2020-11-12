@@ -15,10 +15,12 @@ export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
 const parseToGraph = (graphData: any): SigmaGraph => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
-
+    // console.log(graphData['@graph'][0])
+    graphData = graphData['@graph'].slice(0,1);
+    console.log(graphData);
     // Todo: Make interface for graphData
-    graphData['@graph'].forEach(object => {
-        console.log(object);
+    graphData.forEach(object => {
+        // console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
@@ -37,7 +39,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['o:creatorId'],
                     label: object.creatorName,
-                    type: 'star',
+                    image: {
+                        url: '../Assets/user.svg',
+                    },
                     color: 'red'
                 });
                 // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
@@ -82,8 +86,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             if (object['o:bookObjectId']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObjectId'],
-                    target: object['o:creatorId'],
+                    source: object['o:creatorId'],
+                    target: object['o:bookObjectId'],
                     label: object.actionTitle,
                     type: 'arrow',
                     size: 4,
@@ -91,17 +95,19 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObjectId'],
-                    target: object['locationCreated:Id'],
+                    source: object['locationCreated:Id'],
+                    target: object['o:bookObjectId'],
                     label: '',
+                    type: 'arrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObjectId'],
-                    target: object['toLocation:Id'],
+                    source: object['toLocation:Id'],
+                    target: object['o:bookObjectId'],
                     label: '',
+                    type: 'arrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -112,13 +118,14 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:bookObjectId'],
                     target: object['o:recipientId'],
                     label: '',
+                    type: 'arrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:recipientId'],
-                    target: object['o:creatorId'],
+                    source: object['o:creatorId'],
+                    target: object['o:recipientId'],
                     label: object.actionTitle,
                     type: 'arrow',
                     size: 4,
@@ -131,6 +138,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['locationCreated:Id'],
                     target: object['toLocation:Id'],
                     label: object.actionTitle,
+                    type: 'arrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -140,7 +148,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: generateId(),
                     source: object['locationCreated:Id'],
                     target: object['o:creatorId'],
-                    label: object.actionTitle,
+                    label: 'Action created at',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
