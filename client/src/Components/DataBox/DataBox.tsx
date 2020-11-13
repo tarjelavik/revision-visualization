@@ -40,7 +40,6 @@ const getDisplayType = (dataType: string) => {
 };
 
 const getDisplayProperties = (nodeData: any) => {
-    console.log(nodeData)
     if (!nodeData) return null;
     const displayData: DisplayData = {
         type: '',
@@ -57,7 +56,6 @@ const getDisplayProperties = (nodeData: any) => {
     } catch (error) {
 
     }
-    console.log(displayData)
     return displayData;
 };
 

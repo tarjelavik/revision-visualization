@@ -4,6 +4,8 @@ import { Select } from '@chakra-ui/core';
 import { Box, Flex } from '@chakra-ui/core';
 
 import DropDownOption from '../DropDown/DropDown';
+import ResultIcons from '../ResultIcons/ResultIcons';
+
 
 
 const formStyle = {
@@ -20,16 +22,12 @@ let selectValues: string[] = [];
 export default function SimpleSelect(props: any) {
 
     const handleChange = (event: React.ChangeEvent<{ value: any }>, props: any) => {
-      selectValues.push(event.target.value)
-      props.updateDropDownData(event.target.value)
+      selectValues.push(event.target.value);
+      props.updateDropDownData(event.target.value);
     };
 
     const handleOnClick = async(props: any) => {
-      await props.handleFormData(selectValues)
-      // props.setDisplayGraph(true);
-    };
-
-    const handleSubmit = () => {
+      await props.handleFormData(selectValues);
     };
 
     return (
@@ -41,19 +39,23 @@ export default function SimpleSelect(props: any) {
               <Select
                 onChange={(e) => handleChange(e, props)}
                 value={ 'Choose something' }>
-                <option value="Choose something">Choose something</option>
+                <option value='Choose something'>Choose something</option>
                 {props.dropDownData.map((dropDownOption: any, index: number) => {
                   if (props.dropDownData.length) {
-                    return <DropDownOption dropDownData={dropDownOption} key={index}/>
+                    return <DropDownOption dropDownData={dropDownOption} key={index}/>;
                   }
                   return null;
                 })}
               </Select>
-            <Button style={buttonStyle} variantColor='green' onClick={() => {handleOnClick(props); handleSubmit()}}>
+              {selectValues.length ?
+            <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
                 Create graph
             </Button>
+           : null}
           </form>
-          <p>This is where we will display what the user have chosen</p>
+          {selectValues.map((value: string, index: number) => {
+            return <ResultIcons key={index} selected={value}/>;
+          })}
           </Box>
         </Flex>
         : null}
