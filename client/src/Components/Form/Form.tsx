@@ -1,7 +1,6 @@
 import React from 'react';
-import { Button } from '@chakra-ui/core';
-import { Select } from '@chakra-ui/core';
-import { Box, Flex } from '@chakra-ui/core';
+import { Box, Flex, Button, Select } from '@chakra-ui/core';
+import { Center } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
 import ResultIcons from '../ResultIcons/ResultIcons';
@@ -17,7 +16,7 @@ const buttonStyle = {
   marginTop: '1rem'
 };
 
-let selectValues: string[] = [];
+const selectValues: string[] = [];
 
 export default function SimpleSelect(props: any) {
 
@@ -33,31 +32,36 @@ export default function SimpleSelect(props: any) {
     return (
       <div>
         {!props.displayGraph ?
-        <Flex width='full' align='center' justifyContent='center'>
-          <Box bg='tomato' w='20%' p={4} >
-          <form style={formStyle}>
-              <Select
-                onChange={(e) => handleChange(e, props)}
-                value={ 'Choose something' }>
-                <option value='Choose something'>Choose something</option>
-                {props.dropDownData.map((dropDownOption: any, index: number) => {
-                  if (props.dropDownData.length) {
-                    return <DropDownOption dropDownData={dropDownOption} key={index}/>;
-                  }
-                  return null;
-                })}
-              </Select>
-              {selectValues.length ?
-            <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
-                Create graph
-            </Button>
-           : null}
-          </form>
-          {selectValues.map((value: string, index: number) => {
-            return <ResultIcons key={index} selected={value}/>;
-          })}
+      <Center>
+        <Flex bg='gray.50' color='gray.400' w={1/4} align='center' justifyContent='center'>
+          <Box boxShadow='dark-lg' w='auto' p={4} >
+            <form style={formStyle}>
+                <Select
+                  placeholder='Choose a class'
+                  onChange={(e) => handleChange(e, props)}>
+                  {props.dropDownData.map((dropDownOption: any, index: number) => {
+                    if (props.dropDownData.length) {
+                      return <DropDownOption dropDownData={dropDownOption} key={index}/>;
+                    }
+                    return null;
+                  })}
+                </Select>
+            </form>
+            <Flex>
+              {selectValues.map((value: string, index: number) => {
+                return <ResultIcons key={index} selected={value}/>;
+              })}
+            </Flex>
+            {selectValues.length ?
+            <Center>
+              <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
+                  Create graph
+              </Button>
+            </Center>
+            : null}
           </Box>
         </Flex>
+      </Center>
         : null}
       </div>
     );
