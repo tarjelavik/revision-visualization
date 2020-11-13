@@ -56,8 +56,7 @@ class App extends Component {
   }
 
   handleFormData = async(data: any) => {
-    console.log(data)
-    let formValue = this.state.formData;
+    const formValue = this.state.formData;
     formValue.push(data);
     this.setState({
       formData: {
@@ -78,11 +77,11 @@ class App extends Component {
     graph: responseData
   });
   this.setDisplayGraph(true);
-  console.log(this.state.graph)
+  console.log(this.state.graph);
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `http://localhost:3000/api/graph/node/${id}`
+    const url = `http://localhost:3000/api/graph/node/${id}`;
     const response = await fetch(url);
     try {
       const nodeData = await response.json();
@@ -93,15 +92,15 @@ class App extends Component {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
       console.log(error);
     }
-  };
+  }
 
   updateDropDownData = (id: any) => {
     const ddData = this.state.resourceTemplates;
     const filteredDD = ddData.filter((element: any) => element.id !== id)
     this.setState({
       resourceTemplates: filteredDD
-    })
-  };
+    });
+  }
 
   render () {
 

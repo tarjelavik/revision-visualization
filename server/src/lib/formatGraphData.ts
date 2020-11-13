@@ -15,18 +15,21 @@ export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
 const parseToGraph = (graphData: any): SigmaGraph => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
-    // console.log(graphData['@graph'][0])
-    graphData = graphData['@graph'].slice(0,1);
-    console.log(graphData);
+
+    // Get first element of graphData. Used for debugging.
+    // graphData = graphData['@graph'].slice(0,1);
+
     // Todo: Make interface for graphData
-    graphData.forEach(object => {
+    graphData['@graph'].forEach(object => {
         // console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
                     id: object['o:bookObjectId'],
                     label: object.bookObjectTitle,
-                    type: 'cross',
+                    image: {
+                        url: 'https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg',
+                    },
                     class: 'BookObject'
                 });
             }
@@ -40,9 +43,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: object['o:creatorId'],
                     label: object.creatorName,
                     image: {
-                        url: '../Assets/user.svg',
+                        url: 'https://upload.wikimedia.org/wikipedia/commons/3/37/No_person.jpg',
                     },
-                    color: 'red'
                 });
                 // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
             }
@@ -54,7 +56,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['o:recipientId'],
                     label: object.recipientName,
-                    type: 'diamond'
+                    image: {
+                        url: '',
+                    },
                 });
             } catch (error) {
                 console.log('not found');

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, DragNodes, ForceAtlas2 } from 'react-sigma';
+import {Sigma, RandomizeNodePositions, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
 
 const containerStyle = {
     maxWidth: '100%',
@@ -50,6 +50,7 @@ const sigma = (props: any) => {
                     minEdgeSize: 10
                     }
                     }>
+                        <NodeShapes default='circle' />
                         <ForceAtlas2/>
                         <RandomizeNodePositions>
                         <DragNodes
