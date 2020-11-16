@@ -48,11 +48,11 @@ export default function SimpleSelect(props: any) {
                   })}
                 </Select>
             </form>
-            <Flex>
+            <Box>
               {selectValues.map((value: string, index: number) => {
                 return <ResultIcons key={index} selected={value}/>;
               })}
-            </Flex>
+            </Box>
             {selectValues.length ?
             <Center>
               <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
