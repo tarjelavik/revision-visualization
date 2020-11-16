@@ -33,10 +33,11 @@ export default function SimpleSelect(props: any) {
       <div>
         {!props.displayGraph ?
       <Center>
-        <Flex bg='gray.50' color='gray.400' w={1/4} align='center' justifyContent='center'>
-          <Box boxShadow='dark-lg' w='auto' p={4} >
+        <Flex borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
+          <Box h='auto' w='auto' p={4}>
             <form style={formStyle}>
                 <Select
+                  variant='flushed'
                   placeholder='Choose a class'
                   onChange={(e) => handleChange(e, props)}>
                   {props.dropDownData.map((dropDownOption: any, index: number) => {
