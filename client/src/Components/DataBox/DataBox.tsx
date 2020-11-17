@@ -12,7 +12,6 @@ import {
 interface DisplayData {
     type: string;
     name: string;
-    description: string;
     link: string;
 }
 
@@ -44,17 +43,15 @@ const getDisplayProperties = (nodeData: any) => {
     const displayData: DisplayData = {
         type: '',
         name: '',
-        description: '',
         link: 'https://birgitta.test.uib.no/s/birgitta/item/'
     };
 
     try {
         displayData.name = nodeData['o:title'];
         displayData.type = getDisplayType(nodeData['@type'][1]);
-        displayData.description = nodeData['bdm2:hasType'][0].display_title;
         displayData.link = displayData.link+nodeData['o:id'];
     } catch (error) {
-
+        console.log(error)
     }
     return displayData;
 };
@@ -82,7 +79,6 @@ function DataBox(props: any) {
                     <DrawerBody>
                     <ul style={listStyle}>
                         <li style={listElementStyle}>{displayProperties?.name}</li>
-                        <li style={listElementStyle}>{displayProperties?.description}</li>
                         <li style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></li>
                     </ul>
                     </DrawerBody>

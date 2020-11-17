@@ -21,7 +21,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // Todo: Make interface for graphData
     graphData['@graph'].forEach(object => {
-        // console.log(object);
+        console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
@@ -43,7 +43,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: object['o:creatorId'],
                     label: object.creatorName,
                     image: {
-                        url: 'https://upload.wikimedia.org/wikipedia/commons/3/37/No_person.jpg',
+                        url: '',
                     },
                 });
                 // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
