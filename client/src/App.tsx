@@ -30,6 +30,7 @@ class App extends Component {
       value: ''
     }, */
     formData: [] as string[],
+    selectedClasses: [] as string[],
     nodeData: null,
     displayDrawer: false,
   };
@@ -94,6 +95,40 @@ class App extends Component {
     }
   }
 
+  // Pure helper function - should be refactored out of this class.
+  getResourceTemplateId = (selectedClass: string) => {
+    // Do we need to fill out the rest of the icons... Do we have to have them all in our DD?
+    switch (selectedClass) {
+        case 'Person':
+            return 'https://birgitta.test.uib.no/api/resource_templates/13';
+        case 'Place':
+            return 'https://birgitta.test.uib.no/api/resource_templates/14';
+        case 'Book object':
+            return 'https://birgitta.test.uib.no/api/resource_templates/16';
+        case 'Institution':
+            return 'https://birgitta.test.uib.no/api/resource_templates/17';
+        default:
+            return '0';
+    }
+};
+
+  addSelectedClass = (selectedClass: string) => {
+    const existingClasses = this.state.selectedClasses;
+    existingClasses.push(selectedClass);
+    this.setState({
+      selectedClasses: existingClasses
+    });
+  }
+
+  removeSelectedClasses = (clickedClass: string) => {
+    const clickedClasses = this.state.selectedClasses;
+    const indexToRemove = clickedClasses.indexOf(this.getResourceTemplateId(clickedClass));
+    clickedClasses.splice(indexToRemove);
+    this.setState({
+      selectedClasses: clickedClasses
+    });
+  }
+
   updateDropDownData = (id: any) => {
     const ddData = this.state.resourceTemplates;
     const filteredDD = ddData.filter((element: any) => element.id !== id)
@@ -113,8 +148,11 @@ class App extends Component {
       dropDownData={this.state.resourceTemplates}
       displayGraph={this.state.displayGraph}
       formValue={this.state.formData}
+      selectedClasses={this.state.selectedClasses}
       handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}
+      addSelectedClass={this.addSelectedClass}
+      removeSelectedClass={this.removeSelectedClasses}
       updateDropDownData={this.updateDropDownData}/>;
 
     const databox = <Databox

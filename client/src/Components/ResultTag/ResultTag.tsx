@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-    Tag,
-    TagLabel
-} from "@chakra-ui/react";
 
 const getLabel = (resourceTemplate?: string) => {
-    // Do we need to fill out the rest of the icons... Do we have to have them all in our DD?
+    // Do we need to fill out the rest of the labels... Do we have to have them all in our DD?
     switch (resourceTemplate) {
         case 'https://birgitta.test.uib.no/api/resource_templates/13':
             return 'Person';
@@ -20,19 +16,21 @@ const getLabel = (resourceTemplate?: string) => {
     }
 };
 
-// TOdo: this doesn't have any functionality now
-const removeClass = (clickedClass: any): void => {
-    console.log(clickedClass.target.innerHTML)
+const tagStyle = {
+    border: '1px solid',
+    borderRadius: '50px',
+    margin: '5px 10px'
+}
+
+
+const removeClass = (selected: any, props: any): void => {
+    props.updateSelectedValues(selected.target.innerHTML, props.dropDownKey);
 }
 
 export default function ResultIcons(props: any) {
-
     return(
         <>
-            <Tag>
-                <TagLabel onClick={(e) => removeClass(e)}>{getLabel(props.selected)}
-                </TagLabel>
-            </Tag>
+            <span style={tagStyle} onClick={(e) => removeClass(e, props)}>{getLabel(props.selected)}</span>
         </>
     );
 }

@@ -3,7 +3,7 @@ import { Box, Flex, Button, Select } from '@chakra-ui/core';
 import { Center } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
-import ResultIcons from '../ResultIcons/ResultIcons';
+import ResultTag from '../ResultTag/ResultTag';
 
 
 
@@ -16,12 +16,12 @@ const buttonStyle = {
   marginTop: '1rem'
 };
 
-const selectValues: string[] = [];
+let selectValues: string[] = [];
 
 export default function SimpleSelect(props: any) {
 
     const handleChange = (event: React.ChangeEvent<{ value: any }>, props: any) => {
-      selectValues.push(event.target.value);
+      props.addSelectedClass(event.target.value);
       props.updateDropDownData(event.target.value);
     };
 
@@ -29,6 +29,10 @@ export default function SimpleSelect(props: any) {
       await props.handleFormData(selectValues);
     };
 
+    const updateSelectedValues = (value: any) => {
+      props.removeSelectedClass(value);
+    };
+    console.log(props)
     return (
       <div>
         {!props.displayGraph ?
@@ -48,12 +52,14 @@ export default function SimpleSelect(props: any) {
                   })}
                 </Select>
             </form>
-            <Box>
-              {selectValues.map((value: string, index: number) => {
-                return <ResultIcons key={index} selected={value}/>;
-              })}
-            </Box>
-            {selectValues.length ?
+            <Flex>
+              <Box>
+                {props.selectedClasses.map((value: string, index: number) => {
+                  return <ResultTag key={index} resultKey={index} updateSelectedValues={updateSelectedValues} selected={value}/>;
+                })}
+              </Box>
+            </Flex>
+            {props.selectedClasses.length  ?
             <Center>
               <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
                   Create graph
