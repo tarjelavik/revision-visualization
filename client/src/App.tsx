@@ -59,6 +59,7 @@ class App extends Component {
   handleFormData = async(data: any) => {
     const formValue = this.state.formData;
     formValue.push(data);
+    console.log(formValue)
     this.setState({
       formData: {
         value: formValue

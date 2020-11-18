@@ -16,8 +16,6 @@ const buttonStyle = {
   marginTop: '1rem'
 };
 
-let selectValues: string[] = [];
-
 export default function SimpleSelect(props: any) {
 
     const handleChange = (event: React.ChangeEvent<{ value: any }>, props: any) => {
@@ -26,7 +24,8 @@ export default function SimpleSelect(props: any) {
     };
 
     const handleOnClick = async(props: any) => {
-      await props.handleFormData(selectValues);
+      console.log('clicked')
+      await props.handleFormData(props.selectedClasses);
     };
 
     const updateSelectedValues = (value: any) => {
@@ -47,7 +46,7 @@ export default function SimpleSelect(props: any) {
                   onChange={(e) => handleChange(e, props)}>
                   {props.dropDownData.map((dropDownOption: any, index: number) => {
                     if (props.dropDownData.length) {
-                      return <DropDownOption dropDownData={dropDownOption} key={index}/>;
+                      return <DropDownOption onClick={() => handleOnClick(props)} dropDownData={dropDownOption} key={index}/>;
                     }
                     return null;
                   })}
