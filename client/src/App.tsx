@@ -129,11 +129,19 @@ class App extends Component {
     });
   }
 
-  updateDropDownData = (id: any) => {
+  removeFromDropDownData = (id: any) => {
     const ddData = this.state.resourceTemplates;
     const filteredDD = ddData.filter((element: any) => element.id !== id)
     this.setState({
       resourceTemplates: filteredDD
+    });
+  }
+
+  addToDropDownData = (id: any) => {
+    const ddData = this.state.resourceTemplates;
+    ddData.push({id:this.getResourceTemplateId(id), label: id})
+    this.setState({
+      resourceTemplates: ddData
     });
   }
 
@@ -153,7 +161,8 @@ class App extends Component {
       setDisplayGraph={this.setDisplayGraph}
       addSelectedClass={this.addSelectedClass}
       removeSelectedClass={this.removeSelectedClasses}
-      updateDropDownData={this.updateDropDownData}/>;
+      removeFromDropDownData={this.removeFromDropDownData}
+      addToDropDownData={this.addToDropDownData}/>;
 
     const databox = <Databox
       nodeData={this.state.nodeData}

@@ -22,7 +22,7 @@ export default function SimpleSelect(props: any) {
 
     const handleChange = (event: React.ChangeEvent<{ value: any }>, props: any) => {
       props.addSelectedClass(event.target.value);
-      props.updateDropDownData(event.target.value);
+      props.removeFromDropDownData(event.target.value);
     };
 
     const handleOnClick = async(props: any) => {
@@ -31,8 +31,9 @@ export default function SimpleSelect(props: any) {
 
     const updateSelectedValues = (value: any) => {
       props.removeSelectedClass(value);
+      props.addToDropDownData(value);
     };
-    console.log(props)
+
     return (
       <div>
         {!props.displayGraph ?
