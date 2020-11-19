@@ -4,13 +4,6 @@ import { Box, Flex, Button, Select, Center } from '@chakra-ui/react';
 import DropDownOption from '../DropDown/DropDown';
 import ResultTag from '../ResultTag/ResultTag';
 
-
-
-const formStyle = {
-/*   marginTop: '10rem',
-  marginLeft: '40vw' */
-};
-
 const buttonStyle = {
   marginTop: '1rem'
 };
@@ -38,7 +31,7 @@ export default function SimpleSelect(props: any) {
       <Center>
         <Flex borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
           <Box h='auto' w='auto' p={4}>
-            <form style={formStyle}>
+            <form>
                 <Select
                   variant='flushed'
                   placeholder='Choose a class'

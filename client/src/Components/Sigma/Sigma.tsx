@@ -1,8 +1,11 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes, EdgeShapes } from 'react-sigma';
+import { Box } from '@chakra-ui/react';
+import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
 
+// This has to be modified
 const containerStyle = {
-    maxWidth: '100%',
+    backgroundColor: 'red',
+    width: '10%',
     top: '0',
     bottom: '0',
     left: '0',
@@ -10,9 +13,10 @@ const containerStyle = {
     position: 'absolute' as 'absolute'
 };
 
+// Hardcoded pixels as 100vh does not work.
 const sigmaStyle = {
-    width: '100%',
-    height: '100%',
+    width: '1920px',
+    height: '1080px',
 };
 
 const onClickEdgeHandler = (e: any, props: any) => {
@@ -21,6 +25,7 @@ const onClickEdgeHandler = (e: any, props: any) => {
 };
 
 const onClickNodeHandler = (event: any, props: any) => {
+    console.log('clicked node')
     props.getClickedNodeData(event.data.node.id);
     props.setDisplayDrawer(true);
 };
@@ -28,7 +33,7 @@ const onClickNodeHandler = (event: any, props: any) => {
 
 const sigma = (props: any) => {
     return (
-            <div style={containerStyle}>
+            <Box w='100%'>
                 <Sigma
                 style={sigmaStyle}
                 graph={props.graph.graph}
@@ -51,7 +56,6 @@ const sigma = (props: any) => {
                     }
                     }>
                         <NodeShapes default='circle' />
-                        <EdgeShapes default='curvedArrow'/>
                         <ForceAtlas2/>
                         <NOverlap gridSize={10} maxIterations={100}/>
                         <RandomizeNodePositions/>
@@ -63,7 +67,7 @@ const sigma = (props: any) => {
                         />
                         <RelativeSize initialSize={5}/>
                 </Sigma>
-            </div>
+            </Box>
     );
 };
 

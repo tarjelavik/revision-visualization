@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Form from './Components/Form/Form';
 import Sigma from './Components/Sigma/Sigma';
-import Databox from './Components/DataBox/DataBox';
+import DataDrawer from './Components/DataDrawer/DataDrawer';
 
 class App extends Component {
   state = {
@@ -156,14 +156,14 @@ class App extends Component {
       removeFromDropDownData={this.removeFromDropDownData}
       addToDropDownData={this.addToDropDownData}/>;
 
-    const databox = <Databox
+    const dataDrawer = <DataDrawer
       nodeData={this.state.nodeData}
       displayDrawer={this.state.displayDrawer}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
     return (
-      <div className='App' style={{width: "100%", height: "100%"}}>
-        {databox}
+      <div className='App'>
+        {dataDrawer}
         {form}
         {this.state.displayGraph ? sigma : null}
       </div>
