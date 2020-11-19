@@ -94,7 +94,6 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     target: object['o:bookObjectId'],
                     label: object.actionTitle,
                     type: 'curvedArrow',
-                    count: 2,
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });

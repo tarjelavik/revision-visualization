@@ -67,10 +67,9 @@ function DataBox(props: any) {
     return (
         <div ref={btnRef}>
             {props.nodeData ?
-            <>
              <Drawer
                   isOpen={props.displayDrawer}
-                  placement='right'
+                  placement='right' 
                   onClose={onClose}
                   trapFocus={false}
                   finalFocusRef={btnRef}>
@@ -87,8 +86,7 @@ function DataBox(props: any) {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-            </>
-            : <div></div>}
+            : null}
         </div>
     );
 }

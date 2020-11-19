@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import {
-  ChakraProvider,
-  theme,
-  CSSReset
-} from '@chakra-ui/react';
-import './App.css';
 
 import Form from './Components/Form/Form';
 import Sigma from './Components/Sigma/Sigma';
@@ -168,18 +162,11 @@ class App extends Component {
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
     return (
-
-      <div className='App'>
-        <ChakraProvider theme={theme}>
-            <CSSReset />
-            <div>
-              {databox}
-              {form}
-              {this.state.displayGraph ? sigma : null}
-            </div>
-        </ChakraProvider>
+      <div className='App' style={{width: "100%", height: "100%"}}>
+        {databox}
+        {form}
+        {this.state.displayGraph ? sigma : null}
       </div>
-
     );
   }
 }

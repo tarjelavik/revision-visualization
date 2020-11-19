@@ -40,7 +40,6 @@ export default function SimpleSelect(props: any) {
           <Box h='auto' w='auto' p={4}>
             <form style={formStyle}>
                 <Select
-                  size='lg'
                   variant='flushed'
                   placeholder='Choose a class'
                   onChange={(e) => handleChange(e, props)}>
