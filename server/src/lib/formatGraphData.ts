@@ -93,7 +93,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:creatorId'],
                     target: object['o:bookObjectId'],
                     label: object.actionTitle,
-                    type: 'arrow',
+                    type: 'curvedArrow',
+                    count: 2,
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -102,7 +103,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['locationCreated:Id'],
                     target: object['o:bookObjectId'],
                     label: '',
-                    type: 'arrow',
+                    type: 'curvedArrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -111,7 +112,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['toLocation:Id'],
                     target: object['o:bookObjectId'],
                     label: '',
-                    type: 'arrow',
+                    type: 'curvedArrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -122,7 +123,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:bookObjectId'],
                     target: object['o:recipientId'],
                     label: '',
-                    type: 'arrow',
+                    type: 'curvedArrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -131,7 +132,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['o:creatorId'],
                     target: object['o:recipientId'],
                     label: object.actionTitle,
-                    type: 'arrow',
+                    type: 'curvedArrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });
@@ -142,7 +143,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     source: object['locationCreated:Id'],
                     target: object['toLocation:Id'],
                     label: object.actionTitle,
-                    type: 'arrow',
+                    type: 'curvedArrow',
                     size: 4,
                     actionId: getActionId(object['@id'])
                 });

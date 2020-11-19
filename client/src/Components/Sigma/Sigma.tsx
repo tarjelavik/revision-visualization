@@ -1,5 +1,5 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
+import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes, EdgeShapes } from 'react-sigma';
 
 const containerStyle = {
     maxWidth: '100%',
@@ -51,15 +51,16 @@ const sigma = (props: any) => {
                     }
                     }>
                         <NodeShapes default='circle' />
+                        <EdgeShapes default='curvedArrow'/>
                         <ForceAtlas2/>
-                        <RandomizeNodePositions>
+                        <NOverlap gridSize={10} maxIterations={100}/>
+                        <RandomizeNodePositions/>
                         <DragNodes
                         onDrag={function noRefCheck() {}}
                         onDragend={function noRefCheck() {}}
                         onDrop={function noRefCheck() {}}
                         onStartdrag={function noRefCheck() {}}
                         />
-                        </RandomizeNodePositions>
                         <RelativeSize initialSize={5}/>
                 </Sigma>
             </div>
