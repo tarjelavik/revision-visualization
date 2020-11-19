@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Flex, Button, Select } from '@chakra-ui/core';
-import { Center } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Center } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
 import ResultTag from '../ResultTag/ResultTag';
@@ -41,6 +40,7 @@ export default function SimpleSelect(props: any) {
           <Box h='auto' w='auto' p={4}>
             <form style={formStyle}>
                 <Select
+                  size='lg'
                   variant='flushed'
                   placeholder='Choose a class'
                   onChange={(e) => handleChange(e, props)}>
@@ -61,7 +61,7 @@ export default function SimpleSelect(props: any) {
             </Flex>
             {props.selectedClasses.length  ?
             <Center>
-              <Button style={buttonStyle} variantColor='green' onClick={() => handleOnClick(props)}>
+              <Button style={buttonStyle} colorScheme='green' onClick={() => handleOnClick(props)}>
                   Create graph
               </Button>
             </Center>

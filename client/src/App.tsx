@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  ThemeProvider,
+  ChakraProvider,
   theme,
   CSSReset
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 import './App.css';
 
 import Form from './Components/Form/Form';
@@ -26,9 +26,6 @@ class App extends Component {
           label: ''
         }]
       },
-/*     formData: {
-      value: ''
-    }, */
     formData: [] as string[],
     selectedClasses: [] as string[],
     nodeData: null,
@@ -173,14 +170,14 @@ class App extends Component {
     return (
 
       <div className='App'>
-        <ThemeProvider theme={theme}>
+        <ChakraProvider theme={theme}>
             <CSSReset />
             <div>
               {databox}
               {form}
               {this.state.displayGraph ? sigma : null}
             </div>
-        </ThemeProvider>
+        </ChakraProvider>
       </div>
 
     );

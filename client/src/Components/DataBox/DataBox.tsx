@@ -7,7 +7,7 @@ import {
     DrawerContent,
     useDisclosure,
     Button
-  } from '@chakra-ui/core';
+  } from '@chakra-ui/react';
 
 interface DisplayData {
     type: string;
@@ -64,7 +64,6 @@ function DataBox(props: any) {
     const btnRef = React.useRef(null);
 
     const displayProperties = getDisplayProperties(props.nodeData);
-    // TODO: Set property trapFocus={false} when it is released.
     return (
         <div ref={btnRef}>
             {props.nodeData ?
@@ -73,6 +72,7 @@ function DataBox(props: any) {
                   isOpen={props.displayDrawer}
                   placement='right'
                   onClose={onClose}
+                  trapFocus={false}
                   finalFocusRef={btnRef}>
                 <DrawerContent>
                     <DrawerHeader>{displayProperties?.type}</DrawerHeader>
