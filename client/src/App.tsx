@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 
+import Header from './Components/Header/Header';
+import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
 import Form from './Components/Form/Form';
+import Spinner from './Components/Spinner/Spinner';
 import Sigma from './Components/Sigma/Sigma';
 import DataDrawer from './Components/DataDrawer/DataDrawer';
 
 class App extends Component {
   state = {
     resourceTemplates: [{id: String, label: String}] as object[],
+    isLoading: false,
     displayGraph: false,
     graph: {
         nodes:[ {
@@ -50,7 +54,6 @@ class App extends Component {
   handleFormData = async(data: any) => {
     const formValue = this.state.formData;
     formValue.push(data);
-    console.log(formValue)
     this.setState({
       formData: {
         value: formValue
@@ -59,7 +62,16 @@ class App extends Component {
     this.postFormDataToServer();
   }
 
+  toggleIsLoading = (isLoading: boolean) => {
+    let currentStatus = this.state.isLoading;
+    currentStatus = isLoading;
+    this.setState({
+      isLoading: currentStatus
+    });
+  }
+
   postFormDataToServer = async() => {
+    this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
     const url = `http://localhost:3000/api/form/${data}`;
 
@@ -69,6 +81,7 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
+  this.toggleIsLoading(false);
   this.setDisplayGraph(true);
   console.log(this.state.graph);
   }
@@ -139,6 +152,9 @@ class App extends Component {
 
   render () {
 
+    const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
+    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src='Build.png' alt="Computer image" heigth="200px" width="200px"/>;
+    const spinner = <Spinner isLoading={this.state.isLoading}/>;
     const sigma = <Sigma
       graph={this.state.graph}
       getClickedNodeData={this.getClickedNodeData}
@@ -149,6 +165,7 @@ class App extends Component {
       displayGraph={this.state.displayGraph}
       formValue={this.state.formData}
       selectedClasses={this.state.selectedClasses}
+      isLoading={this.state.isLoading}
       handleFormData={this.handleFormData}
       setDisplayGraph={this.setDisplayGraph}
       addSelectedClass={this.addSelectedClass}
@@ -163,9 +180,12 @@ class App extends Component {
 
     return (
       <div className='App'>
+        {header}
         {dataDrawer}
         {form}
+        {spinner}
         {this.state.displayGraph ? sigma : null}
+        {frontIllustration}
       </div>
     );
   }

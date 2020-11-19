@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Button, Select, Center } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Center, Wrap, WrapItem } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
 import ResultTag from '../ResultTag/ResultTag';
@@ -16,7 +16,6 @@ export default function SimpleSelect(props: any) {
     };
 
     const handleOnClick = async(props: any) => {
-      console.log('clicked')
       await props.handleFormData(props.selectedClasses);
     };
 
@@ -27,9 +26,9 @@ export default function SimpleSelect(props: any) {
 
     return (
       <div>
-        {!props.displayGraph ?
+        {!props.displayGraph && !props.isLoading ?
       <Center>
-        <Flex borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
+        <Flex mt='7rem' borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
           <Box h='auto' w='auto' p={4}>
             <form>
                 <Select
@@ -44,7 +43,7 @@ export default function SimpleSelect(props: any) {
                   })}
                 </Select>
             </form>
-            <Flex>
+            <Flex flexWrap="wrap" w="12em">
               <Box>
                 {props.selectedClasses.map((value: string, index: number) => {
                   return <ResultTag key={index} resultKey={index} updateSelectedValues={updateSelectedValues} selected={value}/>;

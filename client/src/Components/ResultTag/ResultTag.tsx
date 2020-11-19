@@ -1,4 +1,11 @@
 import React from 'react';
+import {
+    Tag,
+    TagLabel,
+    TagLeftIcon,
+    TagRightIcon,
+    TagCloseButton,
+  } from "@chakra-ui/react"
 
 const getLabel = (resourceTemplate?: string) => {
     // Do we need to fill out the rest of the labels... Do we have to have them all in our DD?
@@ -16,13 +23,6 @@ const getLabel = (resourceTemplate?: string) => {
     }
 };
 
-const tagStyle = {
-    border: '1px solid',
-    borderRadius: '50px',
-    margin: '5px 10px'
-}
-
-
 const removeClass = (selected: any, props: any): void => {
     props.updateSelectedValues(selected.target.innerHTML, props.dropDownKey);
 }
@@ -30,7 +30,7 @@ const removeClass = (selected: any, props: any): void => {
 export default function ResultIcons(props: any) {
     return(
         <>
-            <span style={tagStyle} onClick={(e) => removeClass(e, props)}>{getLabel(props.selected)}</span>
+            <Tag mt="10px" mx="5px" variant="solid" colorScheme="teal" onClick={(e) => removeClass(e, props)}>{getLabel(props.selected)}</Tag>
         </>
     );
 }
