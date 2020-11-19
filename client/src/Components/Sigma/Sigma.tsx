@@ -1,17 +1,10 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading } from '@chakra-ui/react';
 import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
+import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
 
-// This has to be modified
-const containerStyle = {
-    backgroundColor: 'red',
-    width: '10%',
-    top: '0',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    position: 'absolute' as 'absolute'
-};
+const noResults = <IllustrationContainer src='Empty.png' alt="No results" heigth="800px" width="800px"/>;
+
 
 // Hardcoded pixels as 100vh does not work.
 const sigmaStyle = {
@@ -32,7 +25,10 @@ const onClickNodeHandler = (event: any, props: any) => {
 
 
 const sigma = (props: any) => {
+    console.log(props.graph.graph.nodes.length)
     return (
+        <>
+        {props.graph.graph.nodes.length ?
             <Box w='100%'>
                 <Sigma
                 style={sigmaStyle}
@@ -67,7 +63,16 @@ const sigma = (props: any) => {
                         />
                         <RelativeSize initialSize={5}/>
                 </Sigma>
+
             </Box>
+            :
+            <Center>
+                <Flex>
+                    <Heading>No results</Heading>
+                    {noResults}
+                </Flex>
+            </Center>}
+        </>
     );
 };
 

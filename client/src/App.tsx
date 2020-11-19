@@ -153,7 +153,7 @@ class App extends Component {
   render () {
 
     const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
-    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src='Build.png' alt="Computer image" heigth="200px" width="200px"/>;
+    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src='Build.png' alt="Computer image" heigth="400px" width="400px"/>;
     const spinner = <Spinner isLoading={this.state.isLoading}/>;
     const sigma = <Sigma
       graph={this.state.graph}
