@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
     res.send('Revision-visualization server is running');
 });
 
-app.get('/node/api/resource_templates', async(_req, res) => {
+app.get('/api/resource_templates', async(_req, res) => {
 
     try {
         const data: any = await getResourceTemplates();
