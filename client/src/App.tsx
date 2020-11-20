@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { config } from './config';
 
 import Header from './Components/Header/Header';
 import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
@@ -32,7 +33,7 @@ class App extends Component {
 
   async componentDidMount() {
 
-    const rtResponse = await fetch('http://localhost:3000/api/resource_templates');
+    const rtResponse = await fetch(`${config.production_url}api/resource_templates`);
     const rtData = await rtResponse.json();
     this.setState({
       resourceTemplates: rtData
@@ -73,7 +74,7 @@ class App extends Component {
   postFormDataToServer = async() => {
     this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
-    const url = `http://localhost:3000/api/form/${data}`;
+    const url = `${config.production_url}api/form/${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
@@ -86,7 +87,7 @@ class App extends Component {
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `http://localhost:3000/api/graph/node/${id}`;
+    const url = `${config.production_url}api/graph/node/${id}`;
     const response = await fetch(url);
     try {
       const nodeData = await response.json();
