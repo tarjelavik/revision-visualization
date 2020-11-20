@@ -54,7 +54,7 @@ app.get('/api/fetch', async(req, res) => {
 
     try {
         // MAGIC STRING: THIS NEEDS TO BE SENT TO searchHandler function, NOT directly to queryData
-        const data: SigmaGraph | void = await queryData(req.params, 'PLACE');
+        const data: SigmaGraph | void = await queryData(req.params);
         res.json(data);
     } catch (error) {
         res.json(error);

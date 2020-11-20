@@ -8,153 +8,46 @@ import { getActionId } from './helpers';
 
 // TODO: Make this function a function that triages incoming requests based on searchCategory, and then calls
 // that specific function.
-export const parseToSigmaFormat = (graphData: RawGraphData, searchCategory: any): SigmaGraph => {
-
-    if (searchCategory === 'ACTION') {
-        return parsetoActionGraph(graphData);
-    }
-
-    if (searchCategory === 'PLACE') {
-        return parsetoPlaceGraph(graphData);
-    }
-
-    if (searchCategory === 'PERSON') {
-        return parseToPersonGraph(graphData);
-    }
-
-    if (searchCategory === 'BOOKOBJECT') {
-        return parseToBookObjectGraph (graphData);
-    }
-
+export const parseToSigmaFormat = (graphData: RawGraphData): SigmaGraph => {
     return parseToGraph(graphData);
 };
 
-const parsetoActionGraph = (graphData: RawGraphData): SigmaGraph => {
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
-
-    graphData.results.bindings.map(object => {
-        if (object.s.value) {
-            nodes.push(
-                {
-                    id: `node_${object.s.value}`,
-                    label: object.s.value
-                });
-        }
-        if (object.o.value) {
-            nodes.push(
-                {
-                    id: `node_${object.o.value}`,
-                    label: object.o.value
-                });
-        }
-
-        edges.push(
-            {
-                id: `edge_${object.s.value}`,
-                source: `node_${object.s.value}`,
-                target: `node_${object.o.value}`,
-                label: object.o.value
-            });
-    });
-
-    const actionGraph: SigmaGraph = {
-        graph: {
-            nodes,
-            edges
-        }
-    };
-
-    // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
-    // the associated place of each person, which is often the same place.
-    actionGraph.graph.nodes = actionGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-
-    return actionGraph;
-};
-
-const parsetoPlaceGraph = (graphData: RawGraphData): SigmaGraph => {
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
-
-    graphData.results.bindings.map(object => {
-        if (object.personId.value) {
-            nodes.push(
-                {
-                    id: `node_${object.personId.value}`,
-                    label: object.personName.value
-                });
-        }
-        if (object.associatedPlaceId.value) {
-            nodes.push(
-                {
-                    id: `node_${object.associatedPlaceId.value}`,
-                    label: object.associatedPlaceName.value
-                });
-        }
-
-        edges.push(
-            {
-                id: `edge_${object.personId.value}`,
-                source: `node_${object.personId.value}`,
-                target: `node_${object.associatedPlaceId.value}`,
-                label: object.associatedPlaceName.value,
-                type: 'arrow'
-            });
-    });
-
-    const placeGraph: SigmaGraph = {
-        graph: {
-            nodes,
-            edges
-        }
-    };
-
-
-    // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
-    // the associated place of each person, which is often the same place.
-    placeGraph.graph.nodes = placeGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-    return placeGraph;
-};
-
 const parseToGraph = (graphData: any): SigmaGraph => {
-    // console.log(graphData['@graph'])
-    // const vars = graphData.head.vars;
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
-    // Create a function that flattens any array. This does not work yet which means that when there are two of an id in an array, one is lost. Now we splice away the troublesome elements.
-    const flattenedTriples: any = graphData['@graph'].splice(4, 23);
+    // Get first element of graphData. Used for debugging.
+    // graphData = graphData['@graph'].slice(0,1);
 
-    flattenedTriples.forEach(object => {
-        console.log(object)
+    // Todo: Make interface for graphData
+    graphData['@graph'].forEach(object => {
+        // console.log(object);
         try {
-            nodes.push({
-                id: object['o:bookObject'],
-                label: object.bookObjectTitle,
-                type: 'cross',
-                class: 'BookObject'
-            });
+            if (object['o:bookObjectId']) {
+                nodes.push({
+                    id: object['o:bookObjectId'],
+                    label: object.bookObjectTitle,
+                    image: {
+                        url: 'https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg',
+                    },
+                    class: 'BookObject'
+                });
+            }
         } catch (error) {
             console.log('not found');
         }
 
-        /*         try {
-            nodes.push({
-                id: object['o:actionId'],
-                label: object.actionTitle
-            })
-        } catch (error) {
-            console.log('not found')
-        } */
-
         try {
-            nodes.push({
-                id: object['o:creatorId'],
-                label: object.creatorName,
-                type: 'star',
-                color: 'red'
-            });
-            // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
+            if (object['o:creatorId']) {
+                nodes.push({
+                    id: object['o:creatorId'],
+                    label: object.creatorName,
+                    image: {
+                        url: '',
+                    },
+                });
+                // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
+            }
         } catch (error) {
             console.log('not found');
         }
@@ -163,7 +56,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['o:recipientId'],
                     label: object.recipientName,
-                    type: 'diamond'
+                    image: {
+                        url: '',
+                    },
                 });
             } catch (error) {
                 console.log('not found');
@@ -192,48 +87,73 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             }
         }
         try {
-            // Setting the SIZE of the edge enabled me to finally click the edge! Now we need the actionID.
-            edges.push({
-                id: generateId(),
-                source: object['o:bookObject'],
-                target: object['o:creatorId'],
-                label: object.actionTitle,
-                type: 'arrow',
-                size: 4,
-                actionId: getActionId(object['@id'])
-            });
-            if (object['o:recipientId']) {
+            if (object['o:bookObjectId']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
-                    target: object['o:recipientId'],
+                    source: object['o:creatorId'],
+                    target: object['o:bookObjectId'],
                     label: '',
+                    type: 'curvedArrow',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
                 edges.push({
                     id: generateId(),
-                    source: object['o:recipientId'],
-                    target: object['o:creatorId'],
+                    source: object['locationCreated:Id'],
+                    target: object['o:bookObjectId'],
+                    label: '',
+                    type: 'curvedArrow',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+                edges.push({
+                    id: generateId(),
+                    source: object['toLocation:Id'],
+                    target: object['o:bookObjectId'],
+                    label: '',
+                    type: 'curvedArrow',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+            }
+            if (object['o:recipientId']) {
+                edges.push({
+                    id: generateId(),
+                    source: object['o:bookObjectId'],
+                    target: object['o:recipientId'],
+                    label: '',
+                    type: 'curvedArrow',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+                edges.push({
+                    id: generateId(),
+                    source: object['o:creatorId'],
+                    target: object['o:recipientId'],
                     label: object.actionTitle,
-                    type: 'arrow',
+                    type: 'curvedArrow',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
             if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
-                    target: object['locationCreated:Id'],
-                    label: '',
+                    source: object['locationCreated:Id'],
+                    target: object['toLocation:Id'],
+                    label: object.actionTitle,
+                    type: 'curvedArrow',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
-            if (object.toLocation) {
+            if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
-                    source: object['o:bookObject'],
-                    target: object['toLocation:Id'],
-                    label: '',
+                    source: object['locationCreated:Id'],
+                    target: object['o:creatorId'],
+                    label: 'Action created at',
+                    size: 4,
                     actionId: getActionId(object['@id'])
                 });
             }
@@ -254,94 +174,12 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     // the associated place of each person, which is often the same place.
     sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
 
+    // Filter out all spurious edges which either miss target or source
+    sigmaGraph.graph.edges = sigmaGraph.graph.edges.filter(edge => typeof(edge.source) !== 'undefined' && typeof(edge.target) !== 'undefined');
+
     // console.log(JSON.stringify(sigmaGraph, null, 2))
     return sigmaGraph;
 };
 
-const parseToBookObjectGraph = (graphData: RawGraphData): SigmaGraph => {
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
 
-    graphData.results.bindings.map(object => {
-        if (object.s.value) {
-            nodes.push(
-                {
-                    id: `node_${object.s.value}`,
-                    label: object.s.value
-                });
-        }
-        if (object.o.value) {
-            nodes.push(
-                {
-                    id: `node_${object.o.value}`,
-                    label: object.o.value
-                });
-        }
-
-        edges.push(
-            {
-                id: `edge_${object.s.value}`,
-                source: `node_${object.s.value}`,
-                target: `node_${object.o.value}`,
-                label: object.o.value
-            });
-    });
-
-    const bookObjectGraph: SigmaGraph = {
-        graph: {
-            nodes,
-            edges
-        }
-    };
-
-    // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
-    // the associated place of each person, which is often the same place.
-    bookObjectGraph.graph.nodes = bookObjectGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-
-    return bookObjectGraph;
-};
-
-const parseToPersonGraph = (graphData: RawGraphData): SigmaGraph => {
-
-    const nodes: Node[] = [];
-    const edges: Edge[] = [];
-
-    graphData.results.bindings.map(object => {
-        if (object.s.value) {
-            nodes.push(
-                {
-                    id: `node_${object.s.value}`,
-                    label: object.s.value
-                });
-        }
-        if (object.o.value) {
-            nodes.push(
-                {
-                    id: `node_${object.o.value}`,
-                    label: object.o.value
-                });
-        }
-
-        edges.push(
-            {
-                id: `edge_${object.s.value}`,
-                source: `node_${object.s.value}`,
-                target: `node_${object.o.value}`,
-                label: object.o.value
-            });
-    });
-
-    const personGraph: SigmaGraph = {
-        graph: {
-            nodes,
-            edges
-        }
-    };
-
-    // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
-    // the associated place of each person, which is often the same place.
-    personGraph.graph.nodes = personGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
-
-    return personGraph;
-};
 

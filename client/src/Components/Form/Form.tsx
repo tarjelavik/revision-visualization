@@ -1,57 +1,65 @@
 import React from 'react';
-import { Button } from '@chakra-ui/core';
-import { Select } from '@chakra-ui/core';
-import { Box, Flex } from '@chakra-ui/core';
+import { Box, Flex, Button, Select, Center } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
-
-
-const formStyle = {
-/*   marginTop: '10rem',
-  marginLeft: '40vw' */
-};
+import ResultTag from '../ResultTag/ResultTag';
 
 const buttonStyle = {
   marginTop: '1rem'
 };
 
-
 export default function SimpleSelect(props: any) {
 
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>, props: any) => {
-      props.handleFormData(event.target.value)
+    const handleChange = (event: React.ChangeEvent<{ value: any }>, props: any) => {
+      props.addSelectedClass(event.target.value);
+      props.removeFromDropDownData(event.target.value);
     };
 
-    const handleOnClick = (props: any) => {
-      props.setDisplayGraph(true);
+    const handleOnClick = async(props: any) => {
+      await props.handleFormData(props.selectedClasses);
     };
 
-    const handleSubmit = () => {
+    const updateSelectedValues = (value: any) => {
+      props.removeSelectedClass(value);
+      props.addToDropDownData(value);
     };
-
     return (
       <div>
-        {!props.displayGraph ?
-        <Flex width='full' align='center' justifyContent='center'>
-          <Box bg='tomato' w='20%' p={4} >
-          <form style={formStyle}>
-              <Select
-                onChange={(e) => handleChange(e, props)}
-                value={ props.formValue || '' }>
-
-                {props.dropDownData.map((dropDownOption: any, index: number) => {
-                  if (props.dropDownData.length) {
-                    return <DropDownOption dropDownData={dropDownOption} key={index}/>
-                  }
-                  return null;
+        {!props.displayGraph && !props.isLoading ?
+      <Center>
+        <Flex mt='7rem' borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
+          <Box h='auto' w='auto' p={4}>
+            <form>
+                <Select
+                  variant='flushed'
+                  placeholder='Choose a class'
+                  value='Placeholder'
+                  onChange={(e) => handleChange(e, props)}>
+                  {props.dropDownData.map((dropDownOption: any, index: number) => {
+                    if (props.dropDownData.length) {
+                      return <DropDownOption onClick={() => handleOnClick(props)} dropDownData={dropDownOption} key={index}/>;
+                    }
+                    return null;
+                  })}
+                </Select>
+            </form>
+            <Flex flexWrap="wrap" w="12em">
+              <Box>
+                {props.selectedClasses.map((value: string, index: number) => {
+                  return <ResultTag key={index} resultKey={index} updateSelectedValues={updateSelectedValues} selected={value}/>;
                 })}
-              </Select>
-            <Button style={buttonStyle} variantColor='green' onClick={() => {handleOnClick(props); handleSubmit()}}>
-                Create graph
-            </Button>
-          </form>
+              </Box>
+            </Flex>
+            {props.selectedClasses.length  ?
+            <Center>
+              <Button style={buttonStyle} colorScheme='green' onClick={() => handleOnClick(props)}>
+                  Create graph
+              </Button>
+            </Center>
+            : null}
           </Box>
         </Flex>
+      </Center>
         : null}
       </div>
     );

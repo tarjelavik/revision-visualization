@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 export const getNodeData = async(id: string) => {
-
-    const birgittaURL = `https://birgitta.test.uib.no/api/items/${id}`
+    const birgittaURL = `https://birgitta.test.uib.no/api/items/${id}`;
 
     try {
         const nodeData: any = axios.get(birgittaURL, { headers: {'Accept': 'application/ld+json'}})

@@ -1,18 +1,15 @@
 import React from 'react';
-import {Sigma, RandomizeNodePositions, RelativeSize, DragNodes } from 'react-sigma';
+import { Box, Stack, Center, Heading } from '@chakra-ui/react';
+import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
+import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
 
-const containerStyle = {
-    maxWidth: '100%',
-    top: '0',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    position: 'absolute' as 'absolute'
-};
+const noResults = <IllustrationContainer src='Empty.png' alt="No results" heigth="800px" width="800px"/>;
 
+
+// Hardcoded pixels as 100vh does not work.
 const sigmaStyle = {
-    width: '100%',
-    height: '100%',
+    width: '1920px',
+    height: '1080px',
 };
 
 const onClickEdgeHandler = (e: any, props: any) => {
@@ -28,7 +25,9 @@ const onClickNodeHandler = (event: any, props: any) => {
 
 const sigma = (props: any) => {
     return (
-            <div style={containerStyle}>
+        <>
+        {props.graph.graph.nodes.length ?
+            <Box w='100%'>
                 <Sigma
                 style={sigmaStyle}
                 graph={props.graph.graph}
@@ -50,17 +49,33 @@ const sigma = (props: any) => {
                     minEdgeSize: 10
                     }
                     }>
-                        <RandomizeNodePositions>
+                        <NodeShapes default='circle' />
+                        <ForceAtlas2/>
+                        <NOverlap gridSize={10} maxIterations={100}/>
+                        <RandomizeNodePositions/>
                         <DragNodes
                         onDrag={function noRefCheck() {}}
                         onDragend={function noRefCheck() {}}
                         onDrop={function noRefCheck() {}}
                         onStartdrag={function noRefCheck() {}}
                         />
-                        </RandomizeNodePositions>
                         <RelativeSize initialSize={5}/>
                 </Sigma>
-            </div>
+
+            </Box>
+            :
+            <Center>
+                <Stack direction="column">
+                    <Box>
+                        {noResults}
+                    </Box>
+                    <Box>
+                        <Heading as="h1" size="4xl" textAlign="center">No results!</Heading>
+                        <Heading as="h2" size="2xl" mt="4rem" textAlign="center">Refresh the page to search again</Heading>
+                    </Box>
+                </Stack>
+            </Center>}
+        </>
     );
 };
 

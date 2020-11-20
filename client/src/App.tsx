@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
-import {
-  ThemeProvider,
-  theme,
-  CSSReset
-} from '@chakra-ui/core';
-import './App.css';
 
+import Header from './Components/Header/Header';
+import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
 import Form from './Components/Form/Form';
+import Spinner from './Components/Spinner/Spinner';
 import Sigma from './Components/Sigma/Sigma';
-import Databox from './Components/DataBox/DataBox';
+import DataDrawer from './Components/DataDrawer/DataDrawer';
 
 class App extends Component {
   state = {
-    resourceTemplates: [],
+    resourceTemplates: [{id: String, label: String}] as object[],
+    isLoading: false,
     displayGraph: false,
     graph: {
         nodes:[ {
@@ -26,11 +24,10 @@ class App extends Component {
           label: ''
         }]
       },
-    formData: {
-      value: ''
-    },
+    formData: [] as string[],
+    selectedClasses: [] as string[],
     nodeData: null,
-    displayDrawer: false
+    displayDrawer: false,
   };
 
   async componentDidMount() {
@@ -56,18 +53,26 @@ class App extends Component {
 
   handleFormData = async(data: any) => {
     const formValue = this.state.formData;
-    formValue.value = await data;
+    formValue.push(data);
     this.setState({
       formData: {
-        value: formValue.value
+        value: formValue
       }
     });
     this.postFormDataToServer();
   }
 
-  postFormDataToServer = async() => {
+  toggleIsLoading = (isLoading: boolean) => {
+    let currentStatus = this.state.isLoading;
+    currentStatus = isLoading;
+    this.setState({
+      isLoading: currentStatus
+    });
+  }
 
-    const data = encodeURIComponent(this.state.formData.value);
+  postFormDataToServer = async() => {
+    this.toggleIsLoading(true);
+    const data = encodeURIComponent(this.state.formData[0]);
     const url = `http://localhost:3000/api/form/${data}`;
 
    const response = await fetch(url);
@@ -76,13 +81,13 @@ class App extends Component {
    this.setState({
     graph: responseData
   });
-  console.log(this.state.graph)
+  this.toggleIsLoading(false);
+  this.setDisplayGraph(true);
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `http://localhost:3000/api/graph/node/${id}`
+    const url = `http://localhost:3000/api/graph/node/${id}`;
     const response = await fetch(url);
-    console.log(response);
     try {
       const nodeData = await response.json();
       this.setState({
@@ -92,11 +97,74 @@ class App extends Component {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
       console.log(error);
     }
+  }
 
+  // Pure helper function - should be refactored out of this class.
+  getResourceTemplateId = (selectedClass: string) => {
+    switch (selectedClass) {
+        case 'Person':
+            return 'https://birgitta.test.uib.no/api/resource_templates/13';
+        case 'Place':
+            return 'https://birgitta.test.uib.no/api/resource_templates/14';
+        case 'Location in Time':
+          return 'https://birgitta.test.uib.no/api/resource_templates/15';
+        case 'Book Object':
+            return 'https://birgitta.test.uib.no/api/resource_templates/16';
+        case 'Institution':
+            return 'https://birgitta.test.uib.no/api/resource_templates/17';
+        case 'Work Item':
+          return 'https://birgitta.test.uib.no/api/resource_templates/18';
+        case 'Work':
+          return 'https://birgitta.test.uib.no/api/resource_templates/19';
+        case 'Non Book Object':
+          return 'https://birgitta.test.uib.no/api/resource_templates/20';
+        case 'Action':
+          return 'https://birgitta.test.uib.no/api/resource_templates/21';
+        case 'Data Source':
+          return 'https://birgitta.test.uib.no/api/resource_templates/22';
+        default:
+          return '0';
+    }
+};
+
+  addSelectedClass = (selectedClass: string) => {
+    const existingClasses = this.state.selectedClasses;
+    existingClasses.push(selectedClass);
+    this.setState({
+      selectedClasses: existingClasses
+    });
+  }
+
+  removeSelectedClasses = (clickedClass: string) => {
+    const clickedClasses = this.state.selectedClasses;
+    const indexToRemove = clickedClasses.indexOf(this.getResourceTemplateId(clickedClass));
+    clickedClasses.splice(indexToRemove);
+    this.setState({
+      selectedClasses: clickedClasses
+    });
+  }
+
+  removeFromDropDownData = (id: any) => {
+    const ddData = this.state.resourceTemplates;
+    const filteredDD = ddData.filter((element: any) => element.id !== id)
+    this.setState({
+      resourceTemplates: filteredDD
+    });
+  }
+
+  addToDropDownData = (id: any) => {
+    const ddData = this.state.resourceTemplates;
+    ddData.push({id:this.getResourceTemplateId(id), label: id})
+    this.setState({
+      resourceTemplates: ddData
+    });
   }
 
   render () {
 
+    const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
+    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src='Build.png' alt="Computer image" heigth="400px" width="400px"/>;
+    const spinner = <Spinner isLoading={this.state.isLoading}/>;
     const sigma = <Sigma
       graph={this.state.graph}
       getClickedNodeData={this.getClickedNodeData}
@@ -105,28 +173,30 @@ class App extends Component {
       const form = <Form
       dropDownData={this.state.resourceTemplates}
       displayGraph={this.state.displayGraph}
-      formValue={this.state.formData.value}
+      formValue={this.state.formData}
+      selectedClasses={this.state.selectedClasses}
+      isLoading={this.state.isLoading}
       handleFormData={this.handleFormData}
-      setDisplayGraph={this.setDisplayGraph}/>;
+      setDisplayGraph={this.setDisplayGraph}
+      addSelectedClass={this.addSelectedClass}
+      removeSelectedClass={this.removeSelectedClasses}
+      removeFromDropDownData={this.removeFromDropDownData}
+      addToDropDownData={this.addToDropDownData}/>;
 
-    const databox = <Databox
+    const dataDrawer = <DataDrawer
       nodeData={this.state.nodeData}
       displayDrawer={this.state.displayDrawer}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
     return (
-
       <div className='App'>
-        <ThemeProvider theme={theme}>
-            <CSSReset />
-            <div>
-              {databox}
-              {form}
-              {this.state.displayGraph ? sigma : null}
-            </div>
-        </ThemeProvider>
+        {header}
+        {dataDrawer}
+        {form}
+        {spinner}
+        {this.state.displayGraph ? sigma : null}
+        {frontIllustration}
       </div>
-
     );
   }
 }
