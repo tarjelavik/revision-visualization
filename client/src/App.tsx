@@ -74,7 +74,7 @@ class App extends Component {
   postFormDataToServer = async() => {
     this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
-    const url = `${config.production_url}api/form/?query=${data}`;
+    const url = `${config.production_url}api/form?query=${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
