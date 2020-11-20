@@ -18,7 +18,6 @@ const onClickEdgeHandler = (e: any, props: any) => {
 };
 
 const onClickNodeHandler = (event: any, props: any) => {
-    console.log('clicked node')
     props.getClickedNodeData(event.data.node.id);
     props.setDisplayDrawer(true);
 };

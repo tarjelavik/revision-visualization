@@ -83,7 +83,6 @@ class App extends Component {
   });
   this.toggleIsLoading(false);
   this.setDisplayGraph(true);
-  console.log(this.state.graph);
   }
 
   getClickedNodeData = async(id: any) => {
@@ -102,7 +101,6 @@ class App extends Component {
 
   // Pure helper function - should be refactored out of this class.
   getResourceTemplateId = (selectedClass: string) => {
-    console.log(selectedClass)
     switch (selectedClass) {
         case 'Person':
             return 'https://birgitta.test.uib.no/api/resource_templates/13';

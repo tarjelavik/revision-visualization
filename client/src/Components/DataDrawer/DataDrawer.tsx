@@ -71,6 +71,7 @@ function DataDrawer(props: any) {
                 isOpen={props.displayDrawer}
                 placement='right'
                 onClose={onClose}
+                trapFocus={false}
                 onOverlayClick={() => props.setDisplayDrawer(false)}>
                 <DrawerOverlay bg="none">
                     <DrawerContent>

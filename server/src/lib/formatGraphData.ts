@@ -21,7 +21,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // Todo: Make interface for graphData
     graphData['@graph'].forEach(object => {
-        console.log(object);
+        // console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
