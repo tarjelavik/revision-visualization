@@ -1,0 +1,10 @@
+apply-config:
+    when: manual
+    image: oyvindlg/gitlab-ci-library:ansible-cgi
+    before_script:
+    - eval $(ssh-agent -s)
+    - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
+    script:
+    - hostname -I
+    - 'ssh -A -o StrictHostKeyChecking=no centos@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
+
