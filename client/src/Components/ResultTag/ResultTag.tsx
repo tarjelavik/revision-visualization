@@ -1,10 +1,6 @@
 import React from 'react';
 import {
     Tag,
-    TagLabel,
-    TagLeftIcon,
-    TagRightIcon,
-    TagCloseButton,
   } from "@chakra-ui/react"
 
 const getLabel = (resourceTemplate?: string) => {

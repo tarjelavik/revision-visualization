@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Button, Select, Center, Wrap, WrapItem } from '@chakra-ui/react';
+import { Box, Flex, Button, Select, Center } from '@chakra-ui/react';
 
 import DropDownOption from '../DropDown/DropDown';
 import ResultTag from '../ResultTag/ResultTag';

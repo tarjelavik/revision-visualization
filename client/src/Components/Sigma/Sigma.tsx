@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Center, Flex, Heading } from '@chakra-ui/react';
+import { Box, Stack, Center, Heading } from '@chakra-ui/react';
 import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
 
@@ -25,7 +25,6 @@ const onClickNodeHandler = (event: any, props: any) => {
 
 
 const sigma = (props: any) => {
-    console.log(props.graph.graph.nodes.length)
     return (
         <>
         {props.graph.graph.nodes.length ?
@@ -67,10 +66,15 @@ const sigma = (props: any) => {
             </Box>
             :
             <Center>
-                <Flex>
-                    <Heading>No results</Heading>
-                    {noResults}
-                </Flex>
+                <Stack direction="column">
+                    <Box>
+                        {noResults}
+                    </Box>
+                    <Box>
+                        <Heading as="h1" size="4xl" textAlign="center">No results!</Heading>
+                        <Heading as="h2" size="2xl" mt="4rem" textAlign="center">Refresh the page to search again</Heading>
+                    </Box>
+                </Stack>
             </Center>}
         </>
     );
