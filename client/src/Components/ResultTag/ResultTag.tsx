@@ -10,10 +10,22 @@ const getLabel = (resourceTemplate?: string) => {
             return 'Person';
         case 'https://birgitta.test.uib.no/api/resource_templates/14':
             return 'Place';
+        case 'https://birgitta.test.uib.no/api/resource_templates/15':
+            return 'Location in Time';
         case 'https://birgitta.test.uib.no/api/resource_templates/16':
-            return 'Book object';
+            return 'Book Object';
         case 'https://birgitta.test.uib.no/api/resource_templates/17':
             return 'Institution';
+        case 'https://birgitta.test.uib.no/api/resource_templates/18':
+            return 'Work Item';
+        case 'https://birgitta.test.uib.no/api/resource_templates/19':
+            return 'Work';
+        case 'https://birgitta.test.uib.no/api/resource_templates/20':
+            return 'Non Book Object';
+        case 'https://birgitta.test.uib.no/api/resource_templates/21':
+            return 'Action';
+        case 'https://birgitta.test.uib.no/api/resource_templates/22':
+        return 'Data Source';
         default:
             return null;
     }
