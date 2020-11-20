@@ -102,18 +102,30 @@ class App extends Component {
 
   // Pure helper function - should be refactored out of this class.
   getResourceTemplateId = (selectedClass: string) => {
-    // Do we need to fill out the rest of the icons... Do we have to have them all in our DD?
+    console.log(selectedClass)
     switch (selectedClass) {
         case 'Person':
             return 'https://birgitta.test.uib.no/api/resource_templates/13';
         case 'Place':
             return 'https://birgitta.test.uib.no/api/resource_templates/14';
-        case 'Book object':
+        case 'Location in Time':
+          return 'https://birgitta.test.uib.no/api/resource_templates/15';
+        case 'Book Object':
             return 'https://birgitta.test.uib.no/api/resource_templates/16';
         case 'Institution':
             return 'https://birgitta.test.uib.no/api/resource_templates/17';
+        case 'Work Item':
+          return 'https://birgitta.test.uib.no/api/resource_templates/18';
+        case 'Work':
+          return 'https://birgitta.test.uib.no/api/resource_templates/19';
+        case 'Non Book Object':
+          return 'https://birgitta.test.uib.no/api/resource_templates/20';
+        case 'Action':
+          return 'https://birgitta.test.uib.no/api/resource_templates/21';
+        case 'Data Source':
+          return 'https://birgitta.test.uib.no/api/resource_templates/22';
         default:
-            return '0';
+          return '0';
     }
 };
 

@@ -23,7 +23,7 @@ export default function SimpleSelect(props: any) {
       props.removeSelectedClass(value);
       props.addToDropDownData(value);
     };
-
+    console.log(props.selectedClasses)
     return (
       <div>
         {!props.displayGraph && !props.isLoading ?
@@ -34,6 +34,7 @@ export default function SimpleSelect(props: any) {
                 <Select
                   variant='flushed'
                   placeholder='Choose a class'
+                  value='Placeholder'
                   onChange={(e) => handleChange(e, props)}>
                   {props.dropDownData.map((dropDownOption: any, index: number) => {
                     if (props.dropDownData.length) {
