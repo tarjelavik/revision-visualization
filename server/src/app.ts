@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
     res.send('Revision-visualization server is running');
 });
 
-app.get('/api/resource_templates', async(_req, res) => {
+app.get('/node/api/resource_templates', async(_req, res) => {
 
     try {
         const data: any = await getResourceTemplates();
@@ -30,7 +30,7 @@ app.get('/api/resource_templates', async(_req, res) => {
     }
 });
 
-app.get('/api/fetch', async(req, res) => {
+app.get('/node/api/fetch', async(req, res) => {
     req.params = {
         'query': `
     PREFIX schema: <http://schema.org/>
@@ -61,7 +61,7 @@ app.get('/api/fetch', async(req, res) => {
     }
 });
 
-app.get('/api/form/:query', async(req, res) => {
+app.get('/node/api/form/:query', async(req, res) => {
     try {
         const searchResult: any = await searchHandler(req.params.query);
         res.json(searchResult);
@@ -70,7 +70,7 @@ app.get('/api/form/:query', async(req, res) => {
     }
 });
 
-app.get('/api/graph/node/:id', async(req, res) => {
+app.get('/node/api/graph/node/:id', async(req, res) => {
     try {
         const searchResult: any = await getNodeData(req.params.id);
         res.json(searchResult);

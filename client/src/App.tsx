@@ -29,16 +29,31 @@ class App extends Component {
     selectedClasses: [] as string[],
     nodeData: null,
     displayDrawer: false,
+    appURL: ''
   };
 
   async componentDidMount() {
-
-    const rtResponse = await fetch(`${config.production_url}api/resource_templates`);
+    await this.setURL();
+    console.log(this.state.appURL)
+    const rtResponse = await fetch(`${this.state.appURL}node/api/resource_templates`);
     const rtData = await rtResponse.json();
     this.setState({
       resourceTemplates: rtData
     });
   }
+
+  setURL = async() => {
+    let url = this.state.appURL;
+    if (process.env.NODE_ENV === 'development') {
+      url = config.development_url
+    } else {
+      url = config.production_url
+    }
+    this.setState({
+      appURL: url
+    })
+  }
+
 
   setDisplayGraph = (bool: boolean) => {
     this.setState({
@@ -74,7 +89,7 @@ class App extends Component {
   postFormDataToServer = async() => {
     this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
-    const url = `${config.production_url}api/form?query=${data}`;
+    const url = `${this.state.appURL}node/api/form/${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
@@ -87,7 +102,7 @@ class App extends Component {
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `${config.production_url}api/graph/node/${id}`;
+    const url = `${this.state.appURL}node/api/graph/node/${id}`;
     const response = await fetch(url);
     try {
       const nodeData = await response.json();
