@@ -9,6 +9,9 @@ import {
     Button
   } from '@chakra-ui/react';
 
+import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
+
+const drawerIllustration = <IllustrationContainer src='book_lover.svg' alt="No results" heigth="600px" width="600px"/>;
 interface DisplayData {
     type: string;
     name: string;
@@ -75,6 +78,7 @@ function DataDrawer(props: any) {
                         <li style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></li>
                     </ul>
                     </DrawerBody>
+                    {drawerIllustration}
                     <DrawerFooter>
                         <Button onClick={() => props.setDisplayDrawer(false)}>Close</Button>
                     </DrawerFooter>
