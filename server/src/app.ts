@@ -30,7 +30,7 @@ app.get('/api/resource_templates', async(_req, res) => {
     }
 });
 
-app.get('/node/api/fetch', async(req, res) => {
+app.get('/api/fetch', async(req, res) => {
     req.params = {
         'query': `
     PREFIX schema: <http://schema.org/>
@@ -61,7 +61,7 @@ app.get('/node/api/fetch', async(req, res) => {
     }
 });
 
-app.get('/node/api/form/:query', async(req, res) => {
+app.get('/api/form/:query', async(req, res) => {
     try {
         console.log(req.params.query)
         const searchResult: any = await searchHandler(decodeURIComponent(req.params.query));
@@ -71,7 +71,7 @@ app.get('/node/api/form/:query', async(req, res) => {
     }
 });
 
-app.get('/node/api/graph/node/:id', async(req, res) => {
+app.get('/api/graph/node/:id', async(req, res) => {
     try {
         const searchResult: any = await getNodeData(req.params.id);
         res.json(searchResult);
