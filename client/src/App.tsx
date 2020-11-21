@@ -34,7 +34,7 @@ class App extends Component {
 
   async componentDidMount() {
     await this.setURL();
-    const rtResponse = await fetch(`${this.state.appURL}node/api/resource_templates`);
+    const rtResponse = await fetch(`${this.state.appURL}api/resource_templates`);
     const rtData = await rtResponse.json();
     this.setState({
       resourceTemplates: rtData
@@ -88,7 +88,7 @@ class App extends Component {
   postFormDataToServer = async() => {
     this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
-    const url = `${this.state.appURL}node/api/form/${data}`;
+    const url = `${this.state.appURL}api/form/${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
@@ -101,7 +101,7 @@ class App extends Component {
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `${this.state.appURL}node/api/graph/node/${id}`;
+    const url = `${this.state.appURL}api/graph/node/${id}`;
     const response = await fetch(url);
     try {
       const nodeData = await response.json();
