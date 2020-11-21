@@ -34,7 +34,6 @@ class App extends Component {
 
   async componentDidMount() {
     await this.setURL();
-    console.log(this.state.appURL)
     const rtResponse = await fetch(`${this.state.appURL}node/api/resource_templates`);
     const rtData = await rtResponse.json();
     this.setState({
