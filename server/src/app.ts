@@ -63,7 +63,8 @@ app.get('/node/api/fetch', async(req, res) => {
 
 app.get('/node/api/form/:query', async(req, res) => {
     try {
-        const searchResult: any = await searchHandler(req.params.query);
+        console.log(req.params.query)
+        const searchResult: any = await searchHandler(decodeURIComponent(req.params.query));
         res.json(searchResult);
     } catch (error) {
         res.json(error);
