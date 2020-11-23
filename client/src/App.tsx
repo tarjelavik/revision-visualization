@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { config } from './config';
 
 import Header from './Components/Header/Header';
 import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
@@ -28,16 +29,30 @@ class App extends Component {
     selectedClasses: [] as string[],
     nodeData: null,
     displayDrawer: false,
+    appURL: ''
   };
 
   async componentDidMount() {
-
-    const rtResponse = await fetch('http://localhost:3000/api/resource_templates');
+    await this.setURL();
+    const rtResponse = await fetch(`${this.state.appURL}api/resource_templates`);
     const rtData = await rtResponse.json();
     this.setState({
       resourceTemplates: rtData
     });
   }
+
+  setURL = async() => {
+    let url = this.state.appURL;
+    if (process.env.NODE_ENV === 'development') {
+      url = config.development_url
+    } else {
+      url = config.production_url
+    }
+    this.setState({
+      appURL: url
+    })
+  }
+
 
   setDisplayGraph = (bool: boolean) => {
     this.setState({
@@ -73,7 +88,7 @@ class App extends Component {
   postFormDataToServer = async() => {
     this.toggleIsLoading(true);
     const data = encodeURIComponent(this.state.formData[0]);
-    const url = `http://localhost:3000/api/form/${data}`;
+    const url = `${this.state.appURL}api/form/${data}`;
 
    const response = await fetch(url);
    const responseData = await response.json();
@@ -86,7 +101,7 @@ class App extends Component {
   }
 
   getClickedNodeData = async(id: any) => {
-    const url = `http://localhost:3000/api/graph/node/${id}`;
+    const url = `${this.state.appURL}api/graph/node/${id}`;
     const response = await fetch(url);
     try {
       const nodeData = await response.json();
