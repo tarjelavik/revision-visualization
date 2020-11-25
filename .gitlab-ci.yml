@@ -12,3 +12,4 @@ client:
     #- 'ssh -A -o StrictHostKeyChecking=no gitworker@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
 
 server:
+    when: manual
