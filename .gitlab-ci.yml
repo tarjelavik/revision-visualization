@@ -8,8 +8,8 @@ client:
 
 publish:
   before_script:
-    - eval $(ssh-agent -s)
-    - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
-    script:
-      - hostname -I
-      - 'ssh -A -o StrictHostKeyChecking=no gitworker@$IP "cd /home/gitworker && touch hello.txt"'
+  - eval $(ssh-agent -s)
+  - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
+  script:
+  - hostname -I
+  - 'ssh -A -o StrictHostKeyChecking=no gitworker@$IP "cd /home/gitworker && touch hello.txt"'
