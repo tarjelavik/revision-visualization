@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Stack, Center, Heading } from '@chakra-ui/react';
-import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2, NodeShapes } from 'react-sigma';
+import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2 } from 'react-sigma';
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
 
 const noResults = <IllustrationContainer src='Empty.png' alt="No results" heigth="800px" width="800px"/>;
@@ -49,7 +49,6 @@ const sigma = (props: any) => {
                     minEdgeSize: 10
                     }
                     }>
-                        <NodeShapes default='circle' />
                         <ForceAtlas2/>
                         <NOverlap gridSize={10} maxIterations={100}/>
                         <RandomizeNodePositions/>
