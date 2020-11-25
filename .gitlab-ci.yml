@@ -1,8 +1,7 @@
 client:
     when: manual
-    image: weboaks/node-karma-protractor-chrome:alpine-root
+    image: oyvindlg/gitlab-ci-library:ansible-cgi
     before_script:
-    - apk add --update base64
     - eval $(ssh-agent -s)
     - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
