@@ -8,6 +8,7 @@ client:
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
     script:
+    - /builds/revision/revision-visualization/client/build
     - pwd
     - hostname -I
     - 'ssh -A -o StrictHostKeyChecking=no gitworker@158.39.77.144 "cd /home/gitworker && touch hello.txt"'
