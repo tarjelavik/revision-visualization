@@ -1,17 +1,12 @@
 client:
     when: manual
     image: oyvindlg/gitlab-ci-library:ansible-cgi
-    before_script:
+    script:
     - yum -y install epel-release nodejs
     - eval $(ssh-agent -s)
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
     - npm run build:client
-    - cd /builds/revision/revision-visualization/client
-    - ls
-    - scp -o "StrictHostKeyChecking=no" -r build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/
-    script:
-    - hostname -I
-    # - 'ssh -A -o StrictHostKeyChecking=no gitworker@158.39.77.144 "cd /home/gitworker && touch hello.txt"'
+    - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/client/build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/
     tags:
       - revision
