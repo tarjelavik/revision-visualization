@@ -3,12 +3,13 @@ client:
     image: weboaks/node-karma-protractor-chrome:alpine-root
     before_script:
     - npm run install:client
-    #- eval $(ssh-agent -s)
-    #- echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
     tags:
       - revision
 
+publish:
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
     script:
-    - npm run build:client
-    #- hostname -I
-    #- 'ssh -A -o StrictHostKeyChecking=no gitworker@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
+      - hostname -I
+      - 'ssh -A -o StrictHostKeyChecking=no gitworker@$IP "cd /home/gitworker && touch hello.txt"'
