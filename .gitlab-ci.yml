@@ -5,6 +5,7 @@ client:
     - npm run install:client
     #- eval $(ssh-agent -s)
     #- echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
+    tags: revision
 
     script:
     - npm run build:client:prod
