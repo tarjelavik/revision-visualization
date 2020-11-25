@@ -9,7 +9,7 @@ client:
     - npm run build:client
     - cd /builds/revision/revision-visualization/client
     - ls
-    - scp -o "StrictHostKeyChecking=no" -r build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/build
+    - scp -o "StrictHostKeyChecking=no" -r build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/
     script:
     - hostname -I
     # - 'ssh -A -o StrictHostKeyChecking=no gitworker@158.39.77.144 "cd /home/gitworker && touch hello.txt"'
