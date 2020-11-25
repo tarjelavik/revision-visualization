@@ -3,7 +3,7 @@ client:
     image: oyvindlg/gitlab-ci-library:ansible-cgi
     before_script:
     - eval $(ssh-agent -s)
-    - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
+    - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
     script:
     - hostname -I
