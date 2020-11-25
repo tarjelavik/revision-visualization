@@ -7,7 +7,7 @@ export default function Header(props: any) {
         <>
         {!props.isLoading && !props.displayGraph ?
         <Center>
-            <Heading size="xs" mt="2rem">Build your own graph</Heading>
+            <Heading mt="2rem">Build your own graph</Heading>
         </Center>
         : null}
         </>
