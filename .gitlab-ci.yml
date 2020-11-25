@@ -2,11 +2,11 @@ client:
     when: manual
     image: oyvindlg/gitlab-ci-library:ansible-cgi
     before_script:
-    - yum -y install epel-release nodejs
-    - echo node --version
+    #- yum -y install epel-release nodejs
+    #- echo node --version
     - eval $(ssh-agent -s)
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
-    - npm run install:client
+    #- npm run install:client
     script:
     - /builds/revision/revision-visualization/client/build
     - pwd
