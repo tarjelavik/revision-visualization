@@ -10,8 +10,8 @@ client:
     - cd /builds/revision/revision-visualization/client/build
     - pwd
     - scp -r build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/build
-    #script:
-    #- hostname -I
+    script:
+    - hostname -I
     # - 'ssh -A -o StrictHostKeyChecking=no gitworker@158.39.77.144 "cd /home/gitworker && touch hello.txt"'
     tags:
       - revision
