@@ -9,6 +9,6 @@ client:
       - revision
 
     script:
-    - npm run build
+    - npm run build:client
     #- hostname -I
     #- 'ssh -A -o StrictHostKeyChecking=no gitworker@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
