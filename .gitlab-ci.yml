@@ -1,10 +1,14 @@
-apply-config:
+client:
     when: manual
-    image: oyvindlg/gitlab-ci-library:ansible-cgi
+    image: weboaks/node-karma-protractor-chrome:alpine-root
     before_script:
-    - eval $(ssh-agent -s)
-    - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
-    script:
-    - hostname -I
-    - 'ssh -A -o StrictHostKeyChecking=no gitworker@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
+    - npm run install:client
+    #- eval $(ssh-agent -s)
+    #- echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
 
+    script:
+    - npm run build:client:prod
+    #- hostname -I
+    #- 'ssh -A -o StrictHostKeyChecking=no gitworker@pva.uib.no "cd /var/www/vimd && git pull origin deployment"'
+
+server:
