@@ -2,15 +2,11 @@ client:
     when: manual
     image: weboaks/node-karma-protractor-chrome:alpine-root
     before_script:
-    - npm run install:client
-    tags:
-      - revision
-
-publish:
-    when: manual
-    before_script:
     - eval $(ssh-agent -s)
     - echo "$PRIVATE_KEY" | base64 --decode | ssh-add -
+    - npm run install:client
     script:
     - hostname -I
-    - 'ssh -A -o StrictHostKeyChecking=no gitworker@$IP "cd /home/gitworker && touch hello.txt"'
+    - 'ssh -A -o StrictHostKeyChecking=no gitworker@158.39.77.144 "cd /home/gitworker && touch hello.txt"'
+    tags:
+      - revision
