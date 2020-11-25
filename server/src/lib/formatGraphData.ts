@@ -28,8 +28,9 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: object['o:bookObjectId'],
                     label: object.bookObjectTitle,
                     image: {
-                        url: 'https://upload.wikimedia.org/wikipedia/en/a/a9/Example.jpg',
+                        url: '',
                     },
+                    type: 'square',
                     class: 'BookObject'
                 });
             }
@@ -45,6 +46,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     image: {
                         url: '',
                     },
+                    type: 'circle',
                 });
                 // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
             }
@@ -59,6 +61,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     image: {
                         url: '',
                     },
+                    type: 'circle',
                 });
             } catch (error) {
                 console.log('not found');
@@ -69,7 +72,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['locationCreated:Id'],
                     label: object.locationCreated,
-                    type: 'circle'
+                    type: 'diamond'
                 });
             } catch (error) {
                 console.log('not found');
@@ -80,7 +83,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['toLocation:Id'],
                     label: object.toLocation,
-                    type: 'square'
+                    type: 'diamond'
                 });
             } catch (error) {
                 console.log('not found');
