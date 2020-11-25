@@ -8,8 +8,8 @@ const noResults = <IllustrationContainer src='Empty.png' alt="No results" heigth
 
 // Hardcoded pixels as 100vh does not work.
 const sigmaStyle = {
-    width: '1920px',
-    height: '1080px',
+    height: '100vh',
+    width: '100vw'
 };
 
 const onClickEdgeHandler = (e: any, props: any) => {
@@ -36,7 +36,7 @@ const sigma = (props: any) => {
                 renderer='canvas'
                 settings={
                     {
-                    scalingMode: 'outside',
+                    sideMargin: 10,
                     defaultLabelSize: 16,
                     labelThreshold: 0,
                     drawEdgeLabels: true,
