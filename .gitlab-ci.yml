@@ -16,6 +16,7 @@ server:
     script:
     - eval $(ssh-agent -s)
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
+    - npm i typescript
     - npm run build:server
     - ls
     #- scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/server/src gitworker@158.39.77.144:/var/www/html/revision-visualization/dist/server/
