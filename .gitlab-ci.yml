@@ -9,3 +9,14 @@ client:
     - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/client/build gitworker@158.39.77.144:/var/www/html/revision-visualization/client/
     tags:
       - revision
+
+server:
+    when: manual
+    image: oyvindlg/gitlab-ci-library:node
+    script:
+    - eval $(ssh-agent -s)
+    - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
+    - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/server/src gitworker@158.39.77.144:/var/www/html/revision-visualization/dist/server/
+    - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/package.json gitworker@158.39.77.144:/var/www/html/revision-visualization/
+    tags:
+      - revision
