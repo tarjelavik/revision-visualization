@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.get('/', (_req, res) => {
-    res.send('Revision-visualization server is running');
+    res.send('Revision-visualization server is up');
 });
 
 app.get('/api/resource_templates', async(_req, res) => {
