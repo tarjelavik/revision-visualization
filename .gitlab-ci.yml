@@ -1,8 +1,7 @@
 client:
     when: manual
-    image: oyvindlg/gitlab-ci-library:ansible-cgi
+    image: oyvindlg/gitlab-ci-library:node
     script:
-    - yum -y install epel-release nodejs
     - eval $(ssh-agent -s)
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
