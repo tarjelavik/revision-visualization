@@ -1,7 +1,9 @@
 {
-  "name": "revision-visualization",
+  "name": "revision-networks",
   "version": "1.0.0",
-  "description": "This repo contains code and documentation for the visualization component of the Revision project",
+  "author": "Ahl Nilsen",
+  "license": "ISC",
+  "description": "The app for the network component of the Revision project",
   "main": "./dist/server/src/app.js",
   "scripts": {
     "install:server": "npm install",
@@ -30,8 +32,6 @@
     "type": "git",
     "url": "git@git.app.uib.no:revision/revision-visualization.git"
   },
-  "author": "Ahl Nilsen",
-  "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.1",
     "@types/jest": "^26.0.14",
