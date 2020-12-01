@@ -26,7 +26,7 @@ This repo contains code and documentation for the visualization component of the
 - Starts React which supports hot reload OOTB
 
 ## Pre-commit hooks
-The following commands are automatically run before commits to version control.
+The following commands are automatically run before commits to version control. This can be omitted by adding the `-n` flag after your commit message.
 
 ### `lint`
 - eslint runs on the project. If the linter finds problems, you can try to automatically fix them by running `npm run fix`
