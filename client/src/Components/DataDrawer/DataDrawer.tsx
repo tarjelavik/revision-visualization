@@ -65,7 +65,7 @@ function DataDrawer(props: any) {
 
     const displayProperties = getDisplayProperties(props.nodeData);
     return (
-        <div >
+        <div>
             {props.nodeData ?
              <Drawer
                 isOpen={props.displayDrawer}

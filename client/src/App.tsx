@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import { getInitialGraphState } from './helpers';
 import { config } from './config';
 
 import Header from './Components/Header/Header';
@@ -7,6 +9,7 @@ import Form from './Components/Form/Form';
 import Spinner from './Components/Spinner/Spinner';
 import Sigma from './Components/Sigma/Sigma';
 import DataDrawer from './Components/DataDrawer/DataDrawer';
+import ControlBox from './Components/ControlBox/ControlBox';
 
 class App extends Component {
   state = {
@@ -175,6 +178,11 @@ class App extends Component {
     });
   }
 
+  resetGraphState = () => {
+    const initialState = getInitialGraphState();
+    this.setState(initialState);
+  }
+
   render () {
 
     const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
@@ -203,9 +211,14 @@ class App extends Component {
       displayDrawer={this.state.displayDrawer}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
+    const controlBox = <ControlBox setDisplayGraph={this.setDisplayGraph} resetGraph={this.resetGraphState} displayGraph={this.state.displayGraph}/>
+    console.log(this.state.formData)
+    console.log(this.state.selectedClasses)
+    console.log(this.state.graph)
     return (
       <div className='App'>
         {header}
+        {controlBox}
         {dataDrawer}
         {form}
         {spinner}

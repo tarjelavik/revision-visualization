@@ -23,6 +23,7 @@ export default function SimpleSelect(props: any) {
       props.removeSelectedClass(value);
       props.addToDropDownData(value);
     };
+
     return (
       <div>
         {!props.displayGraph && !props.isLoading ?
