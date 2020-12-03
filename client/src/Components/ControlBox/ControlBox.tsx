@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button } from "@chakra-ui/react"
 import { getLabel} from '../../helpers';
 
 const navigateToSearch = (props: any) => {
@@ -15,7 +14,7 @@ export default function ControlBox(props: any) {
     <>
         {props.displayGraph ?
         <Box w="fit-content" ml="2rem" padding="2rem" bg="grey.500">
-            <Button onClick={() => navigateToSearch(props)}>Back to search</Button>
+            <Button shadow="2xl" onClick={() => navigateToSearch(props)}>Back to search</Button>
         </Box>
         : null}
     </>

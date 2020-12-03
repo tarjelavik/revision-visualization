@@ -166,18 +166,18 @@ class App extends Component {
       getClickedNodeData={this.getClickedNodeData}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
-      const form = <Form
-      dropDownData={this.state.resourceTemplates}
-      displayGraph={this.state.displayGraph}
-      formValue={this.state.formData}
-      selectedClasses={this.state.selectedClasses}
-      isLoading={this.state.isLoading}
-      handleFormData={this.handleFormData}
-      setDisplayGraph={this.setDisplayGraph}
-      addSelectedClass={this.addSelectedClass}
-      removeSelectedClass={this.removeSelectedClasses}
-      removeFromDropDownData={this.removeFromDropDownData}
-      addToDropDownData={this.addToDropDownData}/>;
+    const form = <Form
+    dropDownData={this.state.resourceTemplates}
+    displayGraph={this.state.displayGraph}
+    formValue={this.state.formData}
+    selectedClasses={this.state.selectedClasses}
+    isLoading={this.state.isLoading}
+    handleFormData={this.handleFormData}
+    setDisplayGraph={this.setDisplayGraph}
+    addSelectedClass={this.addSelectedClass}
+    removeSelectedClass={this.removeSelectedClasses}
+    removeFromDropDownData={this.removeFromDropDownData}
+    addToDropDownData={this.addToDropDownData}/>;
 
     const dataDrawer = <DataDrawer
       nodeData={this.state.nodeData}
