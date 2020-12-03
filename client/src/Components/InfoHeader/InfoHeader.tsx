@@ -4,7 +4,7 @@ import { Heading } from '@chakra-ui/react';
 
 export default function InfoHeader(props: any) {
     return(
-            <Heading mb="2rem">{props.text}</Heading>
+            <Heading letterSpacing="2px" mb="2rem">{props.text}</Heading>
     );
 }
 

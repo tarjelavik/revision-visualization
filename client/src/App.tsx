@@ -180,7 +180,7 @@ class App extends Component {
     removeFromDropDownData={this.removeFromDropDownData}
     addToDropDownData={this.addToDropDownData}/>;
 
-    const infoContainer = <InfoContainer />
+    const infoContainer = <InfoContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} />
 
     const dataDrawer = <DataDrawer
       nodeData={this.state.nodeData}
