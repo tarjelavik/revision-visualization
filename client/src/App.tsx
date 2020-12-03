@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { getInitialGraphState } from './helpers';
+import { getInitialGraphState, getResourceTemplateId } from './helpers';
 import { config } from './config';
 
 import Header from './Components/Header/Header';
@@ -117,34 +117,6 @@ class App extends Component {
     }
   }
 
-  // Pure helper function - should be refactored out of this class.
-  getResourceTemplateId = (selectedClass: string) => {
-    switch (selectedClass) {
-        case 'Person':
-            return 'https://birgitta.test.uib.no/api/resource_templates/13';
-        case 'Place':
-            return 'https://birgitta.test.uib.no/api/resource_templates/14';
-        case 'Location in Time':
-          return 'https://birgitta.test.uib.no/api/resource_templates/15';
-        case 'Book Object':
-            return 'https://birgitta.test.uib.no/api/resource_templates/16';
-        case 'Institution':
-            return 'https://birgitta.test.uib.no/api/resource_templates/17';
-        case 'Work Item':
-          return 'https://birgitta.test.uib.no/api/resource_templates/18';
-        case 'Work':
-          return 'https://birgitta.test.uib.no/api/resource_templates/19';
-        case 'Non Book Object':
-          return 'https://birgitta.test.uib.no/api/resource_templates/20';
-        case 'Action':
-          return 'https://birgitta.test.uib.no/api/resource_templates/21';
-        case 'Data Source':
-          return 'https://birgitta.test.uib.no/api/resource_templates/22';
-        default:
-          return '0';
-    }
-};
-
   addSelectedClass = (selectedClass: string) => {
     const existingClasses = this.state.selectedClasses;
     existingClasses.push(selectedClass);
@@ -155,7 +127,7 @@ class App extends Component {
 
   removeSelectedClasses = (clickedClass: string) => {
     const clickedClasses = this.state.selectedClasses;
-    const indexToRemove = clickedClasses.indexOf(this.getResourceTemplateId(clickedClass));
+    const indexToRemove = clickedClasses.indexOf(getResourceTemplateId(clickedClass));
     clickedClasses.splice(indexToRemove);
     this.setState({
       selectedClasses: clickedClasses
@@ -171,8 +143,9 @@ class App extends Component {
   }
 
   addToDropDownData = (id: any) => {
+
     const ddData = this.state.resourceTemplates;
-    ddData.push({id:this.getResourceTemplateId(id), label: id})
+    ddData.push({id:getResourceTemplateId(id), label: id})
     this.setState({
       resourceTemplates: ddData
     });
@@ -211,10 +184,8 @@ class App extends Component {
       displayDrawer={this.state.displayDrawer}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
-    const controlBox = <ControlBox setDisplayGraph={this.setDisplayGraph} resetGraph={this.resetGraphState} displayGraph={this.state.displayGraph}/>
-    console.log(this.state.formData)
-    console.log(this.state.selectedClasses)
-    console.log(this.state.graph)
+    const controlBox = <ControlBox setDisplayGraph={this.setDisplayGraph} resetGraph={this.resetGraphState} displayGraph={this.state.displayGraph} selectedClasses={this.state.selectedClasses} addToDropDownData={this.addToDropDownData}/>
+
     return (
       <div className='App'>
         {header}
