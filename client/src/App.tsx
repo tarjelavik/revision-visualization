@@ -6,6 +6,7 @@ import { config } from './config';
 import Header from './Components/Header/Header';
 import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
 import Form from './Components/Form/Form';
+import InfoContainer from './Components/InfoContainer/InfoContainer';
 import Spinner from './Components/Spinner/Spinner';
 import Sigma from './Components/Sigma/Sigma';
 import DataDrawer from './Components/DataDrawer/DataDrawer';
@@ -179,6 +180,8 @@ class App extends Component {
     removeFromDropDownData={this.removeFromDropDownData}
     addToDropDownData={this.addToDropDownData}/>;
 
+    const infoContainer = <InfoContainer />
+
     const dataDrawer = <DataDrawer
       nodeData={this.state.nodeData}
       displayDrawer={this.state.displayDrawer}
@@ -191,6 +194,7 @@ class App extends Component {
         {header}
         {controlBox}
         {dataDrawer}
+        {infoContainer}
         {form}
         {spinner}
         {this.state.displayGraph ? sigma : null}
