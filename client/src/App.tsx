@@ -33,6 +33,7 @@ class App extends Component {
     selectedClasses: [] as string[],
     nodeData: null,
     displayDrawer: false,
+    showBackButton: false,
     appURL: ''
   };
 
@@ -157,6 +158,14 @@ class App extends Component {
     this.setState(initialState);
   }
 
+  toggleShowBackButton = () => {
+    const currentButton = this.state.showBackButton;
+    const showBackButton = !currentButton;
+    this.setState({
+      showBackButton: showBackButton
+    })
+}
+
   render () {
 
     const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
@@ -187,7 +196,7 @@ class App extends Component {
       displayDrawer={this.state.displayDrawer}
       setDisplayDrawer={this.setDisplayDrawer}/>;
 
-    const controlBox = <ControlBox setDisplayGraph={this.setDisplayGraph} resetGraph={this.resetGraphState} displayGraph={this.state.displayGraph} selectedClasses={this.state.selectedClasses} addToDropDownData={this.addToDropDownData}/>
+    const controlBox = <ControlBox showBackButton={this.state.showBackButton} toggleShowBackButton={this.toggleShowBackButton} setDisplayGraph={this.setDisplayGraph} resetGraph={this.resetGraphState} displayGraph={this.state.displayGraph} selectedClasses={this.state.selectedClasses} addToDropDownData={this.addToDropDownData}/>
 
     return (
       <div className='App'>

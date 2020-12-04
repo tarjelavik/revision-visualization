@@ -25,25 +25,22 @@ export default function SimpleSelect(props: any) {
     };
 
     return (
-      <div>
+      <Box>
         {!props.displayGraph && !props.isLoading ?
       <Center>
-        <Flex mt='7rem' borderWidth="1px" borderRadius="lg" h='15em' w={1/4} align='center' justifyContent='center'>
+        <Flex mt='7rem' borderWidth="1px" borderRadius="lg" h='15em' align='center' justifyContent='center'>
           <Box h='auto' w='auto' p={4}>
-            <form>
-                <Select
-                  variant='flushed'
-                  placeholder='Choose a class'
-                  value='Placeholder'
-                  onChange={(e) => handleChange(e, props)}>
-                  {props.dropDownData.map((dropDownOption: any, index: number) => {
-                    if (props.dropDownData.length) {
-                      return <DropDownOption onClick={() => handleOnClick(props)} dropDownData={dropDownOption} key={index}/>;
-                    }
-                    return null;
-                  })}
-                </Select>
-            </form>
+            <Select
+              variant='flushed'
+              placeholder='Choose a class'
+              onChange={(e) => handleChange(e, props)}>
+              {props.dropDownData.map((dropDownOption: any, index: number) => {
+                if (props.dropDownData.length) {
+                  return <DropDownOption onClick={() => handleOnClick(props)} dropDownData={dropDownOption} key={index}/>;
+                }
+                return null;
+              })}
+            </Select>
             <Flex flexWrap="wrap" w="12em">
               <Box>
                 {props.selectedClasses.map((value: string, index: number) => {
@@ -53,7 +50,7 @@ export default function SimpleSelect(props: any) {
             </Flex>
             {props.selectedClasses.length  ?
             <Center>
-              <Button style={buttonStyle} colorScheme='green' onClick={() => handleOnClick(props)}>
+              <Button style={buttonStyle} color='white' bg="#4D7494" onClick={() => handleOnClick(props)}>
                   Create graph
               </Button>
             </Center>
@@ -62,6 +59,6 @@ export default function SimpleSelect(props: any) {
         </Flex>
       </Center>
         : null}
-      </div>
+      </Box>
     );
   }
