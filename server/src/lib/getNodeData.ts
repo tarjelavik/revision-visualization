@@ -9,7 +9,7 @@ export const getNodeData = async(id: string) => {
         .catch(err => console.log(err));
         return nodeData
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return null;
     }
-}
+};
