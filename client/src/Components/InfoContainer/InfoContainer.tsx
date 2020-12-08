@@ -8,7 +8,7 @@ export default function InfoContainer(props: any) {
     return(
         <>
         {!props.isLoading && !props.displayGraph ?
-        <Flex mx="5rem" textAlign="center" letterSpacing="1px" align='center' justifyContent='space-between' mt="4rem">
+        <Flex mx="5rem" textAlign="center" letterSpacing="1px" align='center' justifyContent='space-between' mt="8rem">
             <Box w="30%" color="#4D7494">
                 <InfoHeader text="Select"/>
                 <Center mb="1rem">
