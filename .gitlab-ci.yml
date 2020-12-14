@@ -16,7 +16,7 @@ server:
     script:
     - eval $(ssh-agent -s)
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
-    - npm install:server
+    - npm run install:server
     - npm run test
     - npm run install:client
     - npm run build:client
