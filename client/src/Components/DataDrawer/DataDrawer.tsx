@@ -14,28 +14,10 @@ import {
   } from '@chakra-ui/react';
 
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
+import { PersonData, getDisplayProperties } from '../../helpers';
+import DataDrawerDisplayProperty from '../DataDrawerDisplayProperty/DataDrawerDisplayProperty';
 
 const drawerIllustration = <IllustrationContainer src='book_lover.svg' alt="No results" heigth="600px" width="600px"/>;
-
-// Todo: Refactor this interface out to somewhere else
-interface DisplayData {
-    type: string;
-    name: string;
-    alternateName?: string;
-    birthDate?: string;
-    deathDate?: string;
-    birthDateCertainty?: boolean;
-    deathDateCertainty?: boolean;
-    comment?: string;
-    mentionedInInscription?: string;
-    isScribeOf?: string;
-    isMakerOf?: string;
-    associatedPlace?: string;
-    profession?: string;
-    publishes?: string;
-    link: string;
-
-}
 
 const listStyle = {
     listStyleType: 'none'
@@ -45,70 +27,38 @@ const listElementStyle = {
     marginBottom: '1rem'
 };
 
-const getDisplayType = (dataType: string) => {
-    switch (dataType) {
-        case 'bdm2:Institution':
-            return 'Institution';
-        case 'bdm2:BookObject':
-            return 'Book object';
-        case 'bdm2:Person':
-            return 'Person';
-        case 'bdm2:Action':
-            return 'Action';
-        default:
-            return '';
-    }
-};
-
 // Todo: Refactor this out to a helper function or something
-const getDisplayProperties = (nodeData: any) => {
+const getPropertiesToDisplay = (nodeData: any) => {
     if (!nodeData) return null;
-    const displayData: DisplayData = {
-        type: '',
-        name: '',
-        alternateName: '',
-        birthDate: '',
-        deathDate: '',
-        birthDateCertainty: false,
-        deathDateCertainty: false,
-        comment: '',
-        mentionedInInscription: '',
-        isScribeOf: '',
-        isMakerOf: '',
-        associatedPlace: '',
-        profession: '',
-        publishes: '',
-        link: 'https://birgitta.test.uib.no/s/birgitta/item/'
-
-
-    };
-
-    try {
-        displayData.type = getDisplayType(nodeData['@type'][1]);
-        displayData.name = nodeData['o:title'] || 'null';
-        displayData.alternateName = nodeData['schema:alternateName']?.[0]['@value'];
-        displayData.birthDate = nodeData['schema:birthDate']?.[0]['@value'];
-        displayData.deathDate = nodeData['schema:deathDate']?.[0]['@value'];
-        displayData.birthDateCertainty = nodeData['bdm2:birthDateCertainty']?.[0]['@value'];
-        displayData.deathDateCertainty = nodeData['bdm2:deathDateCertainty']?.[0]['@value'];
-        displayData.comment = nodeData['schema:comment']?.[0]['@value'];
-        displayData.mentionedInInscription = nodeData['bdm2:mention']?.[0]['@value'];
-        displayData.isScribeOf = nodeData['bdm2:scribe']?.[0]['@value'];
-        displayData.isMakerOf = nodeData['bdm2:made']?.[0]['@value'];
-        displayData.associatedPlace = nodeData['schema:location']?.[0]['display_title'];
-        displayData.profession = nodeData['schema:occupationalCategory']?.[0]['@value'];
-        displayData.publishes = nodeData['bdm2:publication']?.[0]['@value'];
-        displayData.link = displayData.link+nodeData['o:id'];
-    } catch (error) {
-        console.log(error)
-    }
-    return displayData;
+    return getDisplayProperties(nodeData)
 };
+
+const desiredProps = ['schema:name']
+
+const filterProps = (props: any) => {
+
+    props = props || {hello: 'hello'}
+    console.log(Object.keys(props))
+    // let filteredProps = {};
+    Object.keys(props).forEach(propKey => {
+        console.log(propKey)
+        if (propKey in desiredProps) {
+            console.log(propKey)
+        }
+    });
+
+    return {hello: 'yolo'}
+}
 
 function DataDrawer(props: any) {
     const { onClose } = useDisclosure();
+    const nodes = filterProps(props.nodeData) || {hello: 'value'};
 
-    const displayProperties = getDisplayProperties(props.nodeData);
+
+
+    // TODO: Set inn all correct types here in the union statement
+    // Or should we just strive to get it all dynamic. Dynamically create the ListItems
+    const displayProperties: PersonData | any = getPropertiesToDisplay(props.nodeData);
     return (
         <div>
             {props.nodeData ?
@@ -123,7 +73,8 @@ function DataDrawer(props: any) {
                         <DrawerHeader>{displayProperties?.type}</DrawerHeader>
                         <DrawerBody>
                         <List style={listStyle}>
-                            <ListItem style={listElementStyle}>
+                        {Object.entries(nodes).map(([key, value]) => {return <DataDrawerDisplayProperty key={key} propKey={key} value={value}></DataDrawerDisplayProperty>})}
+                            {/* <ListItem style={listElementStyle}>
                                 <Heading size="xs">Name</Heading>
                                 {displayProperties?.name}
                             </ListItem>
@@ -197,7 +148,7 @@ function DataDrawer(props: any) {
                                 {displayProperties?.publishes}
                             </ListItem>: null}
 
-                            <ListItem style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></ListItem>
+                            <ListItem style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></ListItem> */}
                         </List>
                         </DrawerBody>
                         {drawerIllustration}
