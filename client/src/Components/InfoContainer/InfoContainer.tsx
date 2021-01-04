@@ -15,7 +15,7 @@ export default function InfoContainer(props: any) {
                     <FaHandPointer color="#8BBAE0" size="10%"/>
                 </Center>
                 <Text>
-                    Select the classes you'd like to explore relations between. You can narrow your selection by choosing specific values after you have selected one or more classes
+                    Select the classes you'd like to explore relations between. Narrow your selection by choosing specific values after you have selected one or more classes
                 </Text>
                 <Center>
                     <Divider borderColor="black" mt="2rem" w="30%"/>
@@ -27,7 +27,7 @@ export default function InfoContainer(props: any) {
                     <FaMap color="#8BBAE0" size="10%"/>
                 </Center>
                 <Text>
-                    When you have created your network, you can rearrange the layout by draging individual nodes. You can explore either nodes or connections by clicking on them
+                    When you have created your network, you can rearrange the layout by draging individual nodes. Explore nodes or connections by clicking on them
                 </Text>
                 <Center>
                     <Divider borderColor="black" mt="2rem" w="30%"/>

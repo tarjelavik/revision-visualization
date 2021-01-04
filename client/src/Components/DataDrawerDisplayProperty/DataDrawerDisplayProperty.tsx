@@ -7,6 +7,7 @@ function DataDrawerDisplayProperty(props: any) {
     return (
         <ListItem>
             <Heading size="xs">{props.propKey || null}</Heading>
+            {props.value}
         </ListItem>
     )
 }

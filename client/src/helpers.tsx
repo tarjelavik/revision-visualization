@@ -255,3 +255,37 @@ const getBookObjectData = (nodeData: any) => {
     }
     return displayData;
 }
+
+export const desiredProps = [
+  'schema:name',
+  'schema:alternateName',
+  'schema:birthDate',
+  'schema:deathDate',
+  'bdm2:birthDateCertainty',
+  'bdm2:deathDateCertainty',
+  'schema:comment',
+  'bdm2:mention',
+  'bdm2:scribe',
+  'bdm2:made',
+  'schema:location',
+  'schema:occupationalCategory',
+  'bdm2:publication',
+  'bdm2:shelfmark',
+  'schema:location',
+  'schema:containedInPlace',
+  'schema:includesObject',
+  'bdm2:dataSource',
+  'bdm2:previousShelfmark',
+  'bdm2:stcID',
+  'bdm2:hasType',
+  'bdm2:needsCheck',
+  'bdm2:referencesBirgitta',
+  'bdm2:referenceDetails',
+  'bdm2:checked',
+  'schema:comment',
+  'bdm2:writingSupport',
+  'bdm2:leafPageDimensions',
+  'bdm2:numberLeaves',
+  'bdm2:collationStatement',
+  'schema:pagination'
+]
