@@ -44,9 +44,8 @@ const filterProps = (props: any) => {
 
 function DataDrawer(props: any) {
     const { onClose } = useDisclosure();
-    const nodes = filterProps(props.nodeData) || {hello: 'va'};
+    const nodes = filterProps(props.nodeData);
 
-    // Or should we just strive to get it all dynamic. Dynamically create the ListItems
     const displayProperties: PersonData | any = getPropertiesToDisplay(props.nodeData);
     return (
         <div>
