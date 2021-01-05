@@ -1,9 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from './test-utils/test-utils';
+
+
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders the Birgitta Networks webpage', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const headerElement = getByText(/Build your own networks/i);
+  expect(headerElement).toBeInTheDocument();
 });
