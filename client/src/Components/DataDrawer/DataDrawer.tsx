@@ -12,19 +12,13 @@ import {
   } from '@chakra-ui/react';
 
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
-import { PersonData, getDisplayProperties, desiredProps } from '../../helpers';
+import { desiredProps, getDisplayType } from '../../helpers';
 import DataDrawerDisplayProperty from '../DataDrawerDisplayProperty/DataDrawerDisplayProperty';
 
 const drawerIllustration = <IllustrationContainer src='book_lover.svg' alt="No results" heigth="600px" width="600px"/>;
 
 const listStyle = {
     listStyleType: 'none'
-};
-
-// Todo: Refactor this out to a helper function or something
-const getPropertiesToDisplay = (nodeData: any) => {
-    if (!nodeData) return null;
-    return getDisplayProperties(nodeData)
 };
 
 const filterProps = (props: any) => {
@@ -42,11 +36,19 @@ const filterProps = (props: any) => {
     return filteredProps
 }
 
+const getLinkToResource = (props: any) => {
+    try {
+       return `https://birgitta.test.uib.no/s/birgitta/item/${props['o:id']}`
+    } catch {
+        return ''
+    }
+};
+
 function DataDrawer(props: any) {
     const { onClose } = useDisclosure();
     const nodes = filterProps(props.nodeData);
+    const linkToResource = getLinkToResource(props.nodeData)
 
-    const displayProperties: PersonData | any = getPropertiesToDisplay(props.nodeData);
     return (
         <div>
             {props.nodeData ?
@@ -58,10 +60,11 @@ function DataDrawer(props: any) {
                 onOverlayClick={() => props.setDisplayDrawer(false)}>
                 <DrawerOverlay bg="none">
                     <DrawerContent>
-                        <DrawerHeader>{displayProperties?.type}</DrawerHeader>
+                        <DrawerHeader>{getDisplayType(props.nodeData['@type'][1])}</DrawerHeader>
                         <DrawerBody>
                         <List style={listStyle}>
                         {nodes.map((element, index) => {return <DataDrawerDisplayProperty key={index} propKey={element['property_label']} value={element['display_title'] || element['@value']}/>})}
+                        <DataDrawerDisplayProperty propKey="Link to Record" value={<a href={linkToResource} target='_blank' rel='noopener noreferrer'>See full resource page</a>}/>
                         </List>
                         </DrawerBody>
                         {drawerIllustration}

@@ -2,23 +2,14 @@ import React from 'react';
 
 import { ListItem, Heading } from '@chakra-ui/react'
 
-// This is not functioning at the moment.
-const splitAndCapitalizeHeading = (propHeading: string) => {
+// Can we make this better?
+export const splitAndCapitalizeHeading = (propHeading: string) => {
 
-    if(!propHeading) return null
-
-    let charToSplitAt = 0;
-
-     propHeading.split('').map((character, index) => {
-        if (character === character.toUpperCase()) {
-            charToSplitAt = index
-        }
-    });
-
-    const processedHeading = propHeading.substring(0, charToSplitAt) + ' ' + propHeading.substring(charToSplitAt, -0)
-
-    return processedHeading
-}
+    if(!propHeading) return null;
+    propHeading = propHeading.replace(/([a-z])([A-Z])/g, '$1 $2');
+    propHeading = propHeading.charAt(0).toUpperCase() + propHeading.slice(1);
+    return propHeading
+};
 
 
 function DataDrawerDisplayProperty(props: any) {
