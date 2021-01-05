@@ -21,8 +21,6 @@
     "fix": "npx eslint . --ext .ts,.tsx --fix"
   },
   "pre-commit": [
-    "pre-lint-msg",
-    "lint",
     "pre-test-msg",
     "test"
   ],

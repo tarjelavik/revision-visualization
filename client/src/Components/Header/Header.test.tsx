@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { configure, shallow }from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -17,7 +16,6 @@ beforeEach(() => {
 describe('<Header />', () => {
     it('Should render if !isLoading', () => {
         wrapper.setProps({isLoading: false})
-        console.log(wrapper)
-        expect(wrapper.find(<Heading size="2xl" color="#4D7494" mt="2rem">Build your own networks</Heading>)).toHaveLength(1);
+        expect(wrapper.contains('Build your own networks')).toBeTruthy();
     });
 });

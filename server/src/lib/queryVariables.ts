@@ -26,4 +26,4 @@ export const personVariables = {
     OPTIONAL { ?s schema:occupationalCategory ?occupationalCategory } .
     OPTIONAL { ?s schema:comment ?comment }
     `
-}
+};
