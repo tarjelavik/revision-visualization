@@ -7,63 +7,48 @@ import {
     DrawerContent,
     DrawerOverlay,
     useDisclosure,
-    Button
+    Button,
+    List,
   } from '@chakra-ui/react';
 
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
+import { desiredProps, getDisplayType } from '../../helpers';
+import DataDrawerDisplayProperty from '../DataDrawerDisplayProperty/DataDrawerDisplayProperty';
 
 const drawerIllustration = <IllustrationContainer src='book_lover.svg' alt="No results" heigth="600px" width="600px"/>;
-interface DisplayData {
-    type: string;
-    name: string;
-    link: string;
-}
 
 const listStyle = {
     listStyleType: 'none'
 };
 
-const listElementStyle = {
-    marginBottom: '1rem'
-};
+const filterProps = (props: any) => {
 
-const getDisplayType = (dataType: string) => {
-    switch (dataType) {
-        case 'bdm2:Institution':
-            return 'Institution';
-        case 'bdm2:BookObject':
-            return 'Book object';
-        case 'bdm2:Person':
-            return 'Person';
-        case 'bdm2:Action':
-            return 'Action';
-        default:
-            return '';
+    // We need to set a guard against a null object here
+    props = props || {foo: 'bar'}
+    const filteredProps = []
+
+    for (let key in props) {
+        if (desiredProps.includes(key)) {
+            filteredProps.push(props[key][0])
+        }
     }
-};
 
-const getDisplayProperties = (nodeData: any) => {
-    if (!nodeData) return null;
-    const displayData: DisplayData = {
-        type: '',
-        name: '',
-        link: 'https://birgitta.test.uib.no/s/birgitta/item/'
-    };
+    return filteredProps
+}
 
+const getLinkToResource = (props: any) => {
     try {
-        displayData.name = nodeData['o:title'];
-        displayData.type = getDisplayType(nodeData['@type'][1]);
-        displayData.link = displayData.link+nodeData['o:id'];
-    } catch (error) {
-        console.log(error)
+       return `https://birgitta.test.uib.no/s/birgitta/item/${props['o:id']}`
+    } catch {
+        return ''
     }
-    return displayData;
 };
 
 function DataDrawer(props: any) {
     const { onClose } = useDisclosure();
+    const nodes = filterProps(props.nodeData);
+    const linkToResource = getLinkToResource(props.nodeData)
 
-    const displayProperties = getDisplayProperties(props.nodeData);
     return (
         <div>
             {props.nodeData ?
@@ -75,12 +60,12 @@ function DataDrawer(props: any) {
                 onOverlayClick={() => props.setDisplayDrawer(false)}>
                 <DrawerOverlay bg="none">
                     <DrawerContent>
-                        <DrawerHeader>{displayProperties?.type}</DrawerHeader>
+                        <DrawerHeader>{getDisplayType(props.nodeData['@type'][1])}</DrawerHeader>
                         <DrawerBody>
-                        <ul style={listStyle}>
-                            <li style={listElementStyle}>{displayProperties?.name}</li>
-                            <li style={listElementStyle}><a href={displayProperties?.link} target='_blank' rel='noopener noreferrer'>See full resource page</a></li>
-                        </ul>
+                        <List style={listStyle}>
+                        {nodes.map((element, index) => {return <DataDrawerDisplayProperty key={index} propKey={element['property_label']} value={element['display_title'] || element['@value']}/>})}
+                        <DataDrawerDisplayProperty propKey="Link to Record" value={<a href={linkToResource} target='_blank' rel='noopener noreferrer'>See full resource page</a>}/>
+                        </List>
                         </DrawerBody>
                         {drawerIllustration}
                         <DrawerFooter>

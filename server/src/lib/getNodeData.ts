@@ -5,9 +5,9 @@ export const getNodeData = async(id: string) => {
 
     try {
         const nodeData: any = axios.get(birgittaURL, { headers: {'Accept': 'application/ld+json'}})
-        .then(res => {return res.data})
-        .catch(err => console.log(err));
-        return nodeData
+            .then(res => {return res.data;})
+            .catch(err => console.log(err));
+        return nodeData;
     } catch (error) {
         console.log(error);
         return null;

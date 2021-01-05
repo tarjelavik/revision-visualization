@@ -17,14 +17,14 @@
     "pre-lint-msg": "Echo Linting project... && exit 0",
     "lint": "npx eslint . --ext .ts,.tsx",
     "pre-test-msg": "Echo running test suite... && exit 0",
-    "test": "npx jest",
+    "test:server": "npx jest",
+    "test:client": "cd client && npm run test && exit 0",
     "fix": "npx eslint . --ext .ts,.tsx --fix"
   },
   "pre-commit": [
-    "pre-lint-msg",
-    "lint",
     "pre-test-msg",
-    "test"
+    "test:server",
+    "test:client"
   ],
   "repository": {
     "type": "git",
@@ -37,7 +37,7 @@
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/eslint-plugin-tslint": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
-    "eslint": "^6.6.0",
+    "eslint": "^7.17.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsdoc": "^30.6.2",
@@ -45,7 +45,7 @@
     "eslint-plugin-prefer-arrow": "^1.2.2",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.1.2",
-    "jest": "24.9.0",
+    "jest": "^26.6.0",
     "nodemon": "^2.0.4",
     "pre-commit": "^1.2.2",
     "ts-jest": "^26.4.1",

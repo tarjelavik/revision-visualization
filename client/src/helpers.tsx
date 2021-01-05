@@ -103,3 +103,76 @@ export const getLabel = (resourceTemplate?: string) => {
           return null;
   }
 };
+
+
+export interface PersonData {
+  type: string;
+  name: string;
+  alternateName?: string;
+  birthDate?: string;
+  deathDate?: string;
+  birthDateCertainty?: boolean;
+  deathDateCertainty?: boolean;
+  comment?: string;
+  mentionedInInscription?: string;
+  isScribeOf?: string;
+  isMakerOf?: string;
+  associatedPlace?: string;
+  profession?: string;
+  publishes?: string;
+  link: string;
+}
+
+export const getDisplayType = (dataType: string) => {
+  switch (dataType) {
+      case 'bdm2:Institution':
+          return 'Institution';
+      case 'bdm2:BookObject':
+          return 'Book Object';
+      case 'bdm2:Person':
+          return 'Person';
+      case 'bdm2:Action':
+          return 'Action';
+      default:
+          return '';
+  }
+};
+
+export const getDisplayProperties = (nodeData: any) => {
+  if (!nodeData) return null;
+  return getDisplayType(nodeData['@type'][1]);
+};
+
+export const desiredProps = [
+  'schema:name',
+  'schema:alternateName',
+  'schema:birthDate',
+  'schema:deathDate',
+  'bdm2:birthDateCertainty',
+  'bdm2:deathDateCertainty',
+  'schema:comment',
+  'bdm2:mention',
+  'bdm2:scribe',
+  'bdm2:made',
+  'schema:location',
+  'schema:occupationalCategory',
+  'bdm2:publication',
+  'bdm2:shelfmark',
+  'schema:location',
+  'schema:containedInPlace',
+  'schema:includesObject',
+  'bdm2:dataSource',
+  'bdm2:previousShelfmark',
+  'bdm2:stcID',
+  'bdm2:hasType',
+  'bdm2:needsCheck',
+  'bdm2:referencesBirgitta',
+  'bdm2:referenceDetails',
+  'bdm2:checked',
+  'schema:comment',
+  'bdm2:writingSupport',
+  'bdm2:leafPageDimensions',
+  'bdm2:numberLeaves',
+  'bdm2:collationStatement',
+  'schema:pagination'
+]
