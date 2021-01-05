@@ -7,7 +7,7 @@ import Header from './Header';
 // Set up Enzyme
 configure({adapter: new Adapter()});
 
-    let wrapper;
+    let wrapper: any;
 
 beforeEach(() => {
     wrapper = shallow(<Header />);
