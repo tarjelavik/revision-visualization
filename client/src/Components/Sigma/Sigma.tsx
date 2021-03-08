@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Stack, Center, Heading } from '@chakra-ui/react';
 import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2 } from 'react-sigma';
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
+import empty from '../../Assets/img/Empty.png';
 
-const noResults = <IllustrationContainer src='Empty.png' alt="No results" heigth="800px" width="800px"/>;
+const noResults = <IllustrationContainer src={empty} alt="No results" heigth="800px" width="800px"/>;
 
 
-// Hardcoded pixels as 100vh does not work.
 const sigmaStyle = {
     height: '100vh',
     width: '100vw'

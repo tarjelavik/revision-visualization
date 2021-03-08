@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { getInitialGraphState, getResourceTemplateId } from './helpers';
 import { config } from './config';
+import Build from './Assets/img/Build.png';
 
 import Header from './Components/Header/Header';
 import IllustrationContainer from './Components/IllustrationContainer/IllustrationContainer';
@@ -169,7 +170,7 @@ class App extends Component {
   render () {
 
     const header = <Header displayGraph={this.state.displayGraph} isLoading={this.state.isLoading}/>;
-    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src='Build.png' alt="Computer image" heigth="400px" width="400px"/>;
+    const frontIllustration = <IllustrationContainer displayGraph={this.state.displayGraph} isLoading={this.state.isLoading} src={Build} alt="Computer image" heigth="400px" width="400px"/>;
     const spinner = <Spinner isLoading={this.state.isLoading}/>;
     const sigma = <Sigma
       graph={this.state.graph}

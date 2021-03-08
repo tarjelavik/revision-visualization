@@ -11,11 +11,12 @@ import {
     List,
   } from '@chakra-ui/react';
 
+import bookLover from '../../Assets/img/book_lover.svg';
 import IllustrationContainer from '../IllustrationContainer/IllustrationContainer';
 import { desiredProps, getDisplayType } from '../../helpers';
 import DataDrawerDisplayProperty from '../DataDrawerDisplayProperty/DataDrawerDisplayProperty';
 
-const drawerIllustration = <IllustrationContainer src='book_lover.svg' alt="No results" heigth="600px" width="600px"/>;
+const drawerIllustration = <IllustrationContainer src={bookLover} alt="No results" heigth="600px" width="600px"/>;
 
 const listStyle = {
     listStyleType: 'none'
