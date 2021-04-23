@@ -22,30 +22,31 @@ const listStyle = {
     listStyleType: 'none'
 };
 
-const filterProps = (props: any) => {
 
+const filterProps = (nodeData: any) => {
     // We need to set a guard against a null object here
-    props = props || {foo: 'bar'}
+    nodeData = nodeData || {foo: 'bar'}
     const filteredProps = []
 
-    for (let key in props) {
+    for (let key in nodeData) {
         if (desiredProps.includes(key)) {
-            filteredProps.push(props[key][0])
+            filteredProps.push(nodeData[key][0])
         }
     }
 
     return filteredProps
 }
 
-const getLinkToResource = (props: any) => {
+const getLinkToResource = (nodeData: any) => {
     try {
-       return `https://birgitta.test.uib.no/s/birgitta/item/${props['o:id']}`
+       return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`
     } catch {
         return ''
     }
 };
 
 function DataDrawer(props: any) {
+    console.log(props.nodeData)
     const { onClose } = useDisclosure();
     const nodes = filterProps(props.nodeData);
     const linkToResource = getLinkToResource(props.nodeData)
