@@ -50,7 +50,7 @@ export const getInitialGraphState = () => {
     return state;
 }
 
-export const getResourceTemplateId = (selectedClass: string) => {
+export const getResourceTemplateId = (selectedClass: string): string => {
     switch (selectedClass) {
         case 'Person':
             return 'https://birgitta.test.uib.no/api/resource_templates/13';
@@ -77,7 +77,7 @@ export const getResourceTemplateId = (selectedClass: string) => {
     }
 };
 
-export const getLabel = (resourceTemplate?: string) => {
+export const getLabel = (resourceTemplate?: string): string => {
   switch (resourceTemplate) {
       case 'https://birgitta.test.uib.no/api/resource_templates/13':
           return 'Person';
@@ -100,7 +100,7 @@ export const getLabel = (resourceTemplate?: string) => {
       case 'https://birgitta.test.uib.no/api/resource_templates/22':
       return 'Data Source';
       default:
-          return null;
+          return '';
   }
 };
 
@@ -123,7 +123,7 @@ export interface PersonData {
   link: string;
 }
 
-export const getDisplayType = (dataType: string) => {
+export const getDisplayType = (dataType: string): string => {
   switch (dataType) {
       case 'bdm2:Institution':
           return 'Institution';

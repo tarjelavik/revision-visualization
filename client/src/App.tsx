@@ -159,7 +159,7 @@ class App extends Component {
     this.setState(initialState);
   }
 
-  toggleShowBackButton = () => {
+  toggleShowBackButton = (): void => {
     const currentButton = this.state.showBackButton;
     const showBackButton = !currentButton;
     this.setState({
