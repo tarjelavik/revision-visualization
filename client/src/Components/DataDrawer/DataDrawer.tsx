@@ -46,7 +46,6 @@ const getLinkToResource = (nodeData: any) => {
 };
 
 function DataDrawer(props: any) {
-    console.log(props.nodeData)
     const { onClose } = useDisclosure();
     const nodes = filterProps(props.nodeData);
     const linkToResource = getLinkToResource(props.nodeData)

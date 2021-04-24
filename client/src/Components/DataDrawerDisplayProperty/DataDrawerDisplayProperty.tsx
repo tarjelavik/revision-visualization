@@ -1,8 +1,13 @@
 import React from 'react';
 
 import { ListItem, Heading } from '@chakra-ui/react'
+import DataDrawer from '../DataDrawer/DataDrawer';
 
-// Can we make this better?
+interface DataDrawerDisplayPropertyProps {
+    propKey: string,
+    value?: string | {}
+}
+
 export const splitAndCapitalizeHeading = (propHeading: string) => {
 
     if(!propHeading) return null;
@@ -11,8 +16,8 @@ export const splitAndCapitalizeHeading = (propHeading: string) => {
     return propHeading
 };
 
-
-function DataDrawerDisplayProperty(props: any) {
+function DataDrawerDisplayProperty(props: DataDrawerDisplayPropertyProps) {
+    console.log(props)
     return (
         <ListItem>
             <Heading size="xs">{splitAndCapitalizeHeading(props.propKey) || null}</Heading>
