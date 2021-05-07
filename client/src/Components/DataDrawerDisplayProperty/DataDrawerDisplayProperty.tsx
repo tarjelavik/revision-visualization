@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { ListItem, Heading } from '@chakra-ui/react'
-import DataDrawer from '../DataDrawer/DataDrawer';
-
 interface DataDrawerDisplayPropertyProps {
     propKey: string,
     value?: string | {}
