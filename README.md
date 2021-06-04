@@ -2,6 +2,11 @@
 
 This repo contains code and documentation for the visualization component of the Revision project. The app is built with Node.js, Express and React. It fetches data from the Birgitta-endpoint at https://sparql.birgitta.uib.no/birgitta-revision/query.
 
+
+## How to run
+`git clone git@git.app.uib.no:revision/revision-visualization.git` and then `cd revision-visualization`
+
+
 ## Available scripts
 
 ### `npm run install:server`
