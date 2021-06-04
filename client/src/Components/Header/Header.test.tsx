@@ -10,7 +10,7 @@ configure({adapter: new Adapter()});
     let wrapper: any;
 
 beforeEach(() => {
-    wrapper = shallow(<Header />);
+    wrapper = shallow(<Header isLoading={true} displayGraph={false} />);
 })
 
 describe('<Header />', () => {

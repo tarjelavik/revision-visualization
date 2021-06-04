@@ -1,7 +1,12 @@
 import React from 'react';
 import { Heading, Center } from "@chakra-ui/react"
 
-export default function Header(props: any) {
+interface HeaderProps {
+    isLoading: boolean,
+    displayGraph: boolean
+}
+
+export default function Header(props: HeaderProps) {
 
     return(
         <>
