@@ -6,7 +6,7 @@ client:
     - echo "$WORKER_PRIVATE_KEY" | base64 --decode | ssh-add -
     - npm run install:client
     - npm run build:client
-    - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/client/build gitworker@158.39.77.108:/var/www/html/revision-visualization/client/
+    - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/client/build gitworker@158.39.77.108:/var/www/html/revision-visualization/client
     tags:
       - revision
 
