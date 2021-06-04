@@ -4,7 +4,19 @@ This repo contains code and documentation for the visualization component of the
 
 
 ## How to run
-`git clone git@git.app.uib.no:revision/revision-visualization.git` and then `cd revision-visualization`
+Clone the project and cd into it:
+`git clone git@git.app.uib.no:revision/revision-visualization.git && cd revision-visualization`
+
+Install all dependencies:
+`npm run install:all`
+
+Start the server:
+`npm run start:server`
+
+Start the client:
+`npm run start:client`
+
+This should start a local development environment where the server is at port 3000 and the client at port 1234.
 
 
 ## Available scripts
@@ -15,7 +27,7 @@ This repo contains code and documentation for the visualization component of the
 ### `npm run install:client`
 - Installs npm dependencies for the client
 
-### `npm run install:All`
+### `npm run install:all`
 - Installs npm dependencies for the server and the client
 
 ### `npm run build:server`
@@ -27,7 +39,7 @@ This repo contains code and documentation for the visualization component of the
 ### `npm run start:dev:server`
 - Starts nodemon which enables watch function for server files
 
-### `npm run start:dev:client`
+### `npm run start:client`
 - Starts React which supports hot reload OOTB
 
 ## Pre-commit hooks
