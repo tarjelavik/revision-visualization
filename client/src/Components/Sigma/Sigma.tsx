@@ -45,6 +45,7 @@ const sigma = (props: any) => {
                     clone: false,
                     defaultNodeColor: '#454554',
                     enableEdgeHovering: true,
+                    edgeHoverSizeRatio: 1,
                     edgeHoverPrecision: 5,
                     minEdgeSize: 10
                     }
