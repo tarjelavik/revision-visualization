@@ -20,6 +20,7 @@ server:
     - npm run test
     - npm i typescript
     - npm run build:server
+    - cd /builds/revision/revision-visualization/dist/server/ && ls
     - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/dist/server/src gitworker@158.39.77.108:/var/www/html/revision-visualization/dist/server/
     - scp -o "StrictHostKeyChecking=no" -r /builds/revision/revision-visualization/package.json gitworker@158.39.77.108:/var/www/html/revision-visualization
     tags:
