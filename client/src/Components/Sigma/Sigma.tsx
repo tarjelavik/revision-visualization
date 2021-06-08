@@ -58,7 +58,7 @@ const sigma = (props: any) => {
                         onDrop={function noRefCheck() {}}
                         onStartdrag={function noRefCheck() {}}
                         />
-                        <RelativeSize initialSize={5}/>
+                        <RelativeSize initialSize={10}/>
                 </Sigma>
 
             </Box>
