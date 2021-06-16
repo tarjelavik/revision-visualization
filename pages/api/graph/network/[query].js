@@ -7,10 +7,13 @@ export default async function handler(req, res) {
   } = req
 
   // console.log("1: req: ", query)
-  
+
   switch (method) {
     case 'GET':
       try {
+        if(query?.length == 0) {
+          res.status(400).json(error);
+        }
         const response = await searchHandler(query);
         // console.log('Last: Network served: ', response)
         res.status(200).json(response)

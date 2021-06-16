@@ -3,7 +3,7 @@ import {extendTheme} from '@chakra-ui/react'
 const theme = extendTheme({
   fonts: {
     body: 'EB Garamond, serif',
-    heading: 'EB Garamond, sans-serif',
+    heading: 'EB Garamond, serif',
     mono: 'Menlo, monospace',
   },
   fontSizes: {
@@ -30,13 +30,6 @@ const theme = extendTheme({
       },
       blockquote: {
         color: 'red.600',
-      },
-      "#__next": {
-        display: 'grid',
-        direction: 'column',
-        h: '100%',
-        gridTemplateAreas: {base: '"header header header" "nav toggle main"', xl: '"header header header" "nav toggle main"'},
-        gridTemplateColumns: {base: "0px 0px 8fr", md: "auto auto 1fr", xl: "auto auto 1fr"},
       },
       ".active": {
         borderBottom: 'solid 2px',

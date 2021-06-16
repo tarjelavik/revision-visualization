@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { getInitialGraphState, getResourceTemplateId } from './helpers';
 
-import Header from '../components/Header/Header';
 import IllustrationContainer from '../components/IllustrationContainer/IllustrationContainer';
 import Form from '../components/Form/Form';
 import InfoContainer from '../components/InfoContainer/InfoContainer';
 import Spinner from '../components/Spinner/Spinner';
-import Sigma from '../components/Sigma/Sigma';
+import Sigma from '../components/SigmaBox';
 import DataDrawer from '../components/DataDrawer/DataDrawer';
 import ControlBox from '../components/ControlBox/ControlBox';
 

@@ -26,7 +26,7 @@ export default function Layout({children}) {
   }, []);
   
   return (
-    <Container>
+    <>
       <Header />
      
       <Box
@@ -41,6 +41,6 @@ export default function Layout({children}) {
       {/* <Footer 
         {...footer} 
       /> */}
-    </Container>
+    </>
   )
 }

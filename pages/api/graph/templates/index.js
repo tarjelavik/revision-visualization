@@ -1,5 +1,7 @@
 import { getResourceTemplates } from "../../lib/getResourceTemplates";
 
+const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
+
 export default async function handler(req, res) {
   const {
     method,
@@ -9,8 +11,14 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const response = await getResourceTemplates();
-        console.log('Templates served: ', response)
-        res.status(200).json(response)
+        const urlToNumber = response.map(item => {
+          return {
+            id: getLastItem(item.id),
+            label: item.label
+          }
+        })
+        // console.log('Templates served: ', urlToNumber)
+        res.status(200).json(urlToNumber)
       } catch (error) {
           res.status(400).json(error);
       }

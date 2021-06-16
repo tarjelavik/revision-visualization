@@ -1,0 +1,9 @@
+@media print {
+  #__next {
+    display: block
+  }
+  
+  @page {
+    size: A4;
+  }
+}

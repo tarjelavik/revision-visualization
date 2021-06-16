@@ -7,19 +7,20 @@ export const createConstructClause = (searchCategory) => {
     const types = JSON.parse(searchCategory);
 
     const constructStatementMap = {
-        'https://birgitta.test.uib.no/api/resource_templates/17': getConstructLocationClause(),
-        'https://birgitta.test.uib.no/api/resource_templates/13': getConstructInstigatorClause(),
-        'https://birgitta.test.uib.no/api/resource_templates/16': getConstructBookObjectClause(),
+        '17': getConstructLocationClause(),
+        '13': getConstructInstigatorClause(),
+        '16': getConstructBookObjectClause()
     };
 
     const construct = types.map(template => {
         if(constructStatementMap[template]) {
             return constructStatementMap[template];
-        }
+        } else return '';
     });
 
     // console.log('4.1.1: constructClause: ', construct);
-    return construct.filter(Boolean).join('\n');
+    const result = construct.filter(Boolean).join('\n');
+    return result ? result : null;
 };
 
 export const createWhereClause = (searchCategory) => {
@@ -27,19 +28,20 @@ export const createWhereClause = (searchCategory) => {
     const types = JSON.parse(searchCategory);
 
     const whereStatementMap = {
-        'https://birgitta.test.uib.no/api/resource_templates/17': getWhereLocationClause(),
-        'https://birgitta.test.uib.no/api/resource_templates/13': getWhereInstigatorClause(),
-        'https://birgitta.test.uib.no/api/resource_templates/16': getWhereBookObjectClause(),
+        '17': getWhereLocationClause(),
+        '13': getWhereInstigatorClause(),
+        '16': getWhereBookObjectClause()
     };
 
     const whereClause = types.map(template => {
         if(whereStatementMap[template]) {
             return whereStatementMap[template];
-        }
+        } else return '';
     });
 
     // console.log('4.2.1: whereClause: ', whereClause);
-    return whereClause.filter(Boolean).join('\n');
+    const result = whereClause.filter(Boolean).join('\n');
+    return result ? result : null;
 };
 
 export interface Query {
@@ -67,7 +69,7 @@ export const constructTemplate = (searchParameter) => {
             ${createWhereClause(searchParameter)}
         }`
 };
-    // console.log('43: query in constructTemplate', query);
+    // console.log('4.3: query in constructTemplate', query);
     return query;
 };
 
