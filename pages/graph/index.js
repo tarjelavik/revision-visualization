@@ -1,14 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Ontodia from 'ontodia'
 import { Heading } from '@chakra-ui/layout'
 import Layout from '../../components/Layout'
+import dynamic from 'next/dynamic'
+
+const OntodiaViewerWithNoSSR = dynamic(() => import('../../components/OntodiaViewer'), {ssr: false})
 
 export default function Graph() {
-  const x = Ontodia.
   return (
     <Layout>
-      <Heading>Graph</Heading>
+      <OntodiaViewerWithNoSSR />
     </Layout>
   )
 }
