@@ -27,29 +27,6 @@ export const resetState = () => {
     return state;
 };
 
-export const getInitialGraphState = () => {
-    const state = {
-        displayGraph: false,
-        graph: {
-            nodes:[ {
-              id: '',
-              label: ''
-            }],
-            edges:[ {
-              id: '',
-              source: '',
-              target: '',
-              label: ''
-            }]
-          },
-        formData: [] as string[],
-        selectedClasses: [] as string[],
-        nodeData: null,
-      };
-
-    return state;
-};
-
 export const getResourceTemplateId = (selectedClass: string): string => {
     switch (selectedClass) {
         case 'Person':

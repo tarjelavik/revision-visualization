@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const response = await getNodeData(id);
-        console.log('Node served: ', response)
+        // console.log('Node served: ', response.data)
         res.status(200).json(response.data)
       } catch (error) {
           res.status(400).json(error);
