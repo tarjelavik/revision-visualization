@@ -52,6 +52,7 @@
     "cors": "^2.8.5",
     "framer-motion": "^4.1.17",
     "next": "^11.0.0",
+    "ontodia": "^0.12.2",
     "react": "latest",
     "react-dom": "latest",
     "react-icons": "^4.2.0",
