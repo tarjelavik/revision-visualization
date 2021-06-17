@@ -1,4 +1,4 @@
-import { splitAndCapitalizeHeading } from './DataDrawerDisplayProperty';
+import { splitAndCapitalizeHeading } from '.';
 
 describe('splitAndCapitalizeHeading', () => {
     it('Should return a string wich is split into separate words, where each word is capitalized', () => {
