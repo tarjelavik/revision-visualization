@@ -1,7 +1,6 @@
 import ResourceTemplate from '../../../model/ResourceTemplate';
 import RawResourceTemplate from '../../../model/RawResourceTemplate';
 
-
 export const formatResourceTemplate = (rawResourceTemplate: RawResourceTemplate ): ResourceTemplate[] => {
     const resourceTemplates: ResourceTemplate[] = [];
 
@@ -15,9 +14,11 @@ export const formatResourceTemplate = (rawResourceTemplate: RawResourceTemplate 
             if (object['@id']) {
                 resourceTemplate.id = object['@id'];
             }
+
             if (object['o:label']) {
                 resourceTemplate.label = object['o:label'];
             }
+
             resourceTemplates.push(resourceTemplate);
         });
     } catch (error) {

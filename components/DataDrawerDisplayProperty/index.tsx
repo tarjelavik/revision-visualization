@@ -2,27 +2,27 @@ import React from 'react';
 import { ListItem, Heading } from '@chakra-ui/react';
 
 interface DataDrawerDisplayPropertyProps {
-  propKey: string;
-  value?: string | {};
+    propKey: string;
+    value?: string | unknown;
 }
 
 export const splitAndCapitalizeHeading = (propHeading: string) => {
-  if(!propHeading) return null;
+    if(!propHeading) return null;
 
-  propHeading = propHeading.replace(/([a-z])([A-Z])/g, '$1 $2');
-  propHeading = propHeading.charAt(0).toUpperCase() + propHeading.slice(1);
+    propHeading = propHeading.replace(/([a-z])([A-Z])/g, '$1 $2');
+    propHeading = propHeading.charAt(0).toUpperCase() + propHeading.slice(1);
 
-  return propHeading;
+    return propHeading;
 };
 
-function DataDrawerDisplayProperty(props: DataDrawerDisplayPropertyProps) {
-  // console.log(props);
-  return (
-    <ListItem>
-      <Heading size='xs'>{splitAndCapitalizeHeading(props.propKey) || null}</Heading>
-      {props.value}
-    </ListItem>
-  );
-}
+const  DataDrawerDisplayProperty = (props: DataDrawerDisplayPropertyProps) => {
+    // console.log(props);
+    return (
+        <ListItem>
+            <Heading size='xs'>{splitAndCapitalizeHeading(props.propKey) || null}</Heading>
+            {props.value}
+        </ListItem>
+    );
+};
 
 export default DataDrawerDisplayProperty;

@@ -1,20 +1,20 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
-    ],
-    "jsRules": {},
-    "rules": {
-        "no-console": false,
-        "semicolon": [true, "always"],
-        "no-irregular-whitespace": true,
-        "indent": [true, "spaces", 4],
-        "import-spacing": true,
-        "no-trailing-whitespace": [true, "ignore-comments"],
-        "quotemark": [true, "single", "avoid-escape"]
-    },
-    "rulesDirectory": [],
-    "linterOptions": {
-        "exclude": ["./model/*"]
-    }
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-console": false,
+    "semicolon": [false, "always"],
+    "no-irregular-whitespace": true,
+    "indent": [false, "spaces", 2],
+    "import-spacing": true,
+    "no-trailing-whitespace": [true, "ignore-comments"],
+    "quotemark": [true, "single", "avoid-escape"]
+  },
+  "rulesDirectory": [],
+  "linterOptions": {
+    "exclude": ["./model/*"]
+  }
 }

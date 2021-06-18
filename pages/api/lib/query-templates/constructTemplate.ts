@@ -50,25 +50,25 @@ export interface Query {
 
 export const constructTemplate = (searchParameter) => {
     // console.log('4: searchParameter in constructTemplate', searchParameter);
-    const query: Query = {query:
-        `PREFIX dcterms: <http://purl.org/dc/terms/>
-        PREFIX schema: <http://schema.org/>
-        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-        PREFIX bdm2: <http://purl.org/bdm2>
-        PREFIX o: <http://omeka.org/s/vocabs/o#>
-        CONSTRUCT {
-            ?s o:actionTitle ?action .
-            ?s o:actionId ?actionId .
-            ${createConstructClause(searchParameter)}
-        }
-        WHERE {
-            ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
-            ?s bdm2:hasType/o:title ?action .
-            ?s bdm2:hasType/o:id ?actionId .
-            ${createWhereClause(searchParameter)}
-        }`
-};
+    const query: Query = {query: `
+    PREFIX dcterms: <http://purl.org/dc/terms/>
+    PREFIX schema: <http://schema.org/>
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX bdm2: <http://purl.org/bdm2>
+    PREFIX o: <http://omeka.org/s/vocabs/o#>
+    CONSTRUCT {
+      ?s o:actionTitle ?action .
+      ?s o:actionId ?actionId .
+      ${createConstructClause(searchParameter)}
+    }
+    WHERE {
+      ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
+      ?s bdm2:hasType/o:title ?action .
+      ?s bdm2:hasType/o:id ?actionId .
+      ${createWhereClause(searchParameter)}
+    }`
+    };
     // console.log('4.3: query in constructTemplate', query);
     return query;
 };

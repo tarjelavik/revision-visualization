@@ -5,6 +5,6 @@ describe('splitAndCapitalizeHeading', () => {
         const testString = 'thisIsTheTestString';
         const resultString = splitAndCapitalizeHeading(testString);
         expect(resultString).toEqual('This Is The Test String');
-    })
-})
+    });
+});
 

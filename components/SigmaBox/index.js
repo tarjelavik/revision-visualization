@@ -33,7 +33,7 @@ const SigmaBox = ({classes, getClickedNodeData, setDisplayDrawer}) => {
   };
   
   useEffect(() => {
-    getGraph();
+    void getGraph();
   }, [classes]);
 
   return (

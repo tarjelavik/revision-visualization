@@ -1,4 +1,4 @@
 export default interface resourceTemplate {
-    id: string,
-    label: string,
+  id: string,
+  label: string,
 }

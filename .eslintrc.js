@@ -64,8 +64,8 @@ module.exports = {
             }
         ],
         "@typescript-eslint/consistent-type-assertions": "error",
-        "@typescript-eslint/dot-notation": "error",
-        "@typescript-eslint/indent": "error",
+        "@typescript-eslint/dot-notation": "warn",
+        "@typescript-eslint/indent": "warn",
         "@typescript-eslint/member-delimiter-style": [
             "error",
             {
@@ -79,8 +79,14 @@ module.exports = {
                 }
             }
         ],
+        "@typescript-eslint/no-unsafe-member-access": "warn",
+        "@typescript-eslint/no-unsafe-call": "warn",
+        "@typescript-eslint/no-unsafe-assignment": "warn",
+        "@typescript-eslint/no-unsafe-return": "warn",
+        "@typescript-eslint/restrict-plus-operands": "warn",
+        "@typescript-eslint/restrict-template-expressions": "warn",
         "@typescript-eslint/naming-convention": "warn",
-        "@typescript-eslint/no-empty-function": "error",
+        "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/no-empty-interface": "error",
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-misused-new": "error",
@@ -93,14 +99,14 @@ module.exports = {
         "@typescript-eslint/prefer-function-type": "error",
         "@typescript-eslint/prefer-namespace-keyword": "error",
         "@typescript-eslint/quotes": [
-            "error",
+            "warn",
             "single",
             {
                 "avoidEscape": true
             }
         ],
         "@typescript-eslint/semi": [
-            "error",
+            "warn",
             "always"
         ],
         "@typescript-eslint/triple-slash-reference": [
@@ -133,7 +139,7 @@ module.exports = {
         ],
         "id-match": "error",
         "jsdoc/check-alignment": "error",
-        "jsdoc/check-indentation": "error",
+        "jsdoc/check-indentation": "warn",
         "jsdoc/newline-after-description": "error",
         "max-classes-per-file": [
             "error",
@@ -159,7 +165,7 @@ module.exports = {
         ],
         "no-throw-literal": "error",
         "no-trailing-spaces": [
-            "error",
+            "warn",
             {
                 "ignoreComments": true
             }
@@ -174,7 +180,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "prefer-arrow/prefer-arrow-functions": "error",
+        "prefer-arrow/prefer-arrow-functions": "warn",
         "prefer-const": "error",
         "radix": "error",
         "spaced-comment": [
@@ -195,10 +201,10 @@ module.exports = {
                     "import-spacing": true,
                     "no-console": false,
                     "no-irregular-whitespace": true,
-                    "indent": [true, "spaces", 4],
+                    "indent": [true, "spaces", 2],
                     "import-spacing": true,
                     "no-trailing-whitespace": [true, "ignore-comments"],
-                    "quotemark": [true, "single", "avoid-escape"]
+                    "quotemark": [false, "single", "avoid-escape"]
                 }
             }
         ]

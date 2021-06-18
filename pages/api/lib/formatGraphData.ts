@@ -2,7 +2,6 @@ import RawGraphData from '../../../model/RawGraphData';
 import SigmaGraph from '../../../model/SigmaGraph';
 import Node from '../../../model/Node';
 import Edge from '../../../model/Edge';
-
 import { generateId } from './generateId';
 import { getActionId } from './helpers';
 
@@ -21,7 +20,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // Todo: Make interface for graphData
     graphData['@graph'].forEach(object => {
-        // console.log(object);
+    // console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
@@ -163,7 +162,6 @@ const parseToGraph = (graphData: any): SigmaGraph => {
         } catch (error) {
             console.log(error);
         }
-
     });
 
     const sigmaGraph: SigmaGraph = {

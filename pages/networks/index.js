@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import DataDrawerDisplayProperty from '../../components/DataDrawerDisplayProperty'
-import { desiredProps, getDisplayType } from '../helpers';
+import { desiredProps, getDisplayType } from '../../lib/helpers';
 
 const initialState = {
   resourceTemplates: [],
@@ -32,9 +32,9 @@ const filterProps = (nodeData) => {
   const filteredProps = [];
 
   for (const key in nodeData) {
-      if (desiredProps.includes(key)) {
-          filteredProps.push(nodeData[key][0]);
-      }
+    if (desiredProps.includes(key)) {
+      filteredProps.push(nodeData[key][0]);
+    }
   }
 
   return filteredProps;
@@ -42,9 +42,9 @@ const filterProps = (nodeData) => {
 
 const getLinkToResource = (nodeData) => {
   try {
-     return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`;
+    return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`;
   } catch {
-      return '';
+    return '';
   }
 };
 
@@ -89,7 +89,7 @@ export default function Networks() {
   }
   
   useEffect(() => {
-    getTemplates() 
+    void getTemplates() 
   }, [])
   
   return (

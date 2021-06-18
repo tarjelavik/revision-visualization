@@ -1,4 +1,4 @@
-import { generateId } from '../src/lib/generateId';
+import { generateId } from '../../lib/generateId';
 
 test('generateId should not return undefined', () => {
     const id = generateId();

@@ -1,7 +1,7 @@
 import {Link as ChakraLink} from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-export default function Link({href, children}) {
+const Link = ({href, children}) => {
   if (!href) return null
 
   return (
@@ -10,3 +10,5 @@ export default function Link({href, children}) {
     </ChakraLink>
   )
 }
+
+export default Link

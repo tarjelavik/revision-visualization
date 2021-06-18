@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { formatResourceTemplate } from './formatResourceTemplate';
 import ResourceTemplate from '../../../model/ResourceTemplate';
 

@@ -8,13 +8,13 @@ export default class SigmaLoader extends React.PureComponent {
   }
 
   componentDidMount() {
-    this._load(this.props.graph)
+    this.onLoad(this.props.graph)
   }
 
   componentDidUpdate(props) {
     if(props.graph !== this.props.sigma.graph) {
       this.setState({loaded:false})
-      this._load(props.graph)
+      this.onLoad(props.graph)
     }
   }
 
@@ -28,7 +28,7 @@ export default class SigmaLoader extends React.PureComponent {
     return <div>{ this.embedProps(this.props.children, {sigma: this.props.sigma}) }</div>
   }
 
-  _load(graph) {
+  onLoad(graph) {
     if( graph && typeof(graph) != 'undefined' &&
         typeof(this.props.sigma) != 'undefined' ) {
       this.props.sigma.graph.clear();

@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   switch (method) {
     case 'GET':
       try {
-        if(query?.length == 0) {
+        if(query?.length === 0) {
           res.status(400).json(error);
         }
         const response = await searchHandler(query);
