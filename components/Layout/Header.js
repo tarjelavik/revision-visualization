@@ -23,9 +23,10 @@ export default function Header() {
         wrap="wrap"
         padding={4}
         w="full"
-        bgColor="#ffcc00"
+        bgColor="rgba(255, 204, 0, 0.8)"
       >
-        <Heading 
+        <Heading
+          textTransform="uppercase"
           fontSize={["lg", "xl", "3xl", "3xl"]} 
           px={{base: "5", md: "0"}}
         >
@@ -41,7 +42,7 @@ export default function Header() {
         wrap="wrap"
         padding={4}
         w="full"
-        bgColor="gray.300"
+        bgColor="rgba(200,200,200, 0.3)"
       >
         <Stack
           justify="center"
@@ -51,6 +52,8 @@ export default function Header() {
           alignItems="center"
           flexGrow={1}
           mt={{ base: 4, md: 0 }}
+          fontSize="18px"
+          opacity="1"
         >
           <ActiveLink href={`${site}`} activeClassName="active">
             <a>Home</a>
