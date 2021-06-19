@@ -70,19 +70,19 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
               drawLabels: true,
               minArrowSize: 8,
               clone: false,
-              minNodeSize: 16,
+              minNodeSize: 10,
               defaultNodeColor: '#454554',
               enableEdgeHovering: true,
-              edgeHoverSizeRatio: 3,
+              edgeHoverSizeRatio: 5,
               edgeHoverPrecision: 5,
               minEdgeSize: 1,
               verbose: true,
             }}
           >
             <SigmaLoader graph={graph}>
-              <ForceAtlas2 />
-              <NOverlap gridSize={1} maxIterations={1000} />
+              <ForceAtlas2 background easing="cubicInOut" />
               <RandomizeNodePositions />
+              <NOverlap gridSize={20} maxIterations={100} />
               <DragNodes
                 // tslint:disable-next-line:no-empty
                 onDrag={function noRefCheck() {}}
@@ -93,7 +93,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
                 // tslint:disable-next-line:no-empty
                 onStartdrag={function noRefCheck() {}}
               />
-              <RelativeSize initialSize={10} />
+              <RelativeSize initialSize={8} />
             </SigmaLoader>
           </Sigma>
         </Box>
