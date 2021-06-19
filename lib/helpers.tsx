@@ -97,7 +97,7 @@ export interface PersonData {
   associatedPlace?: string;
   profession?: string;
   publishes?: string;
-  link: string;
+  link: string
 }
 
 export const getDisplayType = (dataType: string): string => {
