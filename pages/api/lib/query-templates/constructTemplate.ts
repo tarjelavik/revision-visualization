@@ -45,7 +45,7 @@ export const createWhereClause = (searchCategory) => {
 };
 
 export interface Query {
-    query: string;
+    query: string
 }
 
 export const constructTemplate = (searchParameter) => {
