@@ -1,59 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Heading, Flex } from '@chakra-ui/react';
-import {Sigma, RandomizeNodePositions, NOverlap, RelativeSize, DragNodes, ForceAtlas2 } from 'react-sigma';
+import {
+  Sigma,
+  RandomizeNodePositions,
+  NOverlap,
+  RelativeSize,
+  DragNodes,
+  ForceAtlas2,
+} from 'react-sigma';
 import SigmaLoader from './SigmaLoader';
 
 const sigmaStyle = {
   height: '100vh',
-  width: '100vw'
+  width: '100vw',
 };
 
-const SigmaBox = ({classes, getClickedNodeData, setDisplayDrawer}) => {
+const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
-  
+
   const onClickEdgeHandler = (event) => {
     // console.log('Edge clicked: ', event)
     getClickedNodeData(event.data.edge.actionId);
-    setDisplayDrawer(true);
+    setDisplayDrawer();
   };
-  
+
   const onClickNodeHandler = (event) => {
     // console.log('Node clicked: ', event)
     getClickedNodeData(event.data.node.id);
-    setDisplayDrawer(true);
+    setDisplayDrawer();
   };
 
-  const getGraph = async() => {
+  const getGraph = async () => {
     setLoading(true);
-    const response = await fetch(`api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`);
+    const response = await fetch(
+      `api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`
+    );
     const body = await response.json();
     setGraph(body.graph);
     setLoading(false);
   };
-  
+
   useEffect(() => {
     void getGraph();
   }, [classes]);
 
   return (
     <>
-      {loading &&
-        <Flex
-          h="80vh"  
-          justifyContent="center"
-          align="center"
-        >
-          <Heading as='p' size='xl'>Loading data...</Heading>
-        </Flex>} 
+      {loading && (
+        <Flex h="80vh" justifyContent="center" align="center">
+          <Heading as="p" size="xl">
+            Loading data...
+          </Heading>
+        </Flex>
+      )}
 
-      {graph?.nodes && !loading &&
-        <Box w='100%' h='100%'>
+      {graph?.nodes && !loading && (
+        <Box w="full" h="full" position="relative">
           <Sigma
             style={sigmaStyle}
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
-            renderer='canvas'
+            renderer="canvas"
             settings={{
               sideMargin: 50,
               defaultLabelSize: 14,
@@ -68,13 +76,13 @@ const SigmaBox = ({classes, getClickedNodeData, setDisplayDrawer}) => {
               edgeHoverSizeRatio: 3,
               edgeHoverPrecision: 5,
               minEdgeSize: 1,
-              verbose: true
+              verbose: true,
             }}
           >
             <SigmaLoader graph={graph}>
-              <ForceAtlas2/>
-              <NOverlap gridSize={1} maxIterations={1000}/>
-              <RandomizeNodePositions/>
+              <ForceAtlas2 />
+              <NOverlap gridSize={1} maxIterations={1000} />
+              <RandomizeNodePositions />
               <DragNodes
                 // tslint:disable-next-line:no-empty
                 onDrag={function noRefCheck() {}}
@@ -85,21 +93,22 @@ const SigmaBox = ({classes, getClickedNodeData, setDisplayDrawer}) => {
                 // tslint:disable-next-line:no-empty
                 onStartdrag={function noRefCheck() {}}
               />
-              <RelativeSize initialSize={10}/>
+              <RelativeSize initialSize={10} />
             </SigmaLoader>
           </Sigma>
-        </Box>}
+        </Box>
+      )}
 
-        {graph.nodes && !loading && ( 
-          <Flex
-            h="80vh"  
-            justifyContent="center"
-            align="center"
-          >
-            <Heading as='h1' size='2xl' textAlign='center'>No results!</Heading>
-            <Heading as='h2' size='xl' mt='4rem' textAlign='center'>Refresh the page to search again</Heading>
-          </Flex>
-        )}
+      {!graph.nodes && !loading && (
+        <Flex h="80vh" justifyContent="center" align="center">
+          <Heading as="h1" size="2xl" textAlign="center">
+            No results!
+          </Heading>
+          <Heading as="h2" size="xl" mt="4rem" textAlign="center">
+            Refresh the page to search again
+          </Heading>
+        </Flex>
+      )}
     </>
   );
 };

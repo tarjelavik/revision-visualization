@@ -1,34 +1,41 @@
-import { Flex, HStack } from '@chakra-ui/layout'
-import { Box, Button, Checkbox, CheckboxGroup, Drawer,
+import {
+  Container,
+  Flex,
+  HStack,
+  Stack,
+  Text,
+  Wrap,
+  WrapItem,
+} from '@chakra-ui/layout';
+import {
+  Box,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Drawer,
   DrawerBody,
   DrawerFooter,
   DrawerHeader,
   DrawerContent,
   DrawerOverlay,
   useDisclosure,
-  List } from "@chakra-ui/react"
-import dynamic from 'next/dynamic'
-import { useEffect, useState } from 'react'
-import Layout from '../../components/Layout'
-import DataDrawerDisplayProperty from '../../components/DataDrawerDisplayProperty'
+  List,
+} from '@chakra-ui/react';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import Layout from '../../components/Layout';
+import DataDrawerDisplayProperty from '../../components/DataDrawerDisplayProperty';
 import { desiredProps, getDisplayType } from '../../lib/helpers';
 
 const initialState = {
   resourceTemplates: [],
-  isLoading: false,
-  displayGraph: false,
-  formData: [],
-  selectedClasses: [
-    "13", 
-    "16"
-  ],
+  selectedClasses: ['13', '16'],
   nodeData: null,
-  displayDrawer: true,
-}
+};
 
 const filterProps = (nodeData) => {
   // We need to set a guard against a null object here
-  nodeData = nodeData || {foo: 'bar'};
+  nodeData = nodeData || { foo: 'bar' };
   const filteredProps = [];
 
   for (const key in nodeData) {
@@ -48,11 +55,13 @@ const getLinkToResource = (nodeData) => {
   }
 };
 
-const SigmaWithNoSSR = dynamic(() => import('../../components/SigmaBox'), {ssr: false})
+const SigmaWithNoSSR = dynamic(() => import('../../components/SigmaBox'), {
+  ssr: false,
+});
 
-export default function Networks() {
-  const [state, setState] = useState(initialState)
-  const { onClose } = useDisclosure();
+const Networks = () => {
+  const [state, setState] = useState(initialState);
+  const { isOpen, onClose, onToggle } = useDisclosure();
 
   const nodes = filterProps(state.nodeData);
   const linkToResource = getLinkToResource(state.nodeData);
@@ -62,120 +71,134 @@ export default function Networks() {
     const body = await response.json();
     setState({
       ...state,
-      resourceTemplates: body
-    })
-  }
+      resourceTemplates: body,
+    });
+  };
 
   const getClickedNodeData = async (id) => {
     const response = await fetch(`api/graph/node/${id}`);
     try {
       const body = await response.json();
-      console.log(body)
+      console.log(body);
       setState({
         ...state,
-        nodeData: body
+        nodeData: body,
       });
     } catch (error) {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
       console.log(error);
     }
-  }
+  };
 
-  const setDisplayDrawer = (bool) => {
-    setState({
-      ...state,
-      displayDrawer: bool
-    });
-  }
-  
+  const setDisplayDrawer = () => {
+    onToggle();
+  };
+
   useEffect(() => {
-    void getTemplates() 
-  }, [])
-  
+    void getTemplates();
+  }, []);
+
   return (
     <Layout>
-      <Flex
+      <Container
+        maxW="full"
+        m="0"
+        pt="4"
         as="header"
         align="center"
         justify="center"
         wrap="wrap"
-        padding={2}
-        w="full"
         bgColor="gray.100"
         borderColor="gray.600"
         borderBottom="solid 2px"
       >
-        <Box mr="5"><strong>Build your network:</strong></Box>
-        <CheckboxGroup 
-          colorScheme="teal" 
-          defaultValue={state.selectedClasses}
-          onChange={(e) => setState({
-            ...state,
-            selectedClasses: e
-          })}
-        >
-          <HStack spacing={10} direction="row">
-            {state.resourceTemplates && state.resourceTemplates.map(template => (
-              <Checkbox size="md" value={template.id} key={template.id}>
-                {template.label}
-              </Checkbox>
-            ))}
-          </HStack>
-        </CheckboxGroup>
-        {/* <Button>Apply</Button> */}
-      </Flex>
+        <Stack spacing={2} direction="row">
+          <Text fontSize="sm" mr="5" pr="5" borderRight="solid 1px">
+            Build your network
+          </Text>
+
+          <CheckboxGroup
+            colorScheme="teal"
+            defaultValue={state.selectedClasses}
+            onChange={(e) =>
+              setState({
+                ...state,
+                selectedClasses: e,
+              })
+            }
+          >
+            <Wrap spacing={0}>
+              {state.resourceTemplates &&
+                state.resourceTemplates.map((template) => (
+                  <WrapItem key={template.id} pr="7">
+                    <Checkbox size="md" value={template.id}>
+                      {template.label}
+                    </Checkbox>
+                  </WrapItem>
+                ))}
+            </Wrap>
+          </CheckboxGroup>
+        </Stack>
+      </Container>
 
       {state.resourceTemplates && (
-        <SigmaWithNoSSR 
-          classes={state.selectedClasses}  
-          getClickedNodeData={getClickedNodeData}
-          setDisplayDrawer={setDisplayDrawer}
-          /* graph={graph} */ 
-        /> 
-      )};
-      
-      {/* <pre>
-        {JSON.stringify(state, null, 2)}
-      </pre> */}
-      {state.nodeData ?
+        <Box position="relative">
+          <SigmaWithNoSSR
+            classes={state.selectedClasses}
+            getClickedNodeData={getClickedNodeData}
+            setDisplayDrawer={setDisplayDrawer}
+            /* graph={graph} */
+          />
+        </Box>
+      )}
+
+      {state.nodeData && (
         <Drawer
-          isOpen={state.displayDrawer}
-          placement='right'
+          placement="right"
           onClose={onClose}
+          isOpen={isOpen}
           trapFocus={false}
-          onOverlayClick={() => setDisplayDrawer(false)}
-          onEsc={() => setDisplayDrawer(false)}
+          onOverlayClick={onClose}
+          onEsc={onClose}
         >
           <DrawerOverlay>
             <DrawerContent>
-              <DrawerHeader>{getDisplayType(state.nodeData['@type'][1])}</DrawerHeader>
+              <DrawerHeader>
+                {getDisplayType(state.nodeData['@type'][1])}
+              </DrawerHeader>
               <DrawerBody>
                 <List>
-                  {nodes.length && nodes.map((element, index) => (
-                    <DataDrawerDisplayProperty 
-                      key={index} 
-                      propKey={element['property_label']} 
-                      value={element['display_title'] || element['@value']}
-                    />
-                  ))}
-                  <DataDrawerDisplayProperty 
-                    propKey="Link to Record" 
+                  {nodes.length &&
+                    nodes.map((element, index) => (
+                      <DataDrawerDisplayProperty
+                        key={index}
+                        propKey={element['property_label']}
+                        value={element['display_title'] || element['@value']}
+                      />
+                    ))}
+                  <DataDrawerDisplayProperty
+                    propKey="Link to Record"
                     value={
-                      <a href={linkToResource} 
-                        target='_blank' 
-                        rel='noopener noreferrer'>See full resource page
+                      <a
+                        href={linkToResource}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        See full resource page
                       </a>
                     }
                   />
                 </List>
               </DrawerBody>
               <DrawerFooter>
-                <Button onClick={() => setDisplayDrawer(false)}>Close</Button>
+                <Button onClick={onToggle}>Close</Button>
               </DrawerFooter>
             </DrawerContent>
-        </DrawerOverlay>
-      </Drawer>
-      : null}
+          </DrawerOverlay>
+        </Drawer>
+      )}
     </Layout>
-  )
-}
+  );
+};
+
+export default Networks;
