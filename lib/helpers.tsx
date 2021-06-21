@@ -81,7 +81,6 @@ export const getLabel = (resourceTemplate?: string): string => {
   }
 };
 
-
 export interface PersonData {
   type: string;
   name: string;
@@ -151,5 +150,9 @@ export const desiredProps = [
   'bdm2:leafPageDimensions',
   'bdm2:numberLeaves',
   'bdm2:collationStatement',
-  'schema:pagination'
+  'schema:pagination',
+  'schema:recipient',
+  'schema:roleName',
+  'schema:creator',
+  'rdfs:label'
 ];
