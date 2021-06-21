@@ -91,7 +91,7 @@ const Header = () => {
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={'/graph'} activeClassName="active">
+            <ActiveLink href={'https://revision-ontodia.vercel.app'} activeClassName="active">
               <a>Graph</a>
             </ActiveLink>
           </WrapItem>
