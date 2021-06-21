@@ -27,7 +27,8 @@ const Header = () => {
         align="center"
         justify="center"
         wrap="wrap"
-        padding={4}
+        pt="3"
+        pb={4}
         maxW="full"
         bgColor="rgba(255, 204, 0, 0.8)"
       >
@@ -46,7 +47,7 @@ const Header = () => {
         <Wrap
           pb="2"
           px="8"
-          spacing=""
+          spacing="4"
           justify="center"
           alignItems="center"
           fontSize="18px"

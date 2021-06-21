@@ -93,7 +93,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
                 // tslint:disable-next-line:no-empty
                 onStartdrag={function noRefCheck() {}}
               />
-              <RelativeSize initialSize={8} />
+              <RelativeSize initialSize={1} />
             </SigmaLoader>
           </Sigma>
         </Box>

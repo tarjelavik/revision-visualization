@@ -103,7 +103,7 @@ const Networks = () => {
       <Container
         maxW="full"
         m="0"
-        pt="4"
+        pt="2"
         as="header"
         align="center"
         justify="center"
