@@ -8,6 +8,7 @@ import {
   DragNodes,
   ForceAtlas2,
 } from 'react-sigma';
+import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
 
 const sigmaStyle = {
@@ -65,7 +66,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             settings={{
               sideMargin: 50,
               defaultLabelSize: 14,
-              labelThreshold: 0,
+              labelThreshold: 5,
               drawEdgeLabels: true,
               drawLabels: true,
               minArrowSize: 8,
@@ -80,9 +81,29 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             }}
           >
             <SigmaLoader graph={graph}>
-              <ForceAtlas2 background easing="cubicInOut" />
+              <NOverlap 
+                easing="quadraticInOut"
+                duration={2000}
+                gridSize={20}
+                maxIterations={100}
+                nodeMargin={20}
+                scaleNodes={4}
+                speed={10} 
+              />
+              <ForceLink
+                background
+                barnesHutTheta={0.5}
+                easing="quadraticInOut"
+                edgeWeightInfluence={0}
+                gravity={1}
+                linLogMode
+                randomize="locally"
+                timeout={2000}
+                worker
+              />
+
+              <RelativeSize initialSize={15} />
               <RandomizeNodePositions />
-              <NOverlap gridSize={20} maxIterations={100} />
               <DragNodes
                 // tslint:disable-next-line:no-empty
                 onDrag={function noRefCheck() {}}
@@ -93,7 +114,6 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
                 // tslint:disable-next-line:no-empty
                 onStartdrag={function noRefCheck() {}}
               />
-              <RelativeSize initialSize={1} />
             </SigmaLoader>
           </Sigma>
         </Box>
