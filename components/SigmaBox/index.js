@@ -66,7 +66,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             settings={{
               sideMargin: 50,
               defaultLabelSize: 14,
-              labelThreshold: 5,
+              labelThreshold: 200,
               drawEdgeLabels: true,
               drawLabels: true,
               minArrowSize: 8,
