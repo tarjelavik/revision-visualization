@@ -30,8 +30,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                         url: '/icons/book-item-svgrepo.svg',
                     },
                     type: 'square',
-                    color: '#C16200',
-                    class: 'BookObject'
+                    color: '#D08770',
+                    class: 'BookObject',
                 });
             }
         } catch (error) {
@@ -46,6 +46,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     image: {
                         url: '',
                     },
+                    color: '#B48EAD',
                     type: 'circle',
                 });
                 // TODO: Let the client know that the object ['o:creatorId'] is now using "star" as its shape and "red" as color
@@ -61,6 +62,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     image: {
                         url: '',
                     },
+                    color: '#A3BE8C',
                     type: 'circle',
                 });
             } catch (error) {
@@ -72,7 +74,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['locationCreated:Id'],
                     label: object.locationCreated,
-                    type: 'diamond'
+                    color: '#EBCB8B',
+                    type: 'diamond',
                 });
             } catch (error) {
                 console.log('not found');
@@ -83,7 +86,8 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['toLocation:Id'],
                     label: object.toLocation,
-                    type: 'diamond'
+                    color: '#BF616A',
+                    type: 'diamond',
                 });
             } catch (error) {
                 console.log('not found');
