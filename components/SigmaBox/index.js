@@ -81,39 +81,31 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             }}
           >
             <SigmaLoader graph={graph}>
-              <NOverlap 
-                easing="quadraticInOut"
-                duration={2000}
-                gridSize={20}
-                maxIterations={100}
-                nodeMargin={20}
-                scaleNodes={4}
-                speed={10} 
-              />
-              <ForceLink
-                background
-                barnesHutTheta={0.5}
-                easing="quadraticInOut"
-                edgeWeightInfluence={0}
-                gravity={1}
-                linLogMode
-                randomize="locally"
-                timeout={2000}
-                worker
-              />
+              <RandomizeNodePositions>
+                <ForceLink
+                  background
+                  barnesHutTheta={0.5}
+                  easing="quadraticInOut"
+                  edgeWeightInfluence={0}
+                  gravity={1}
+                  linLogMode
+                  randomize="locally"
+                  timeout={1000}
+                  worker
+                />
+                <RelativeSize initialSize={100} />
 
-              <RelativeSize initialSize={15} />
-              <RandomizeNodePositions />
-              <DragNodes
-                // tslint:disable-next-line:no-empty
-                onDrag={function noRefCheck() {}}
-                // tslint:disable-next-line:no-empty
-                onDragend={function noRefCheck() {}}
-                // tslint:disable-next-line:no-empty
-                onDrop={function noRefCheck() {}}
-                // tslint:disable-next-line:no-empty
-                onStartdrag={function noRefCheck() {}}
-              />
+                <DragNodes
+                  // tslint:disable-next-line:no-empty
+                  onDrag={function noRefCheck() {}}
+                  // tslint:disable-next-line:no-empty
+                  onDragend={function noRefCheck() {}}
+                  // tslint:disable-next-line:no-empty
+                  onDrop={function noRefCheck() {}}
+                  // tslint:disable-next-line:no-empty
+                  onStartdrag={function noRefCheck() {}}
+                />
+              </RandomizeNodePositions>
             </SigmaLoader>
           </Sigma>
         </Box>
