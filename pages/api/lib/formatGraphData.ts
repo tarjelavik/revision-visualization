@@ -27,9 +27,10 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: object['o:bookObjectId'],
                     label: object.bookObjectTitle,
                     image: {
-                        url: '',
+                        url: '/icons/book-item-svgrepo.svg',
                     },
                     type: 'square',
+                    color: '#C16200',
                     class: 'BookObject'
                 });
             }
