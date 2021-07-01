@@ -36,7 +36,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
     const relatedEdges = graph.edges.filter(e => e.source === event.data.node.id || e.target === event.data.node.id)
     // change the color of the edges related to the clicked node 
     relatedEdges.forEach(e => e.color = '#C21F30')
-    const allUnrelatedEdges = graph.edges.filter(e => e.source !== event.data.node.id && e.target != event.data.node.id)
+    const allUnrelatedEdges = graph.edges.filter(e => e.source !== event.data.node.id && e.target !== event.data.node.id)
     // keep the color of the unlated edges to original color 
     allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
     getClickedNodeData(event.data.node.id);
