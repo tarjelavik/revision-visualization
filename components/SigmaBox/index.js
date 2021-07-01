@@ -23,9 +23,11 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
   const onClickEdgeHandler = (event) => {
     // change color of edges of the clicked edge
     event.data.edge.color = '#C21F30'
+    console.log('id of the clicked edge:', event.data.edge.id)
     const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
     // keep color of unclicked edges to original color:
     allOtherEdges.forEach(e => e.color = '#CFCCC9')
+    console.log(allOtherEdges)
     getClickedNodeData(event.data.edge.actionId);
     setDisplayDrawer();
   };
@@ -95,16 +97,15 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
           >
             <SigmaLoader graph={graph}>
               <RandomizeNodePositions>
-              <NOverlap 
-                  easing="quadraticInOut"
-                  duration={2000}
-                  gridSize={20}
-                  maxIterations = {100}
-                  nodeMargin={20}
-                  scaleNodes = {4}
-                  speed={10} 
-                ></NOverlap>
-
+                <NOverlap 
+                    easing="quadraticInOut"
+                    duration={2000}
+                    gridSize={20}
+                    maxIterations = { 100 }
+                    nodeMargin={20}
+                    scaleNodes = { 4 }
+                    speed={10} 
+                />
                 <RelativeSize initialSize={100} />
                 <DragNodes
                   // tslint:disable-next-line:no-empty
