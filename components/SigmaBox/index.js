@@ -21,13 +21,22 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
   const [loading, setLoading] = useState(false);
 
   const onClickEdgeHandler = (event) => {
-    // console.log('Edge clicked: ', event)
+    // change color of edges of the clicked edge
+    event.data.edge.color = '#C21F30'
+    const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
+    // keep color of unclicked edges to original color:
+    allOtherEdges.forEach(e => e.color = '#CFCCC9')
     getClickedNodeData(event.data.edge.actionId);
     setDisplayDrawer();
   };
 
   const onClickNodeHandler = (event) => {
-    // console.log('Node clicked: ', event)
+    const relatedEdges = graph.edges.filter(e => e.source === event.data.node.id || e.target === event.data.node.id)
+    // change the color of the edges related to the clicked node 
+    relatedEdges.forEach(e => e.color = '#C21F30')
+    const allUnrelatedEdges = graph.edges.filter(e => e.source !== event.data.node.id && e.target != event.data.node.id)
+    // keep the color of the unlated edges to original color 
+    allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
     getClickedNodeData(event.data.node.id);
     setDisplayDrawer();
   };
@@ -74,30 +83,29 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
               minNodeSize: 6,
               minEdgeSize: 1,
               enableEdgeHovering: true,
-              defaultEdgeHoverColor: "#2E3440",
+              defaultEdgeHoverColor: "#2775B6",
+              edgeHoverColor: 'default',
               edgeHoverSizeRatio: 3,
               edgeHoverPrecision: 5,
               defaultNodeColor: '#4C566A',
-              defaultEdgeColor: '#4C566A',
+              defaultEdgeColor: '#CFCCC9',
               edgeColor: "default",
               verbose: true,
             }}
           >
             <SigmaLoader graph={graph}>
               <RandomizeNodePositions>
-                <ForceLink
-                  background
-                  barnesHutTheta={0.5}
+              <NOverlap 
                   easing="quadraticInOut"
-                  edgeWeightInfluence={0}
-                  gravity={1}
-                  linLogMode
-                  randomize="locally"
-                  timeout={1000}
-                  worker
-                />
-                <RelativeSize initialSize={100} />
+                  duration={2000}
+                  gridSize={20}
+                  maxIterations = {100}
+                  nodeMargin={20}
+                  scaleNodes = {4}
+                  speed={10} 
+                ></NOverlap>
 
+                <RelativeSize initialSize={100} />
                 <DragNodes
                   // tslint:disable-next-line:no-empty
                   onDrag={function noRefCheck() {}}
