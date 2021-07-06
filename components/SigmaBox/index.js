@@ -47,7 +47,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
       }
       // display
       getClickedEdgeInfo(edgeInfo)
-      //getClickedEdgeLabel(event.data.edge.label)
+      // getClickedEdgeLabel(event.data.edge.label)
       setDisplayClickedEdgeInfo();
     }
   };
@@ -163,7 +163,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               minEdgeSize: 1,
               // Edge label
               drawEdgeLabels: false,
-              //drawEdgeLabels: true,
+              // drawEdgeLabels: true,
               // Captors
               zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,

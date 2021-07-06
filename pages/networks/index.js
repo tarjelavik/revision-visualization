@@ -109,14 +109,14 @@ const Networks = () => {
   };
 
   // a function to get clicked edge info -Rui
-  const getClickedEdgeInfo = async (edgeInfo) => {
+  const getClickedEdgeInfo = (edgeInfo) => {
     setState({...state,
       clickedEdgeInfo: edgeInfo
     });
   }
 
   const setDisplayClickedNodeInfo = () => {
-    //onToggle(); // TODO: note - the node code by Ahl -rui
+    // onToggle(); // TODO: note - the node code by Ahl -rui
     // call onToggleClickedNode to display the feedback when clicking a node -Rui
     onToggleClickedNode();
   };
