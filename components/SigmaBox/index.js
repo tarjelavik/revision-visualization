@@ -17,9 +17,8 @@ const sigmaStyle = {
   width: '100vw',
 };
 
-const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo, 
-                  getClickedEdgeInfo, setDisplayClickedEdgeInfo, 
-                  //getOverEdgeInfo, setDisplayOverEdgeInfo, closeDisplayOverEdgeInfo
+const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
+                  getClickedEdgeInfo, setDisplayClickedEdgeInfo
                 }) => {
 
   const [graph, setGraph] = useState({});
@@ -28,14 +27,14 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
   const onClickEdgeHandler = (event) => {
     // change color of edges of the clicked edge
     event.data.edge.color = '#C21F30'
-    
+
     const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
     // keep color of unclicked edges to original color:
     allOtherEdges.forEach(e => e.color = '#CFCCC9')
     // display edge label if it is not empty
     if (event.data.edge.label !== '') {
       const edgeSource = graph.nodes.filter(n => n.id === event.data.edge.source)
-      const edgeTarget = graph.nodes.filter(n => n.id === event.data.edge.target) 
+      const edgeTarget = graph.nodes.filter(n => n.id === event.data.edge.target)
       // TODO: debug edge label and connected ndoes labels -Rui
       console.log('edge source: ', edgeSource[0].label)
       console.log('edge target: ', edgeTarget[0].label)
@@ -45,7 +44,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
         target: edgeTarget[0].label,
         coordinateX: event.data.captor.clientX,
         coordinateY: event.data.captor.clientY,
-      } 
+      }
       // display
       getClickedEdgeInfo(edgeInfo)
       //getClickedEdgeLabel(event.data.edge.label)

@@ -77,7 +77,7 @@ const Networks = () => {
   // Add two more triggers below for the feedback of the clickecd edge/node -Rui
   const { isOpen: isOpenClickedEdge, onClose: onCloseClickedEdge, onToggle: onToggleClickedEdge } = useDisclosure();
   const { isOpen: isOpenClickedNode, onClose: onCloseClickedNode, onToggle: onToggleClickedNode } = useDisclosure();
-  
+
   const nodes = filterProps(state.nodeData);
   const linkToResource = getLinkToResource(state.nodeData);
 
@@ -187,7 +187,7 @@ const Networks = () => {
           />
         </Box>
       )}
-      
+
       {// display clicked edge info -Rui
       state.clickedEdgeInfo && (
         <SlideFade in={isOpenClickedEdge} offsetY="20px" offsetX="20px">
@@ -207,7 +207,7 @@ const Networks = () => {
             left={state.clickedEdgeInfo.coordinateX}
           >
             <Heading as="h4" size="md">
-              {state.clickedEdgeInfo.label} 
+              {state.clickedEdgeInfo.label}
             </Heading>
             <CloseButton onClick={onCloseClickedEdge} size="sm" pos="absolute" top="8px" right="8px"/>
             <Divider orientation="horizontal" mt="2" mb="2"/>
