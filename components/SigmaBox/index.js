@@ -6,7 +6,7 @@ import {
   NOverlap,
   RelativeSize,
   DragNodes,
-  ForceAtlas2,
+  orceAtlas2,
 } from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
@@ -17,50 +17,68 @@ const sigmaStyle = {
   width: '100vw',
 };
 
-const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
+const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo, 
+                  getClickedEdgeInfo, setDisplayClickedEdgeInfo, 
+                  //getOverEdgeInfo, setDisplayOverEdgeInfo, closeDisplayOverEdgeInfo
+                }) => {
+
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
 
   const onClickEdgeHandler = (event) => {
     // change color of edges of the clicked edge
     event.data.edge.color = '#C21F30'
-    // TODO: debug
-    console.log('id of the clicked edge:', event.data.edge.id)
+    
     const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
     // keep color of unclicked edges to original color:
     allOtherEdges.forEach(e => e.color = '#CFCCC9')
-    console.log(allOtherEdges)
-    getClickedNodeData(event.data.edge.actionId);
-    setDisplayDrawer();
+    // display edge label if it is not empty
+    if (event.data.edge.label !== '') {
+      const edgeSource = graph.nodes.filter(n => n.id === event.data.edge.source)
+      const edgeTarget = graph.nodes.filter(n => n.id === event.data.edge.target) 
+      // TODO: debug edge label and connected ndoes labels -Rui
+      console.log('edge source: ', edgeSource[0].label)
+      console.log('edge target: ', edgeTarget[0].label)
+      const edgeInfo = {
+        label: event.data.edge.label,
+        source: edgeSource[0].label,
+        target: edgeTarget[0].label,
+        coordinateX: event.data.captor.clientX,
+        coordinateY: event.data.captor.clientY,
+      } 
+      // display
+      getClickedEdgeInfo(edgeInfo)
+      //getClickedEdgeLabel(event.data.edge.label)
+      setDisplayClickedEdgeInfo();
+    }
   };
 
   const onClickNodeHandler = (event) => {
     const relatedEdges = graph.edges.filter(e => e.source === event.data.node.id || e.target === event.data.node.id)
-    // TODO: debug
-    relatedEdges.forEach(e => console.log('edge label:', e.label))
-    relatedEdges.forEach(e => console.log('edge id:', e.id))
-    relatedEdges.forEach(e => console.log('edge:', e))
-    relatedEdges.forEach(e => console.log('edge label color:', e.labelColor))
     // change the color of the edges related to the clicked node
     relatedEdges.forEach(e => e.color = '#C21F30')
 
     const allUnrelatedEdges = graph.edges.filter(e => e.source !== event.data.node.id && e.target !== event.data.node.id)
     // keep the color of the unlated edges to original color
     allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
-    getClickedNodeData(event.data.node.id);
-    setDisplayDrawer();
+    // TODO: debug -Rui
+    console.log("node info:", event.data.node)
+    console.log("node info - client X:", event.data.captor.clientX)
+    console.log("node info - client Y:", event.data.captor.clientY)
+    // create node info -Rui
+    const nodeInfo = {
+      label: event.data.node.label,
+      coordinateX: event.data.captor.clientX,
+      coordinateY: event.data.captor.clientY,
+    }
+    getClickedNodeDataInfo(event.data.node.id, nodeInfo);
+    setDisplayClickedNodeInfo();
   };
 
   const onClickStageHandler = (event) => {
-    // TODO: debug
-    console.log("stage is clicked, ", event.data)
-    console.log("stage is clicked, camera", event.data.renderer.settings)
-    console.log("stage is clicked, settings", event.data.renderer.settings)
-    console.log("stage is clicked, ", event.data.renderer.settings)
+    // TODO: debug -Rui
     console.log("stage is clicked, edges on screens", event.data.renderer.edgesOnScreen)
-    // TODO: it seems the following 2 lines dose not work
-    event.data.renderer.settings('defaultEdgeHoverColor:', 'green')
-    event.data.renderer.edgesOnScreen.forEach(e => e.edgeLabelColor = "black")
+    console.log("tage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
     // set color of edges to default color when clicking the stage
     event.data.renderer.edgesOnScreen.forEach(e => e.color = "#CFCCC9")
   }
@@ -95,10 +113,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             style={sigmaStyle}
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
-            // TODO: debug
-            onOverEdge={(edgeEvent) => {
-              console.log("Mouse over edge: ", edgeEvent.data.edge.label);
-            }}
+            // add eventfor the stage -Rui
             onClickStage={(stageEvent)=> onClickStageHandler(stageEvent)}
             renderer="canvas"
             settings={{
@@ -122,7 +137,7 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
               defaultNodeBorderColor: "#C1BE45",
               singleHover: true,
               // Node label
-              drawLabels: false,
+              drawLabels: true,
               labelThreshold: 100, // or 200
               labelColor: "default",
               labelHoverShadow: "default",
@@ -148,19 +163,8 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
               minArrowSize: 5,
               minEdgeSize: 1,
               // Edge label
-              drawEdgeLabels: true,
-              edgeLabelColor: 'default',
-              // defaultEdgeLabelColor: '#000',
-              // defaultEdgeLabelActiveColor: '#000',
-              // defaultEdgeLabelSize: 12,
-              // edgeLabelSize: 'fixed',              // Available values: fixed, proportional
-              // edgeLabelAlignment: 'auto',          // Available values: auto, horizontal
-              // edgeLabelSizePowRatio: 1,
-              // edgeLabelThreshold: 1,
-              // defaultEdgeHoverLabelBGColor: '#002147',
-              // edgeLabelHoverBGColor: 'default',
-              // edgeLabelHoverShadow: 'default',
-              // edgeLabelHoverShadowColor: '#fff',
+              drawEdgeLabels: false,
+              //drawEdgeLabels: true,
               // Captors
               zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,

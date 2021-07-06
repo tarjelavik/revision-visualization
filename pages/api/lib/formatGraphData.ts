@@ -154,6 +154,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     actionId: getActionId(object['@id'])
                 });
             }
+            // TODO: Why is the code block below is the same with the code above in addition to the label? -Rui
             if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
