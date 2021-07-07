@@ -37,7 +37,7 @@ const Header = () => {
           fontSize={['lg', 'xl', '3xl', '3xl']}
           px={{ base: '5', md: '0' }}
         >
-          <Link href="/">
+          <Link href={`${site}`}>
             <a>Digital Birgitta</a>
           </Link>
         </Heading>
@@ -58,28 +58,28 @@ const Header = () => {
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}booksmss`} activeClassName="active">
+            <ActiveLink href={`${site}page/booksmss`} activeClassName="active">
               <a>Books & Manuscripts</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}works`} activeClassName="active">
+            <ActiveLink href={`${site}page/works`} activeClassName="active">
               <a>Works</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}people`} activeClassName="active">
+            <ActiveLink href={`${site}page/people`} activeClassName="active">
               <a>People</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}places`} activeClassName="active">
+            <ActiveLink href={`${site}page/places`} activeClassName="active">
               <a>Places</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
             <ActiveLink
-              href={`${site}digital-editions`}
+              href={`${site}page/digital-editions`}
               activeClassName="active"
             >
               <a>Digital editions</a>
@@ -96,12 +96,12 @@ const Header = () => {
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}bibliography`} activeClassName="active">
+            <ActiveLink href={`${site}page/bibliography`} activeClassName="active">
               <a>Bibliography</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}search`} activeClassName="active">
+            <ActiveLink href={`${site}item/search`} activeClassName="active">
               <a>Search</a>
             </ActiveLink>
           </WrapItem>
