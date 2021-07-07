@@ -226,7 +226,7 @@ const Networks = () => {
         <SlideFade in={isOpenClickedNode} offsetY="20px" offsetX="20px">
         <Box
           maxW={{base: "160px", sm: "160px", md: "200px"}} // max width
-          maxH={{base: "150px", sm: "150px", md: "150px"}} // max height
+          maxH={{base: "180px", sm: "180px", md: "150px"}} // max height
           p="10px" // padding
           mt="4" // margin top
           bg="gray.100"
