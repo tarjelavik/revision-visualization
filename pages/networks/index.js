@@ -193,8 +193,8 @@ const Networks = () => {
         <SlideFade in={isOpenClickedEdge} offsetY="20px" offsetX="20px">
           <Box
             p="10px" // padding
-            maxW="400px" // max width
-            maxH="120px" // max height
+            maxW={{base: "170px", sm: "160px"}} // max width
+            maxH={{base: "120px", sm: "120px"}} // max height
             mt="4" // margin top
             bg="gray.100"
             rounded="md"
@@ -203,18 +203,20 @@ const Networks = () => {
             borderColor="gray.800"
             borderRadius="md"
             pos="absolute"  // position
-            top={state.clickedEdgeInfo.coordinateY}
-            left={state.clickedEdgeInfo.coordinateX}
+            // top={state.clickedEdgeInfo.coordinateY}
+            // left={state.clickedEdgeInfo.coordinateX}
+            top={{base: "650", sm: "300", md: "250"}}
+            left="90"
           >
-            <Heading as="h4" size="md">
+            <Heading as="h5" size={["xs","sm"]} mr="4">
               {state.clickedEdgeInfo.label}
             </Heading>
             <CloseButton onClick={onCloseClickedEdge} size="sm" pos="absolute" top="8px" right="8px"/>
             <Divider orientation="horizontal" mt="2" mb="2"/>
-            <p>
+            <Text fontSize="sm">
               From: {state.clickedEdgeInfo.source}<br/>
               To: {state.clickedEdgeInfo.target}
-            </p>
+            </Text>
           </Box>
         </SlideFade>
       )}
@@ -223,9 +225,9 @@ const Networks = () => {
       state.nodeData && state.clickedNodeInfo && (
         <SlideFade in={isOpenClickedNode} offsetY="20px" offsetX="20px">
         <Box
+          maxW={{base: "160px", sm: "160px", md: "200px"}} // max width
+          maxH={{base: "150px", sm: "150px", md: "150px"}} // max height
           p="10px" // padding
-          maxW="400px" // max width
-          maxH="130px" // max height
           mt="4" // margin top
           bg="gray.100"
           rounded="md"
@@ -234,10 +236,12 @@ const Networks = () => {
           borderColor="gray.800"
           borderRadius="md"
           pos="absolute"  // position
-          top={state.clickedNodeInfo.coordinateY}
-          left={state.clickedNodeInfo.coordinateX}
+          // top={state.clickedNodeInfo.coordinateY}
+          // left={state.clickedNodeInfo.coordinateX}
+          top={{base: "650", sm: "300", md: "250"}}
+          left="100"
         >
-          <Heading as="h4" size="md">
+          <Heading as="h5" size={["xs","sm"]} mr="3">
             {state.clickedNodeInfo.label}
           </Heading>
           <CloseButton onClick={onCloseClickedNode} size="sm" pos="absolute" top="8px" right="8px"/>

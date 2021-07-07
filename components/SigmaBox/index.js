@@ -70,6 +70,8 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
       coordinateX: event.data.captor.clientX,
       coordinateY: event.data.captor.clientY,
     }
+
+    console.log('node label length:', nodeInfo.label.length)
     getClickedNodeDataInfo(event.data.node.id, nodeInfo);
     setDisplayClickedNodeInfo();
   };
