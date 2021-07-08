@@ -29,19 +29,19 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
     event.data.edge.color = '#C21F30'
 
     const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
-    // keep color of unclicked edges to original color:
+    // keep color of unclicked edges to original color
     allOtherEdges.forEach(e => e.color = '#CFCCC9')
     // display edge label if it is not empty
     if (event.data.edge.label !== '') {
-      const edgeSource = graph.nodes.filter(n => n.id === event.data.edge.source)
-      const edgeTarget = graph.nodes.filter(n => n.id === event.data.edge.target)
-      // TODO: debug edge label and connected ndoes labels -Rui
-      console.log('edge source: ', edgeSource[0].label)
-      console.log('edge target: ', edgeTarget[0].label)
+      const edgeSource = graph.nodes.find(n => n.id === event.data.edge.source)
+      const edgeTarget = graph.nodes.find(n => n.id === event.data.edge.target)
+      // TODO: debug edge label -Rui
+      console.log('edge source: ', edgeSource.label)
+      console.log('edge target: ', edgeTarget.label)
       const edgeInfo = {
         label: event.data.edge.label,
-        source: edgeSource[0].label,
-        target: edgeTarget[0].label,
+        source: edgeSource.label,
+        target: edgeTarget.label,
         coordinateX: event.data.captor.clientX,
         coordinateY: event.data.captor.clientY,
       }
@@ -71,7 +71,6 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
       coordinateY: event.data.captor.clientY,
     }
 
-    console.log('node label length:', nodeInfo.label.length)
     getClickedNodeDataInfo(event.data.node.id, nodeInfo);
     setDisplayClickedNodeInfo();
   };
@@ -79,7 +78,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
   const onClickStageHandler = (event) => {
     // TODO: debug -Rui
     console.log("stage is clicked, edges on screens", event.data.renderer.edgesOnScreen)
-    console.log("tage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
+    console.log("stage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
     // set color of edges to default color when clicking the stage
     event.data.renderer.edgesOnScreen.forEach(e => e.color = "#CFCCC9")
   }

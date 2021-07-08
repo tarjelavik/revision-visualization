@@ -12,24 +12,13 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerContent,
-  DrawerOverlay,
   useDisclosure,
   List,
-  Modal,
-  ModalOverlay ,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   SlideFade,
   CloseButton,
   Heading, Divider,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
+  Drawer,DrawerBody, DrawerFooter, DrawerHeader, DrawerContent, DrawerOverlay,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
@@ -90,7 +79,7 @@ const Networks = () => {
     });
   };
 
-  // add another argument nodeInfo and set it state -Rui
+  // add another argument nodeInfo and set its state -Rui
   const getClickedNodeDataInfo = async (id, nodeInfo) => {
     const response = await fetch(`api/graph/node/${id}`);
     try {
@@ -100,7 +89,7 @@ const Networks = () => {
       setState({
         ...state,
         nodeData: body,
-        clickedNodeInfo: nodeInfo, // get nodeInfo -Rui
+        clickedNodeInfo: nodeInfo, // set nodeInfo -Rui
       });
     } catch (error) {
       // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
@@ -108,7 +97,7 @@ const Networks = () => {
     }
   };
 
-  // a function to get clicked edge info -Rui
+  // getClickedEdgeInfo gets clicked edge info -Rui
   const getClickedEdgeInfo = (edgeInfo) => {
     setState({...state,
       clickedEdgeInfo: edgeInfo
@@ -116,12 +105,12 @@ const Networks = () => {
   }
 
   const setDisplayClickedNodeInfo = () => {
-    // onToggle(); // TODO: note - the node code by Ahl -rui
+    // onToggle(); // TODO: note - the trigger used by Ahl -rui
     // call onToggleClickedNode to display the feedback when clicking a node -Rui
     onToggleClickedNode();
   };
 
-  // a function to display edge info -Rui
+  // The function triggers the display of edge info -Rui
   const setDisplayClickedEdgeInfo = () => {
     // call onToggleClickedEdge to dispaly the feedback when clicking an edge -Rui
     onToggleClickedEdge();
