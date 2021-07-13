@@ -12,10 +12,14 @@
     "lint": "next lint",
     "pre-lint-msg": "Echo Linting project... && exit 0",
     "pre-test-msg": "Echo running test suite... && exit 0",
-    "fix": "npx eslint . --ext .ts,.tsx --fix"
+    "fix": "npx eslint . --ext .ts,.tsx --fix",
+    "test:server": "npx jest",
+    "test:client": "cd client && npm run test && exit 0"
   },
   "pre-commit": [
-    "pre-test-msg"
+    "pre-test-msg",
+    "test:server",
+    "test:client"
   ],
   "repository": {
     "type": "git",
