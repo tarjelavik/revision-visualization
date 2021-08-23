@@ -129,8 +129,8 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               clone: false,
               verbose: true, // log errors and warnings
               // Node
-              minNodeSize: 5,
-              maxNodeSize: 10,
+              minNodeSize: 0.5,
+              maxNodeSize: 25,
               defaultNodeColor: '#4C566A',
               nodeHoverColor: "default",
               defaultNodeHoverColor: "#C1BE45",
