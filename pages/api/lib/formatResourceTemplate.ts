@@ -1,11 +1,11 @@
 import ResourceTemplate from '../../../model/ResourceTemplate';
 import RawResourceTemplate from '../../../model/RawResourceTemplate';
 
-export const formatResourceTemplate = (rawResourceTemplate: RawResourceTemplate ): ResourceTemplate[] => {
+export const formatResourceTemplate = (rawResourceTemplate: RawResourceTemplate): ResourceTemplate[] => {
     const resourceTemplates: ResourceTemplate[] = [];
 
     try {
-        rawResourceTemplate.data.map((object) => {
+        rawResourceTemplate.data.filter(t => t['@id']).map((object) => {
             const resourceTemplate: ResourceTemplate = {
                 id: '',
                 label: ''

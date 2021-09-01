@@ -1,26 +1,38 @@
-import { getResourceTemplates } from "../../lib/getResourceTemplates";
+import { getResourceTemplates } from '../../lib/getResourceTemplates';
 
-const getLastItem = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
+const getTemplateId = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
+
+/**
+ * Get all resource templates from Omeka. A template is the same as a rdfs Class.
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 
 export default async function handler(req, res) {
   const {
     method,
   } = req
 
+  const unwantedTemplates = ['15', '17', '20', '21', '22', '24']
+
   switch (method) {
     case 'GET':
       try {
         const response = await getResourceTemplates();
-        const urlToNumber = response.map(item => {
+        console.log(response)
+        const templateData = response.map(item => {
           return {
-            id: getLastItem(item.id),
+            id: getTemplateId(item.id),
             label: item.label
           }
         })
-        // console.log('Templates served: ', urlToNumber)
-        res.status(200).json(urlToNumber)
+
+        const filteredTemplates = templateData.filter(({ id }) => !unwantedTemplates.includes(id))
+
+        res.status(200).json(filteredTemplates)
       } catch (error) {
-          res.status(400).json(error);
+        res.status(400).json(error);
       }
 
       break

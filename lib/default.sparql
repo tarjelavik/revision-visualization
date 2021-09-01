@@ -1,0 +1,28 @@
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX bdm2: <http://purl.org/bdm2/>
+PREFIX o: <http://omeka.org/s/vocabs/o#>
+
+CONSTRUCT {
+  ?s o:actionTitle ?action .
+  ?s o:actionId ?actionId .
+  ?s o:creatorId ?instigatorId .
+  ?s o:creatorName ?instigator .
+  ?s o:recipientId ?recipientId .
+  ?s o:recipientName ?recipient .
+  ?s o:bookObjectId ?bookObjectId .
+  ?s o:bookObjectTitle ?bookObject .
+}
+WHERE {
+  ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
+  ?s bdm2:hasType/o:title ?action .
+  ?s bdm2:hasType/o:id ?actionId .
+  ?s schema:creator/o:title ?instigator .
+  ?s schema:creator/o:id ?instigatorId .
+  OPTIONAL { ?s schema:recipient/o:title ?recipient } .
+  OPTIONAL { ?s schema:recipient/o:id ?recipientId } .
+  ?s schema:object/o:title ?bookObject .
+  ?s schema:object/o:id ?bookObjectId .
+}

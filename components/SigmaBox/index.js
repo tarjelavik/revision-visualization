@@ -6,7 +6,7 @@ import {
   NOverlap,
   RelativeSize,
   DragNodes,
-  orceAtlas2,
+  ForceAtlas2,
 } from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
@@ -18,8 +18,8 @@ const sigmaStyle = {
 };
 
 const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
-                  getClickedEdgeInfo, setDisplayClickedEdgeInfo
-                }) => {
+  getClickedEdgeInfo, setDisplayClickedEdgeInfo
+}) => {
 
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
@@ -61,9 +61,9 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
     // keep the color of the unlated edges to original color
     allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
     // TODO: debug -Rui
-    console.log("node info:", event.data.node)
-    console.log("node info - client X:", event.data.captor.clientX)
-    console.log("node info - client Y:", event.data.captor.clientY)
+    console.log('node info:', event.data.node)
+    console.log('node info - client X:', event.data.captor.clientX)
+    console.log('node info - client Y:', event.data.captor.clientY)
     // create node info -Rui
     const nodeInfo = {
       label: event.data.node.label,
@@ -77,16 +77,16 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
 
   const onClickStageHandler = (event) => {
     // TODO: debug -Rui
-    console.log("stage is clicked, edges on screens", event.data.renderer.edgesOnScreen)
-    console.log("stage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
+    console.log('stage is clicked, edges on screens', event.data.renderer.edgesOnScreen)
+    console.log('stage is clicked, nodes on screens', event.data.renderer.nodesOnScreen)
     // set color of edges to default color when clicking the stage
-    event.data.renderer.edgesOnScreen.forEach(e => e.color = "#CFCCC9")
+    event.data.renderer.edgesOnScreen.forEach(e => e.color = '#CFCCC9')
   }
 
   const getGraph = async () => {
     setLoading(true);
     const response = await fetch(
-      `api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`
+      `/api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`
     );
     const body = await response.json();
     setGraph(body.graph);
@@ -114,88 +114,87 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
             // add eventfor the stage -Rui
-            onClickStage={(stageEvent)=> onClickStageHandler(stageEvent)}
+            onClickStage={(stageEvent) => onClickStageHandler(stageEvent)}
             renderer="canvas"
             settings={{
               // Global settings
               sideMargin: 400,
-              scalingMode: "outside",
-              font: "arial",
-              hoverFontStyle: "bold",
-              fontStyle: "bold",
-              activeFontStyle: "bold",
-              autoRescale: true,
-              autoResize: true,
+              scalingMode: 'outside',
+              font: 'arial',
+              hoverFontStyle: 'bold',
+              fontStyle: 'bold',
+              activeFontStyle: 'bold',
+              /* autoRescale: true,
+              autoResize: true, */
               clone: false,
               verbose: true, // log errors and warnings
               // Node
               minNodeSize: 5,
               maxNodeSize: 10,
               defaultNodeColor: '#4C566A',
-              nodeHoverColor: "default",
-              defaultNodeHoverColor: "#C1BE45",
-              defaultNodeBorderColor: "#C1BE45",
+              nodeHoverColor: 'default',
+              defaultNodeHoverColor: '#C1BE45',
+              defaultNodeBorderColor: '#C1BE45',
               singleHover: true,
               // Node label
               drawLabels: true,
-              labelThreshold: 100, // or 200
-              labelColor: "default",
-              labelHoverShadow: "default",
-              labelHoverShadowColor: "#000",
-              labelHoverBGColor: "default",
-              labelHoverColor: "default",
-              defaultHoverLabelBGColor: "#002147",
-              defaultLabelHoverColor: "#fff",
-              defaultLabelColor: "#fff",
+              labelThreshold: 20, // or 200
+              labelColor: 'default',
+              labelHoverShadow: 'default',
+              labelHoverShadowColor: '#000',
+              labelHoverBGColor: 'default',
+              labelHoverColor: 'default',
+              defaultHoverLabelBGColor: '#002147',
+              defaultLabelHoverColor: '#fff',
+              defaultLabelColor: '#fff',
               defaultLabelSize: 14,
-              defaultLabelBGColor: "#002147",
+              defaultLabelBGColor: '#002147',
               // Edge
               defaultEdgeColor: '#CFCCC9',
-              defaultEdgeType: "curvedArrow",
+              // defaultEdgeType: 'curvedArrow',
               enableEdgeHovering: true,
               edgeHoverPrecision: 5,
               edgeHoverHighlightNodes: 'circle',
-              edgeHoverSizeRatio: 3,
+              edgeHoverSizeRatio: 1.2,
               edgeHoverExtremities: true,
-              edgeColor: "default",
+              edgeColor: 'default',
               edgeHoverColor: 'default',
-              defaultEdgeHoverColor: "#2775B6",
+              defaultEdgeHoverColor: '#2775B6',
               minArrowSize: 5,
-              minEdgeSize: 1,
+              minEdgeSize: 3,
               // Edge label
-              drawEdgeLabels: false,
-              // drawEdgeLabels: true,
+              drawEdgeLabels: true,
               // Captors
-              zoomingRatio: 1.6,
+              /* zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
               mouseZoomDuration: 500,
               doubleClickZoomDuration: 500,
               zoomMin: 0.001,
-              zoomMax: 300
+              zoomMax: 300 */
             }}
           >
             <SigmaLoader graph={graph}>
               <RandomizeNodePositions>
-                <NOverlap
-                    easing="quadraticInOut"
-                    duration={2000}
-                    gridSize={20}
-                    maxIterations = { 100 }
-                    nodeMargin={20}
-                    scaleNodes = { 4 }
-                    speed={10}
+                <ForceAtlas2
+                  iterationsPerRender={1}
+                  barnesHutOptimize
+                  barnesHutTheta={0.4}
+                  slowdown={10}
+                  timeout={500}
+                  worker
                 />
+
                 <RelativeSize initialSize={100} />
-                <DragNodes
+                {/* <DragNodes
                   // tslint:disable-next-line:no-empty
-                  onDrag={function noRefCheck() {}}
+                  onDrag={function noRefCheck() { }}
                   // tslint:disable-next-line:no-empty
-                  onDragend={function noRefCheck() {}}
+                  onDragend={function noRefCheck() { }}
                   // tslint:disable-next-line:no-empty
-                  onDrop={function noRefCheck() {}}
+                  onDrop={function noRefCheck() { }}
                   // tslint:disable-next-line:no-empty
-                  onStartdrag={function noRefCheck() {}}
-                />
+                  onStartdrag={function noRefCheck() { }}
+                /> */}
               </RandomizeNodePositions>
             </SigmaLoader>
           </Sigma>

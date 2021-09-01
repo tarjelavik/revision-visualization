@@ -13,7 +13,7 @@ export const createConstructClause = (searchCategory) => {
     };
 
     const construct = types.map(template => {
-        if(constructStatementMap[template]) {
+        if (constructStatementMap[template]) {
             return constructStatementMap[template];
         } else return '';
     });
@@ -34,7 +34,7 @@ export const createWhereClause = (searchCategory) => {
     };
 
     const whereClause = types.map(template => {
-        if(whereStatementMap[template]) {
+        if (whereStatementMap[template]) {
             return whereStatementMap[template];
         } else return '';
     });
@@ -50,7 +50,8 @@ export interface Query {
 
 export const constructTemplate = (searchParameter) => {
     // console.log('4: searchParameter in constructTemplate', searchParameter);
-    const query: Query = {query: `
+    const query: Query = {
+        query: `
     PREFIX dcterms: <http://purl.org/dc/terms/>
     PREFIX schema: <http://schema.org/>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
