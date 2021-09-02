@@ -1,11 +1,11 @@
 import useSWR from 'swr'
-import Graphin, { Behaviors, Utils } from '@antv/graphin';
+// import Graphin, { Behaviors, Utils } from '@antv/graphin';
 
 import Layout from '../../../components/Layout';
 import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
 
-const { ZoomCanvas, FitView } = Behaviors;
+// const { ZoomCanvas, FitView } = Behaviors;
 
 const onClickNode = function (nodeId) {
   window.alert(`Clicked node ${nodeId}`);
@@ -150,10 +150,10 @@ const Works = () => {
               borderWidth="thin"
               bgColor="rgba(200,200,200, 0.2)"
             >
-              <Graphin data={data} layout={{ type: 'dagre' }}>
+              {/* <Graphin data={data} layout={{ type: 'dagre' }}>
                 <ZoomCanvas disabled />
                 <FitView />
-              </Graphin>
+              </Graphin> */}
             </Box>
           )}
         </Container>
