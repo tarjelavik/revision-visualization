@@ -46,47 +46,6 @@ const linksQuery = `
   }
 `
 
-
-const getShape = (type) => {
-  switch (type) {
-    case 'birgitta':
-      return {
-        svg: '/icons/birgitta.png', // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        size: 650
-      }
-      break;
-    case 'http://purl.org/bdm2/Work':
-      return {
-        svg: '/icons/idea.svg', // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        size: 250
-      }
-      break;
-    case 'http://purl.org/bdm2/WorkItem':
-      return {
-        svg: '/icons/open-book.svg', // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        size: 250
-      }
-      break;
-    case 'http://purl.org/bdm2/BookObject':
-      return {
-        svg: '/icons/closed-book.svg', // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        size: 250
-      }
-      break;
-    case 'http://purl.org/bdm2/Institution':
-      return {
-        svg: '/icons/library.svg', // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        size: 250
-      }
-      break;
-    default:
-      return {
-        svg: 'circle',
-        size: 250
-      }
-  }
-}
-
 /**
  * Query the SPARQL endpoint for data
  * 
@@ -107,28 +66,19 @@ export default async function handler(req, res) {
           .then((res) => { return res.data })
           .catch(error => console.log(error));
 
-        const links = await axios.get(`${ENDPOINT}/query?query=${encodeURIComponent(linksQuery)}`, { headers: { 'Accept': 'application/json' } })
+        const edges = await axios.get(`${ENDPOINT}/query?query=${encodeURIComponent(linksQuery)}`, { headers: { 'Accept': 'application/json' } })
           // .then((res) => { console.log(JSON.stringify(res.data, null, 2)) })
           .then((res) => { return res.data })
           .catch(error => console.log(error));
 
+
+
         const data = {
           nodes: [
-            ...nodes.results.bindings.map(node => {
-              return {
-                id: String(node.id.value),
-                label: node.label.value,
-                ...getShape(node.id.value === '224' ? 'birgitta' : node.type.value),
-              }
-            })
+            ...nodes.results.bindings
           ],
-          links: [
-            ...links.results.bindings.map(link => {
-              return {
-                source: String(link.source.value),
-                target: String(link.target.value)
-              }
-            })
+          edges: [
+            ...edges.results.bindings
           ]
         }
 

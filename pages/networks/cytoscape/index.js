@@ -1,8 +1,15 @@
 import useSWR from 'swr'
-import { Graph } from 'react-d3-graph';
+import dynamic from 'next/dynamic'
+
 import Layout from '../../../components/Layout';
 import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
+
+
+const Cyto = dynamic(() => import('../../../components/Cyposcape'), {
+  ssr: false
+});
+
 
 const onClickNode = function (nodeId) {
   window.alert(`Clicked node ${nodeId}`);
@@ -82,53 +89,30 @@ function useWorksNetwork() {
 const Works = () => {
   const { graph, isLoading, isError } = useWorksNetwork()
 
-  console.log(graph)
-
   let data = {}
 
   if (graph) {
-    data = {
-      nodes: [
-        ...graph.nodes.map(node => {
-          return {
+    data = [
+      ...graph.nodes.map(node => {
+        return {
+          data: {
             id: String(node.id.value),
             label: truncate(node.label.value, 52),
             ...getShape(node.id.value === '224' ? 'birgitta' : node.type.value),
           }
-        })
-      ],
-      links: [
-        ...graph.edges.map(link => {
-          return {
-            source: String(link.source.value),
-            target: String(link.target.value)
+        }
+      }),
+      ...graph.edges.map(edge => {
+        return {
+          data: {
+            source: String(edge.source.value),
+            target: String(edge.target.value)
           }
-        })
-      ]
-    }
+        }
+      })
+    ]
   }
 
-  // the graph configuration, just override the ones you need
-  const myConfig = {
-    directed: true,
-    initialZoom: 0.5,
-    height: 800,
-    width: 1200,
-    nodeHighlightBehavior: true,
-    node: {
-      labelProperty: 'label',
-      size: 120,
-      highlightStrokeColor: 'blue',
-    },
-    link: {
-      highlightColor: 'lightblue',
-    },
-    d3: {
-      gravity: -80,
-      linkStrength: 0.8,
-      alphaTarget: 0.5
-    }
-  }
 
   return (
     <Layout>
@@ -169,12 +153,28 @@ const Works = () => {
               borderWidth="thin"
               bgColor="rgba(200,200,200, 0.2)"
             >
-              <Graph
-                id="works-network"
-                data={data}
-                config={myConfig}
-                onClickNode={onClickNode}
-                onClickLink={onClickLink}
+              <Cyto
+                elements={data}
+                style={{ width: '1200px', height: '800px' }}
+                stylesheet={[
+                  {
+                    selector: 'node',
+                    style: {
+                      width: 80,
+                      height: 80,
+                      label: 'data(label)',
+                      'font-size': 12,
+                      'background-image': 'data(svg)',
+                      'background-fit': 'contain'
+                    }
+                  },
+                  {
+                    selector: 'edge',
+                    style: {
+                      width: 1
+                    }
+                  }
+                ]}
               />
             </Box>
           )}

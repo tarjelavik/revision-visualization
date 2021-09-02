@@ -24,6 +24,10 @@ import DataDrawerDisplayProperty from '../../../components/DataDrawerDisplayProp
 import { desiredProps, getDisplayType } from '../../../lib/helpers';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
 
+const SigmaWithNoSSR = dynamic(() => import('../../../components/SigmaBox'), {
+  ssr: false,
+});
+
 const initialState = {
   resourceTemplates: [],
   selectedClasses: ['13', '16'],
@@ -54,9 +58,6 @@ const getLinkToResource = (nodeData) => {
   }
 };
 
-const SigmaWithNoSSR = dynamic(() => import('../../../components/SigmaBox'), {
-  ssr: false,
-});
 
 const Networks = () => {
   const [state, setState] = useState(initialState);

@@ -1,8 +1,11 @@
 import useSWR from 'swr'
-import { Graph } from 'react-d3-graph';
+import Graphin, { Behaviors, Utils } from '@antv/graphin';
+
 import Layout from '../../../components/Layout';
 import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
+
+const { ZoomCanvas, FitView } = Behaviors;
 
 const onClickNode = function (nodeId) {
   window.alert(`Clicked node ${nodeId}`);
@@ -97,7 +100,7 @@ const Works = () => {
           }
         })
       ],
-      links: [
+      edges: [
         ...graph.edges.map(link => {
           return {
             source: String(link.source.value),
@@ -105,28 +108,6 @@ const Works = () => {
           }
         })
       ]
-    }
-  }
-
-  // the graph configuration, just override the ones you need
-  const myConfig = {
-    directed: true,
-    initialZoom: 0.5,
-    height: 800,
-    width: 1200,
-    nodeHighlightBehavior: true,
-    node: {
-      labelProperty: 'label',
-      size: 120,
-      highlightStrokeColor: 'blue',
-    },
-    link: {
-      highlightColor: 'lightblue',
-    },
-    d3: {
-      gravity: -80,
-      linkStrength: 0.8,
-      alphaTarget: 0.5
     }
   }
 
@@ -169,13 +150,10 @@ const Works = () => {
               borderWidth="thin"
               bgColor="rgba(200,200,200, 0.2)"
             >
-              <Graph
-                id="works-network"
-                data={data}
-                config={myConfig}
-                onClickNode={onClickNode}
-                onClickLink={onClickLink}
-              />
+              <Graphin data={data} layout={{ type: 'dagre' }}>
+                <ZoomCanvas disabled />
+                <FitView />
+              </Graphin>
             </Box>
           )}
         </Container>

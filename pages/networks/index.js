@@ -1,8 +1,10 @@
 import {
+  Box,
   Container,
-  Stack,
 } from '@chakra-ui/layout';
+import { Flex, Heading } from '@chakra-ui/react';
 import Layout from '../../components/Layout';
+import HeaderNetworks from '../../components/Layout/HeaderNetworks';
 import Link from '../../components/Link';
 
 
@@ -10,7 +12,9 @@ const Networks = () => {
 
   return (
     <Layout>
+      <HeaderNetworks />
       <Container
+        centerContent
         maxW="full"
         m="0"
         pt="2"
@@ -18,21 +22,24 @@ const Networks = () => {
         align="center"
         justify="center"
         wrap="wrap"
-        bgColor="gray.100"
-        borderColor="gray.600"
         borderBottom="solid 2px"
       >
-        <Stack spacing={2} direction="row">
-          <Link href="/networks/gifts-donations" fontSize="sm" mr="5" pr="5" borderRight="solid 1px">
-            Build your network
-          </Link>
-          <Link href="/networks/works-books" fontSize="sm" mr="5" pr="5" borderRight="solid 1px">
-            Works
-          </Link>
-          {/* <Link href="/networks/revelations" fontSize="sm" mr="5" pr="5" borderRight="solid 1px">
-            Revelations
-          </Link> */}
-        </Stack>
+        <Flex>
+          <Box p="10">
+            <Heading>
+              <Link href="/networks/gifts-donations">
+                Build your network
+              </Link>
+            </Heading>
+          </Box>
+          <Box p="10">
+            <Heading>
+              <Link href="networks/works-books">
+                Works, books and sections
+              </Link>
+            </Heading>
+          </Box>
+        </Flex>
       </Container>
 
     </Layout>
