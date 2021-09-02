@@ -6,7 +6,7 @@ import {
   NOverlap,
   RelativeSize,
   DragNodes,
-  orceAtlas2,
+  ForceAtlas2,
 } from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
@@ -126,6 +126,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               activeFontStyle: "bold",
               autoRescale: true,
               autoResize: true,
+              nodesPowRatio: 1,
               clone: false,
               verbose: true, // log errors and warnings
               // Node
@@ -162,9 +163,10 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               defaultEdgeHoverColor: "#2775B6",
               minArrowSize: 5,
               minEdgeSize: 1,
+              maxEdgeSize: 5,
               // Edge label
               drawEdgeLabels: false,
-              // drawEdgeLabels: true,
+              drawEdgeLabels: true,
               // Captors
               zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
@@ -176,16 +178,33 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
           >
             <SigmaLoader graph={graph}>
               <RandomizeNodePositions>
-                <NOverlap
+                <ForceAtlas2 
+                  worker
+                  barnesHutOptimize={true}
+                  barnesHutTheta={0.5}
+                  adjustSize={true}
+                  linLogMode={false}
+                  outboundAttractionDistribution={false}
+                  edgeWeightInfluence={0}
+                  scalingRatio={1}
+                  gravity={0}
+                  strongGravityMode={true}
+                  background
+                  timeout={2000}
+                  easing="quadraticInOut"
+                >
+                <NOverlap 
                     easing="quadraticInOut"
                     duration={2000}
                     gridSize={20}
-                    maxIterations = { 100 }
-                    nodeMargin={20}
-                    scaleNodes = { 4 }
+                    maxIterations={100000}
+                    nodeMargin={200}
+                    scaleNodes={6}
                     speed={10}
                 />
-                <RelativeSize initialSize={100} />
+                </ForceAtlas2>
+
+                <RelativeSize initialSize={50} />
                 <DragNodes
                   // tslint:disable-next-line:no-empty
                   onDrag={function noRefCheck() {}}
