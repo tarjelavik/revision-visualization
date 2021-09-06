@@ -113,12 +113,12 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
             style={sigmaStyle}
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
-            // add eventfor the stage -Rui
+            // add event for the stage -Rui
             onClickStage={(stageEvent)=> onClickStageHandler(stageEvent)}
             renderer="canvas"
             settings={{
-              // Global settings
-              sideMargin: 400,
+              // Global settings of the renderer
+              sideMargin: 500,
               scalingMode: "outside",
               font: "arial",
               hoverFontStyle: "bold",
@@ -126,7 +126,10 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               activeFontStyle: "bold",
               autoRescale: true,
               autoResize: true,
-              nodesPowRatio: 1,
+              // autoRescale: false,
+              // autoResize: false,
+              nodesPowRatio: 1, // camera setting: nodes size relatively to the zooming level
+              edgesPowRatio: 1,
               clone: false,
               verbose: true, // log errors and warnings
               // Node
@@ -163,59 +166,63 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               defaultEdgeHoverColor: "#2775B6",
               minArrowSize: 5,
               minEdgeSize: 1,
-              maxEdgeSize: 5,
+              // maxEdgeSize: 5, // only use it after using edge thickness
               // Edge label
               drawEdgeLabels: false,
-              drawEdgeLabels: true,
+              //drawEdgeLabels: true,
               // Captors
               zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
               mouseZoomDuration: 500,
               doubleClickZoomDuration: 500,
               zoomMin: 0.001,
-              zoomMax: 300
+              zoomMax: 300,
+
+              hideEdgesOnMove: true, // If true, then edges won't draw during dragging or animations.
             }}
           >
             <SigmaLoader graph={graph}>
-              <RandomizeNodePositions>
-                <ForceAtlas2 
-                  worker
-                  barnesHutOptimize={true}
-                  barnesHutTheta={0.5}
-                  adjustSize={true}
-                  linLogMode={false}
-                  outboundAttractionDistribution={false}
-                  edgeWeightInfluence={0}
-                  scalingRatio={1}
-                  gravity={0}
-                  strongGravityMode={true}
-                  background
-                  timeout={2000}
-                  easing="quadraticInOut"
-                >
+
+            <ForceAtlas2 
+                worker={false}
+                barnesHutOptimize={true}
+                barnesHutTheta={0.6}
+                adjustSize={true}
+                linLogMode={false}
+                outboundAttractionDistribution={true}
+                edgeWeightInfluence={0}
+                scalingRatio={1}
+                gravity={0}
+                strongGravityMode={true}
+                //iterationsPerRender={10}
+                timeout={2000}
+                easing="quadraticInOut"
+                background={true}
+              >
                 <NOverlap 
                     easing="quadraticInOut"
+                    background={true}
                     duration={2000}
-                    gridSize={20}
-                    maxIterations={100000}
-                    nodeMargin={200}
-                    scaleNodes={6}
-                    speed={10}
+                    gridSize={75}
+                    maxIterations={500}
+                    nodeMargin={50}
+                    scaleNodes={5}
+                    speed={5}
                 />
-                </ForceAtlas2>
+              </ForceAtlas2>
 
-                <RelativeSize initialSize={50} />
-                <DragNodes
-                  // tslint:disable-next-line:no-empty
-                  onDrag={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onDragend={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onDrop={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onStartdrag={function noRefCheck() {}}
-                />
-              </RandomizeNodePositions>
+              <RelativeSize initialSize={15} />
+
+              <DragNodes
+                // tslint:disable-next-line:no-empty
+                onDrag={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onDragend={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onDrop={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onStartdrag={function noRefCheck() {}}
+              />
             </SigmaLoader>
           </Sigma>
         </Box>
