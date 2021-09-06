@@ -6,7 +6,7 @@ import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
 
 
-const Cyto = dynamic(() => import('../../../components/Cyposcape'), {
+const CytoForce = dynamic(() => import('../../../components/Cyposcape/Cose'), {
   ssr: false
 });
 
@@ -86,12 +86,13 @@ function useWorksNetwork() {
   }
 }
 
-const Works = () => {
+const Force = () => {
   const { graph, isLoading, isError } = useWorksNetwork()
 
   let data = {}
 
   if (graph) {
+    console.log('page: ', graph)
     data = [
       ...graph.nodes.map(node => {
         return {
@@ -147,13 +148,13 @@ const Works = () => {
           borderColor="gray.600"
           borderBottom="solid 2px"
         >
-          {graph && (
+          {data.length > 1 && (
             <Box
               borderColor="blackAlpha.400"
               borderWidth="thin"
               bgColor="rgba(200,200,200, 0.2)"
             >
-              <Cyto
+              <CytoForce
                 elements={data}
                 style={{ width: '1200px', height: '800px' }}
                 stylesheet={[
@@ -184,4 +185,4 @@ const Works = () => {
   )
 }
 
-export default Works
+export default Force

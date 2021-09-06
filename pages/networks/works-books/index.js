@@ -79,7 +79,7 @@ function useWorksNetwork() {
   }
 }
 
-const Works = () => {
+const D3Graph = () => {
   const { graph, isLoading, isError } = useWorksNetwork()
 
   console.log(graph)
@@ -184,4 +184,4 @@ const Works = () => {
   )
 }
 
-export default Works
+export default D3Graph

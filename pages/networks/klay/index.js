@@ -1,11 +1,15 @@
 import useSWR from 'swr'
-// import Graphin, { Behaviors, Utils } from '@antv/graphin';
+import dynamic from 'next/dynamic'
 
 import Layout from '../../../components/Layout';
 import { Box, Container, Flex, Heading } from '@chakra-ui/react';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
 
-// const { ZoomCanvas, FitView } = Behaviors;
+
+const Cyto = dynamic(() => import('../../../components/Cyposcape/Klay'), {
+  ssr: false
+});
+
 
 const onClickNode = function (nodeId) {
   window.alert(`Clicked node ${nodeId}`);
@@ -72,7 +76,7 @@ const truncate = (fullStr, strLen, separator) => {
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-function useWorksNetwork() {
+function useKlayNetwork() {
   const { data, error } = useSWR('/api/graph/network/works', fetcher)
 
   return {
@@ -82,34 +86,33 @@ function useWorksNetwork() {
   }
 }
 
-const Graphin = () => {
-  const { graph, isLoading, isError } = useWorksNetwork()
-
-  console.log(graph)
+const Klay = () => {
+  const { graph, isLoading, isError } = useKlayNetwork()
 
   let data = {}
 
   if (graph) {
-    data = {
-      nodes: [
-        ...graph.nodes.map(node => {
-          return {
+    data = [
+      ...graph.nodes.map(node => {
+        return {
+          data: {
             id: String(node.id.value),
             label: truncate(node.label.value, 52),
             ...getShape(node.id.value === '224' ? 'birgitta' : node.type.value),
           }
-        })
-      ],
-      edges: [
-        ...graph.edges.map(link => {
-          return {
-            source: String(link.source.value),
-            target: String(link.target.value)
+        }
+      }),
+      ...graph.edges.map(edge => {
+        return {
+          data: {
+            source: String(edge.source.value),
+            target: String(edge.target.value)
           }
-        })
-      ]
-    }
+        }
+      })
+    ]
   }
+
 
   return (
     <Layout>
@@ -150,10 +153,29 @@ const Graphin = () => {
               borderWidth="thin"
               bgColor="rgba(200,200,200, 0.2)"
             >
-              {/* <Graphin data={data} layout={{ type: 'dagre' }}>
-                <ZoomCanvas disabled />
-                <FitView />
-              </Graphin> */}
+              <Cyto
+                elements={data}
+                style={{ width: '1200px', height: '800px' }}
+                stylesheet={[
+                  {
+                    selector: 'node',
+                    style: {
+                      width: 80,
+                      height: 80,
+                      label: 'data(label)',
+                      'font-size': 12,
+                      'background-image': 'data(svg)',
+                      'background-fit': 'contain'
+                    }
+                  },
+                  {
+                    selector: 'edge',
+                    style: {
+                      width: 1
+                    }
+                  }
+                ]}
+              />
             </Box>
           )}
         </Container>
@@ -162,4 +184,4 @@ const Graphin = () => {
   )
 }
 
-export default Graphin
+export default Klay

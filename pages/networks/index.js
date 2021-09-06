@@ -27,14 +27,14 @@ const Networks = () => {
         <Flex>
           <Box p="10">
             <Heading>
-              <Link href="/networks/gifts-donations">
+              <Link href="gifts-donations">
                 Build your network
               </Link>
             </Heading>
           </Box>
           <Box p="10">
             <Heading>
-              <Link href="networks/works-books">
+              <Link href="works-books">
                 Works, books and sections
               </Link>
             </Heading>
