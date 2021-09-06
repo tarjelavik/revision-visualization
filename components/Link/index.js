@@ -1,7 +1,7 @@
-import {Link as ChakraLink} from '@chakra-ui/react'
+import { Link as ChakraLink } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
-const Link = ({href, children}) => {
+const Link = ({ href, children }) => {
   if (!href) return null
 
   return (

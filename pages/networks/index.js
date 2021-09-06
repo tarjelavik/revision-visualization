@@ -12,7 +12,7 @@ const Networks = () => {
 
   return (
     <Layout>
-      <HeaderNetworks />
+      {/* <HeaderNetworks /> */}
       <Container
         centerContent
         maxW="full"
@@ -27,14 +27,14 @@ const Networks = () => {
         <Flex>
           <Box p="10">
             <Heading>
-              <Link href="gifts-donations">
+              <Link href="/networks/gifts-donations">
                 Build your network
               </Link>
             </Heading>
           </Box>
           <Box p="10">
             <Heading>
-              <Link href="works-books">
+              <Link href="/networks/works-books">
                 Works, books and sections
               </Link>
             </Heading>
