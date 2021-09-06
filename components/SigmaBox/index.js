@@ -169,7 +169,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               // maxEdgeSize: 5, // only use it after using edge thickness
               // Edge label
               drawEdgeLabels: false,
-              //drawEdgeLabels: true,
+              // drawEdgeLabels: true,
               // Captors
               zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
@@ -194,7 +194,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
                 scalingRatio={1}
                 gravity={0}
                 strongGravityMode={true}
-                //iterationsPerRender={10}
+                // iterationsPerRender={10}
                 timeout={2000}
                 easing="quadraticInOut"
                 background={true}

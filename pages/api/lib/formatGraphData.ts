@@ -94,7 +94,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             }
         }
         try {
-            //let redundantEdge = null
+            // let redundantEdge = null
             if (object['o:bookObjectId']) {
                 // TODO filter out redundant edges
                 // console.log("current edge source:", object['o:creatorId'])
