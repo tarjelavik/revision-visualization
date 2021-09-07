@@ -119,11 +119,11 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
             settings={{
               // Global settings of the renderer
               sideMargin: 800,
-              scalingMode: "outside",
-              font: "arial",
-              hoverFontStyle: "bold",
-              fontStyle: "bold",
-              activeFontStyle: "bold",
+              scalingMode: 'outside',
+              font: 'arial',
+              hoverFontStyle: 'bold',
+              fontStyle: 'bold',
+              activeFontStyle: 'bold',
               autoRescale: true,
               autoResize: false,
               clone: false,
@@ -166,7 +166,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               // Edge label
               drawEdgeLabels: true,
               // Captors
-              /* zoomingRatio: 1.6,
+              // zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
               mouseZoomDuration: 500,
               doubleClickZoomDuration: 500,
@@ -177,7 +177,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
             }}
           >
             <SigmaLoader graph={graph}>
-            <ForceAtlas2
+              <ForceAtlas2
                 worker={false}
                 barnesHutOptimize={true}
                 barnesHutTheta={0.6}
@@ -194,14 +194,14 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
                 background={true}
               >
                 <NOverlap
-                    easing="quadraticInOut"
-                    background={true}
-                    duration={2000}
-                    gridSize={75}
-                    maxIterations={500}
-                    nodeMargin={50}
-                    scaleNodes={5}
-                    speed={5}
+                  easing="quadraticInOut"
+                  background={true}
+                  duration={2000}
+                  gridSize={75}
+                  maxIterations={500}
+                  nodeMargin={50}
+                  scaleNodes={5}
+                  speed={5}
                 />
               </ForceAtlas2>
 
@@ -209,13 +209,13 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
 
               <DragNodes
                 // tslint:disable-next-line:no-empty
-                onDrag={function noRefCheck() {}}
+                onDrag={function noRefCheck() { }}
                 // tslint:disable-next-line:no-empty
-                onDragend={function noRefCheck() {}}
+                onDragend={function noRefCheck() { }}
                 // tslint:disable-next-line:no-empty
-                onDrop={function noRefCheck() {}}
+                onDrop={function noRefCheck() { }}
                 // tslint:disable-next-line:no-empty
-                onStartdrag={function noRefCheck() {}}
+                onStartdrag={function noRefCheck() { }}
               />
             </SigmaLoader>
           </Sigma>

@@ -103,16 +103,16 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 // debug - Rui
                 // if (typeof(redundantEdge) === 'undefined'){
                 // console.log("didn't find redundant edge, so push a new edge ...")
-                    edges.push({
-                        id: generateId(),
-                        source: object['o:creatorId'],
-                        target: object['o:bookObjectId'],
-                        label: object.actionTitle,
-                        type: 'curvedArrow',
-                        size: 4,
-                        actionId: getActionId(object['@id'])
-                    });
-                    // console.log("length of the edges array:", edges.length)
+                edges.push({
+                    id: generateId(),
+                    source: object['o:creatorId'],
+                    target: object['o:bookObjectId'],
+                    label: object.actionTitle,
+                    type: 'curvedArrow',
+                    size: 4,
+                    actionId: getActionId(object['@id'])
+                });
+                // console.log("length of the edges array:", edges.length)
                 // }else {
                 //     console.log("find a redundant edge:", redundantEdge)
                 //     const idxOfRedundantEdge = edges.indexOf(redundantEdge)
@@ -201,7 +201,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
 
     // let nodes to be initialized as a circle on canvas
-    sigmaGraph.graph.nodes.forEach(function(node, i, a){
+    sigmaGraph.graph.nodes.forEach(function (node, i, a) {
         node.x = 1000 * Math.cos(2 * i * Math.PI / a.length);
         node.y = 1000 * Math.sin(2 * i * Math.PI / a.length);
     });

@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const response = await getResourceTemplates();
-        console.log(response)
+        // console.log(response)
         const templateData = response.map(item => {
           return {
             id: getTemplateId(item.id),

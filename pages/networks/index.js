@@ -2,71 +2,13 @@ import {
   Box,
   Container,
 } from '@chakra-ui/layout';
-import { Flex, Heading } from '@chakra-ui/react';
+import { Flex, Heading, Text } from '@chakra-ui/react';
 import Layout from '../../components/Layout';
 import HeaderNetworks from '../../components/Layout/HeaderNetworks';
 import Link from '../../components/Link';
 
 
 const Networks = () => {
-  const [state, setState] = useState(initialState);
-  const { isOpen, onClose, onToggle } = useDisclosure();
-  // Add two more triggers below for the feedback of the clickecd edge/node -Rui
-  const { isOpen: isOpenClickedEdge, onClose: onCloseClickedEdge, onToggle: onToggleClickedEdge } = useDisclosure();
-  const { isOpen: isOpenClickedNode, onClose: onCloseClickedNode, onToggle: onToggleClickedNode } = useDisclosure();
-
-  const nodes = filterProps(state.nodeData);
-  const linkToResource = getLinkToResource(state.nodeData);
-
-  const getTemplates = async () => {
-    const response = await fetch(`api/graph/templates`);
-    const body = await response.json();
-    setState({
-      ...state,
-      resourceTemplates: body,
-    });
-  };
-
-  // add another argument nodeInfo and set its state -Rui
-  const getClickedNodeDataInfo = async (id, nodeInfo) => {
-    const response = await fetch(`api/graph/node/${id}`);
-    try {
-      const body = await response.json();
-      console.log('print body when getClickedNodeDataInfo is called', body);
-      console.log('print body when getClickedNodeDataInfo is called', nodeInfo);
-      setState({
-        ...state,
-        nodeData: body,
-        clickedNodeInfo: nodeInfo, // set nodeInfo -Rui
-      });
-    } catch (error) {
-      // TODO: Handle this is a more elegant manner which lets end user know that something is wrong.
-      console.log(error);
-    }
-  };
-
-  // getClickedEdgeInfo gets clicked edge info -Rui
-  const getClickedEdgeInfo = (edgeInfo) => {
-    setState({...state,
-      clickedEdgeInfo: edgeInfo
-    });
-  }
-
-  const setDisplayClickedNodeInfo = () => {
-    // onToggle(); // TODO: note that this is the trigger used by Ahl -rui
-    // call onToggleClickedNode to display the feedback when clicking a node -Rui
-    onToggleClickedNode();
-  };
-
-  // The function triggers the display of edge info -Rui
-  const setDisplayClickedEdgeInfo = () => {
-    // call onToggleClickedEdge to dispaly the feedback when clicking an edge -Rui
-    onToggleClickedEdge();
-  }
-
-  useEffect(() => {
-    void getTemplates();
-  }, []);
 
   return (
     <Layout>
@@ -74,6 +16,7 @@ const Networks = () => {
       <Container
         centerContent
         maxW="full"
+        h="70vh"
         m="0"
         pt="2"
         as="header"
@@ -89,129 +32,22 @@ const Networks = () => {
                 Build your network
               </Link>
             </Heading>
+            <Text>
+              Network based on Actions.
+            </Text>
           </Box>
-        </SlideFade>
-      )}
-
-      {// display clicked node info and data -Rui
-      state.nodeData && state.clickedNodeInfo && (
-        <SlideFade in={isOpenClickedNode} offsetY="20px" offsetX="20px">
-        <Box
-          maxW={{base: "160px", sm: "160px", md: "200px"}} // max width
-          maxH={{base: "180px", sm: "180px", md: "150px"}} // max height
-          p="10px" // padding
-          mt="4" // margin top
-          bg="gray.100"
-          rounded="md"
-          boxShadow="outline"
-          boxSize="sm"
-          borderColor="gray.800"
-          borderRadius="md"
-          pos="absolute"  // position
-          // top={state.clickedNodeInfo.coordinateY}
-          // left={state.clickedNodeInfo.coordinateX}
-          top={{base: "650", sm: "300", md: "250"}}
-          left="100"
-        >
-          <Heading as="h5" size={["xs","sm"]} mr="3">
-            {state.clickedNodeInfo.label}
-          </Heading>
-          <CloseButton onClick={onCloseClickedNode} size="sm" pos="absolute" top="8px" right="8px"/>
-          <Divider orientation="horizontal" mt="2" mb="2"/>
-          <Button onClick={onToggle} colorScheme="blue" size="md" variant="link">View Full Data</Button>
-          <Modal
-            onClose={onClose}
-            isOpen={isOpen}
-            trapFocus={false}
-            onOverlayClick={onClose}
-            size="sm"
-            isCentered
-          >
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader>
-                {getDisplayType(state.nodeData['@type'][1])}
-              </ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <List>
-                  {nodes.length &&
-                    nodes.map((element, index) => (
-                      <DataDrawerDisplayProperty
-                        key={index}
-                        propKey={element['property_label']}
-                        value={element['display_title'] || element['@value']}
-                      />
-                    ))}
-                  <DataDrawerDisplayProperty
-                    propKey="Link to Record"
-                    value={
-                      <a
-                        href={linkToResource}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        color="blue"
-                      >
-                        <Text color="blue">
-                          See full resource page
-                        </Text>
-                      </a>
-                    }
-                  />
-                </List>
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        </Box>
-        </SlideFade>
-      )}
-
-      {// TODO: commented code implemented by Ahl below -Rui
-      /* {state.nodeData && (
-        <Drawer
-          placement="right"
-          onClose={onClose}
-          isOpen={isOpen}
-          trapFocus={false}
-          onOverlayClick={onClose}
-          onEsc={onClose}
-        >
-          <DrawerOverlay>
-            <DrawerContent>
-              <DrawerHeader>
-                {getDisplayType(state.nodeData['@type'][1])}
-              </DrawerHeader>
-              <DrawerBody>
-                <List>
-                  {nodes.length &&
-                    nodes.map((element, index) => (
-                      <DataDrawerDisplayProperty
-                        key={index}
-                        propKey={element['property_label']}
-                        value={element['display_title'] || element['@value']}
-                      />
-                    ))}
-                  <DataDrawerDisplayProperty
-                    propKey="Link to Record"
-                    value={
-                      <a
-                        href={linkToResource}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        See full resource page
-                      </a>
-                    }
-                  />
-                </List>
-              </DrawerBody>
-              <DrawerFooter>
-                <Button onClick={onToggle}>Close</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </DrawerOverlay>
-        </Drawer>
-      )} */}
+          <Box p="10">
+            <Heading>
+              <Link href="/networks/works-books">
+                Works, books and sections
+              </Link>
+            </Heading>
+            <Text>
+              Works and the books they are carried by.
+            </Text>
+          </Box>
+        </Flex>
+      </Container>
 
     </Layout>
   );

@@ -1,5 +1,7 @@
 import {
   Container,
+  Flex,
+  HStack,
   Stack,
   Text,
   Wrap,
@@ -15,7 +17,8 @@ import {
   SlideFade,
   CloseButton,
   Heading, Divider,
-  Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton,
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
+  Drawer, DrawerBody, DrawerFooter, DrawerHeader, DrawerContent, DrawerOverlay,
 } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
@@ -23,10 +26,6 @@ import Layout from '../../../components/Layout';
 import DataDrawerDisplayProperty from '../../../components/DataDrawerDisplayProperty';
 import { desiredProps, getDisplayType } from '../../../lib/helpers';
 import HeaderNetworks from '../../../components/Layout/HeaderNetworks';
-
-const SigmaWithNoSSR = dynamic(() => import('../../../components/SigmaBox'), {
-  ssr: false,
-});
 
 const initialState = {
   resourceTemplates: [],
@@ -58,6 +57,9 @@ const getLinkToResource = (nodeData) => {
   }
 };
 
+const SigmaWithNoSSR = dynamic(() => import('../../../components/SigmaBox'), {
+  ssr: false,
+});
 
 const Networks = () => {
   const [state, setState] = useState(initialState);
@@ -80,11 +82,11 @@ const Networks = () => {
 
   // add another argument nodeInfo and set its state -Rui
   const getClickedNodeDataInfo = async (id, nodeInfo) => {
-    const response = await fetch(`/api/graph/node/${id}`);
+    const response = await fetch(`api/graph/node/${id}`);
     try {
       const body = await response.json();
-      // console.log('print body when getClickedNodeDataInfo is called', body);
-      // console.log('print body when getClickedNodeDataInfo is called', nodeInfo);
+      console.log('print body when getClickedNodeDataInfo is called', body);
+      console.log('print body when getClickedNodeDataInfo is called', nodeInfo);
       setState({
         ...state,
         nodeData: body,
@@ -105,7 +107,7 @@ const Networks = () => {
   }
 
   const setDisplayClickedNodeInfo = () => {
-    // onToggle(); // TODO: note - the trigger used by Ahl -rui
+    // onToggle(); // TODO: note that this is the trigger used by Ahl -rui
     // call onToggleClickedNode to display the feedback when clicking a node -Rui
     onToggleClickedNode();
   };
@@ -284,7 +286,7 @@ const Networks = () => {
           </SlideFade>
         )}
 
-      {// TODO: commented code by Ahl below -Rui
+      {// TODO: commented code implemented by Ahl below -Rui
       /* {state.nodeData && (
         <Drawer
           placement="right"
