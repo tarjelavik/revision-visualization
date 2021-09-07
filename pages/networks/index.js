@@ -1,64 +1,12 @@
 import {
-  Container,
-  Flex,
-  HStack,
-  Stack,
-  Text,
-  Wrap,
-  WrapItem,
-} from '@chakra-ui/layout';
-import {
   Box,
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  useDisclosure,
-  List,
-  SlideFade,
-  CloseButton,
-  Heading, Divider,
-  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
-  Drawer,DrawerBody, DrawerFooter, DrawerHeader, DrawerContent, DrawerOverlay,
-} from '@chakra-ui/react';
-import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+  Container,
+} from '@chakra-ui/layout';
+import { Flex, Heading } from '@chakra-ui/react';
 import Layout from '../../components/Layout';
-import DataDrawerDisplayProperty from '../../components/DataDrawerDisplayProperty';
-import { desiredProps, getDisplayType } from '../../lib/helpers';
+import HeaderNetworks from '../../components/Layout/HeaderNetworks';
+import Link from '../../components/Link';
 
-const initialState = {
-  resourceTemplates: [],
-  selectedClasses: ['13', '16'],
-  nodeData: null,
-  clickedEdgeInfo: null, // clickedEdgeInfo stores information related to a clicked edge -Rui
-  clickedNodeInfo: null, // clickedNodeInfo stores information related to a clicked node -Rui
-};
-
-const filterProps = (nodeData) => {
-  // We need to set a guard against a null object here
-  nodeData = nodeData || { foo: 'bar' };
-  const filteredProps = [];
-
-  for (const key in nodeData) {
-    if (desiredProps.includes(key)) {
-      filteredProps.push(nodeData[key][0]);
-    }
-  }
-
-  return filteredProps;
-};
-
-const getLinkToResource = (nodeData) => {
-  try {
-    return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`;
-  } catch {
-    return '';
-  }
-};
-
-const SigmaWithNoSSR = dynamic(() => import('../../components/SigmaBox'), {
-  ssr: false,
-});
 
 const Networks = () => {
   const [state, setState] = useState(initialState);
@@ -122,7 +70,9 @@ const Networks = () => {
 
   return (
     <Layout>
+      {/* <HeaderNetworks /> */}
       <Container
+        centerContent
         maxW="full"
         m="0"
         pt="2"
@@ -130,82 +80,15 @@ const Networks = () => {
         align="center"
         justify="center"
         wrap="wrap"
-        bgColor="gray.100"
-        borderColor="gray.600"
         borderBottom="solid 2px"
       >
-        <Stack spacing={2} direction="row">
-          <Text fontSize="sm" mr="5" pr="5" borderRight="solid 1px">
-            Build your network
-          </Text>
-
-          <CheckboxGroup
-            colorScheme="teal"
-            defaultValue={state.selectedClasses}
-            onChange={(e) =>
-              setState({
-                ...state,
-                selectedClasses: e,
-              })
-            }
-          >
-            <Wrap spacing={0}>
-              {state.resourceTemplates &&
-                state.resourceTemplates.map((template) => (
-                  <WrapItem key={template.id} pr="7">
-                    <Checkbox size="md" value={template.id}>
-                      {template.label}
-                    </Checkbox>
-                  </WrapItem>
-                ))}
-            </Wrap>
-          </CheckboxGroup>
-        </Stack>
-      </Container>
-
-      {state.resourceTemplates && (
-        <Box position="relative">
-          <SigmaWithNoSSR
-            classes={state.selectedClasses}
-            getClickedNodeDataInfo={getClickedNodeDataInfo}
-            setDisplayClickedNodeInfo={setDisplayClickedNodeInfo}
-            // add two functions below to disply edge info -Rui
-            getClickedEdgeInfo={getClickedEdgeInfo}
-            setDisplayClickedEdgeInfo={setDisplayClickedEdgeInfo}
-            /* graph={graph} */
-          />
-        </Box>
-      )}
-
-      {// display clicked edge info -Rui
-      state.clickedEdgeInfo && (
-        <SlideFade in={isOpenClickedEdge} offsetY="20px" offsetX="20px">
-          <Box
-            p="10px" // padding
-            maxW={{base: "170px", sm: "160px"}} // max width
-            maxH={{base: "120px", sm: "120px"}} // max height
-            mt="4" // margin top
-            bg="gray.100"
-            rounded="md"
-            boxShadow="outline"
-            boxSize="sm"
-            borderColor="gray.800"
-            borderRadius="md"
-            pos="absolute"  // position
-            // top={state.clickedEdgeInfo.coordinateY}
-            // left={state.clickedEdgeInfo.coordinateX}
-            top={{base: "650", sm: "300", md: "250"}}
-            left="90"
-          >
-            <Heading as="h5" size={["xs","sm"]} mr="4">
-              {state.clickedEdgeInfo.label}
+        <Flex>
+          <Box p="10">
+            <Heading>
+              <Link href="/networks/gifts-donations">
+                Build your network
+              </Link>
             </Heading>
-            <CloseButton onClick={onCloseClickedEdge} size="sm" pos="absolute" top="8px" right="8px"/>
-            <Divider orientation="horizontal" mt="2" mb="2"/>
-            <Text fontSize="sm">
-              From: {state.clickedEdgeInfo.source}<br/>
-              To: {state.clickedEdgeInfo.target}
-            </Text>
           </Box>
         </SlideFade>
       )}

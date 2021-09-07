@@ -9,9 +9,9 @@ export const getConstructLocationClause = (): string => {
 
 export const getWhereLocationClause = (): string => {
   return `
-    ?s schema:locationCreated/o:title ?locationCreated .
-    ?s schema:locationCreated/o:id ?locationCreatedId .
-    OPTIONAL {?s schema:toLocation/o:title ?toLocation } .
-    OPTIONAL {?s schema:toLocation/o:id ?toLocationId } .
+    OPTIONAL { ?s schema:locationCreated/o:title ?locationCreated } .
+    OPTIONAL { ?s schema:locationCreated/o:id ?locationCreatedId } .
+    OPTIONAL { ?s schema:toLocation/o:title ?toLocation } .
+    OPTIONAL { ?s schema:toLocation/o:id ?toLocationId } .
   `;
 };

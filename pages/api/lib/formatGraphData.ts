@@ -20,7 +20,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // Todo: Make interface for graphData
     graphData['@graph'].forEach(object => {
-    // console.log(object);
+        // console.log(object);
         try {
             if (object['o:bookObjectId']) {
                 nodes.push({
@@ -86,7 +86,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                 nodes.push({
                     id: object['toLocation:Id'],
                     label: object.toLocation,
-                    color: '#BF616A',
+                    color: '#EBCB8B',
                     type: 'diamond',
                 });
             } catch (error) {
@@ -159,7 +159,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     target: object['o:recipientId'],
                     label: object.actionTitle,
                     type: 'curvedArrow',
-                    size: 4,
+                    size: 40,
                     actionId: getActionId(object['@id'])
                 });
             }
@@ -174,7 +174,6 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     actionId: getActionId(object['@id'])
                 });
             }
-            // TODO: Why is the code block below is the same with the code above in addition to the label? -Rui
             if (object['locationCreated:Id']) {
                 edges.push({
                     id: generateId(),
@@ -199,7 +198,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
 
     // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
     // the associated place of each person, which is often the same place.
-    sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v,i,a)=>a.findIndex(t=>(t.id === v.id))===i);
+    sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
 
     // let nodes to be initialized as a circle on canvas
     sigmaGraph.graph.nodes.forEach(function(node, i, a){
@@ -208,7 +207,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     });
 
     // Filter out all spurious edges which either miss target or source
-    sigmaGraph.graph.edges = sigmaGraph.graph.edges.filter(edge => typeof(edge.source) !== 'undefined' && typeof(edge.target) !== 'undefined');
+    sigmaGraph.graph.edges = sigmaGraph.graph.edges.filter(edge => typeof (edge.source) !== 'undefined' && typeof (edge.target) !== 'undefined');
 
     // console.log(JSON.stringify(sigmaGraph, null, 2))
     return sigmaGraph;

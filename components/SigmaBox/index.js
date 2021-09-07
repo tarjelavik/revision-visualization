@@ -18,8 +18,8 @@ const sigmaStyle = {
 };
 
 const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
-                  getClickedEdgeInfo, setDisplayClickedEdgeInfo
-                }) => {
+  getClickedEdgeInfo, setDisplayClickedEdgeInfo
+}) => {
 
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
@@ -61,9 +61,9 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
     // keep the color of the unlated edges to original color
     allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
     // TODO: debug -Rui
-    console.log("node info:", event.data.node)
-    console.log("node info - client X:", event.data.captor.clientX)
-    console.log("node info - client Y:", event.data.captor.clientY)
+    console.log('node info:', event.data.node)
+    console.log('node info - client X:', event.data.captor.clientX)
+    console.log('node info - client Y:', event.data.captor.clientY)
     // create node info -Rui
     const nodeInfo = {
       label: event.data.node.label,
@@ -77,16 +77,16 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
 
   const onClickStageHandler = (event) => {
     // TODO: debug -Rui
-    console.log("stage is clicked, edges on screens", event.data.renderer.edgesOnScreen)
-    console.log("stage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
+    console.log('stage is clicked, edges on screens', event.data.renderer.edgesOnScreen)
+    console.log('stage is clicked, nodes on screens', event.data.renderer.nodesOnScreen)
     // set color of edges to default color when clicking the stage
-    event.data.renderer.edgesOnScreen.forEach(e => e.color = "#CFCCC9")
+    event.data.renderer.edgesOnScreen.forEach(e => e.color = '#CFCCC9')
   }
 
   const getGraph = async () => {
     setLoading(true);
     const response = await fetch(
-      `api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`
+      `/api/graph/network/${encodeURIComponent(JSON.stringify(classes))}`
     );
     const body = await response.json();
     setGraph(body.graph);
@@ -132,42 +132,41 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               minNodeSize: 2.5,
               maxNodeSize: 22,
               defaultNodeColor: '#4C566A',
-              nodeHoverColor: "default",
-              defaultNodeHoverColor: "#C1BE45",
-              defaultNodeBorderColor: "#C1BE45",
+              nodeHoverColor: 'default',
+              defaultNodeHoverColor: '#C1BE45',
+              defaultNodeBorderColor: '#C1BE45',
               singleHover: true,
               // Node label
               drawLabels: true,
-              labelThreshold: 100, // or 200
-              labelColor: "default",
-              labelHoverShadow: "default",
-              labelHoverShadowColor: "#000",
-              labelHoverBGColor: "default",
-              labelHoverColor: "default",
-              defaultHoverLabelBGColor: "#002147",
-              defaultLabelHoverColor: "#fff",
-              defaultLabelColor: "#fff",
+              labelThreshold: 20, // or 200
+              labelColor: 'default',
+              labelHoverShadow: 'default',
+              labelHoverShadowColor: '#000',
+              labelHoverBGColor: 'default',
+              labelHoverColor: 'default',
+              defaultHoverLabelBGColor: '#002147',
+              defaultLabelHoverColor: '#fff',
+              defaultLabelColor: '#fff',
               defaultLabelSize: 14,
-              defaultLabelBGColor: "#002147",
+              defaultLabelBGColor: '#002147',
               // Edge
               defaultEdgeColor: '#CFCCC9',
-              defaultEdgeType: "curvedArrow",
+              // defaultEdgeType: 'curvedArrow',
               enableEdgeHovering: true,
               edgeHoverPrecision: 5,
               edgeHoverHighlightNodes: 'circle',
-              edgeHoverSizeRatio: 3,
+              edgeHoverSizeRatio: 1.2,
               edgeHoverExtremities: true,
-              edgeColor: "default",
+              edgeColor: 'default',
               edgeHoverColor: 'default',
-              defaultEdgeHoverColor: "#2775B6",
+              defaultEdgeHoverColor: '#2775B6',
               minArrowSize: 5,
               minEdgeSize: 1,
               // maxEdgeSize: 5, // only use it if considering edge thickness
               // Edge label
-              drawEdgeLabels: false,
-              // drawEdgeLabels: true,
+              drawEdgeLabels: true,
               // Captors
-              zoomingRatio: 1.6,
+              /* zoomingRatio: 1.6,
               doubleClickZoomingRatio: 1.6,
               mouseZoomDuration: 500,
               doubleClickZoomDuration: 500,

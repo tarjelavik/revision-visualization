@@ -1,8 +1,15 @@
-import { getNodeData } from "../../lib/getNodeData";
+import { getNodeData } from '../../lib/getNodeData';
+
+/**
+ * Get data about a node, e.g. an instance from Omeka
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 
 export default async function handler(req, res) {
   const {
-    query: {id},
+    query: { id },
     method,
   } = req
 
@@ -13,7 +20,7 @@ export default async function handler(req, res) {
         // console.log('Node served: ', response.data)
         res.status(200).json(response.data)
       } catch (error) {
-          res.status(400).json(error);
+        res.status(400).json(error);
       }
 
       break
