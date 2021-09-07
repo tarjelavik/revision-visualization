@@ -4,6 +4,8 @@ export default interface Node {
   type?: string, 
   color?: string, 
   class?: string, 
+  x?: number,
+  y?: number,
   image?: {
     url: string
   } 

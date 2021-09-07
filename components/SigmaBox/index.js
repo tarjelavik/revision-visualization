@@ -10,27 +10,78 @@ import {
 } from 'react-sigma';
 import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
+import { getConstructLocationClause } from '../../pages/api/lib/query-templates/locationTemplate';
 
 const sigmaStyle = {
   height: '100vh',
   width: '100vw',
 };
 
-const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
+const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
+                  getClickedEdgeInfo, setDisplayClickedEdgeInfo
+                }) => {
+
   const [graph, setGraph] = useState({});
   const [loading, setLoading] = useState(false);
 
   const onClickEdgeHandler = (event) => {
-    // console.log('Edge clicked: ', event)
-    getClickedNodeData(event.data.edge.actionId);
-    setDisplayDrawer();
+    // change color of edges of the clicked edge
+    event.data.edge.color = '#C21F30'
+
+    const allOtherEdges = graph.edges.filter(e => e.id !== event.data.edge.id)
+    // keep color of unclicked edges to original color
+    allOtherEdges.forEach(e => e.color = '#CFCCC9')
+    // display edge label if it is not empty
+    if (event.data.edge.label !== '') {
+      const edgeSource = graph.nodes.find(n => n.id === event.data.edge.source)
+      const edgeTarget = graph.nodes.find(n => n.id === event.data.edge.target)
+      // TODO: debug edge label -Rui
+      console.log('edge source: ', edgeSource.label)
+      console.log('edge target: ', edgeTarget.label)
+      const edgeInfo = {
+        label: event.data.edge.label,
+        source: edgeSource.label,
+        target: edgeTarget.label,
+        coordinateX: event.data.captor.clientX,
+        coordinateY: event.data.captor.clientY,
+      }
+      // display
+      getClickedEdgeInfo(edgeInfo)
+      // getClickedEdgeLabel(event.data.edge.label)
+      setDisplayClickedEdgeInfo();
+    }
   };
 
   const onClickNodeHandler = (event) => {
-    // console.log('Node clicked: ', event)
-    getClickedNodeData(event.data.node.id);
-    setDisplayDrawer();
+    const relatedEdges = graph.edges.filter(e => e.source === event.data.node.id || e.target === event.data.node.id)
+    // change the color of the edges related to the clicked node
+    relatedEdges.forEach(e => e.color = '#C21F30')
+
+    const allUnrelatedEdges = graph.edges.filter(e => e.source !== event.data.node.id && e.target !== event.data.node.id)
+    // keep the color of the unlated edges to original color
+    allUnrelatedEdges.forEach(e => e.color = '#CFCCC9')
+    // TODO: debug -Rui
+    console.log("node info:", event.data.node)
+    console.log("node info - client X:", event.data.captor.clientX)
+    console.log("node info - client Y:", event.data.captor.clientY)
+    // create node info -Rui
+    const nodeInfo = {
+      label: event.data.node.label,
+      coordinateX: event.data.captor.clientX,
+      coordinateY: event.data.captor.clientY,
+    }
+
+    getClickedNodeDataInfo(event.data.node.id, nodeInfo);
+    setDisplayClickedNodeInfo();
   };
+
+  const onClickStageHandler = (event) => {
+    // TODO: debug -Rui
+    console.log("stage is clicked, edges on screens", event.data.renderer.edgesOnScreen)
+    console.log("stage is clicked, nodes on screens", event.data.renderer.nodesOnScreen)
+    // set color of edges to default color when clicking the stage
+    event.data.renderer.edgesOnScreen.forEach(e => e.color = "#CFCCC9")
+  }
 
   const getGraph = async () => {
     setLoading(true);
@@ -62,50 +113,111 @@ const SigmaBox = ({ classes, getClickedNodeData, setDisplayDrawer }) => {
             style={sigmaStyle}
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
+            // add event for the stage -Rui
+            onClickStage={(stageEvent) => onClickStageHandler(stageEvent)}
             renderer="canvas"
             settings={{
-              sideMargin: 50,
-              defaultLabelSize: 14,
-              labelThreshold: 200,
-              drawEdgeLabels: true,
-              drawLabels: true,
-              minArrowSize: 8,
+              // Global settings of the renderer
+              sideMargin: 800,
+              scalingMode: "outside",
+              font: "arial",
+              hoverFontStyle: "bold",
+              fontStyle: "bold",
+              activeFontStyle: "bold",
+              autoRescale: true,
+              autoResize: false,
               clone: false,
-              minNodeSize: 10,
-              defaultNodeColor: '#454554',
+              verbose: true, // log errors and warnings
+              // Node
+              minNodeSize: 2.5,
+              maxNodeSize: 22,
+              defaultNodeColor: '#4C566A',
+              nodeHoverColor: "default",
+              defaultNodeHoverColor: "#C1BE45",
+              defaultNodeBorderColor: "#C1BE45",
+              singleHover: true,
+              // Node label
+              drawLabels: true,
+              labelThreshold: 100, // or 200
+              labelColor: "default",
+              labelHoverShadow: "default",
+              labelHoverShadowColor: "#000",
+              labelHoverBGColor: "default",
+              labelHoverColor: "default",
+              defaultHoverLabelBGColor: "#002147",
+              defaultLabelHoverColor: "#fff",
+              defaultLabelColor: "#fff",
+              defaultLabelSize: 14,
+              defaultLabelBGColor: "#002147",
+              // Edge
+              defaultEdgeColor: '#CFCCC9',
+              defaultEdgeType: "curvedArrow",
               enableEdgeHovering: true,
-              edgeHoverSizeRatio: 5,
               edgeHoverPrecision: 5,
+              edgeHoverHighlightNodes: 'circle',
+              edgeHoverSizeRatio: 3,
+              edgeHoverExtremities: true,
+              edgeColor: "default",
+              edgeHoverColor: 'default',
+              defaultEdgeHoverColor: "#2775B6",
+              minArrowSize: 5,
               minEdgeSize: 1,
-              verbose: true,
+              // maxEdgeSize: 5, // only use it if considering edge thickness
+              // Edge label
+              drawEdgeLabels: false,
+              // drawEdgeLabels: true,
+              // Captors
+              zoomingRatio: 1.6,
+              doubleClickZoomingRatio: 1.6,
+              mouseZoomDuration: 500,
+              doubleClickZoomDuration: 500,
+              zoomMin: 0.001,
+              zoomMax: 300,
+
+              hideEdgesOnMove: true, // If true, then edges won't draw during dragging or animations.
             }}
           >
             <SigmaLoader graph={graph}>
-              <RandomizeNodePositions>
-                <ForceLink
-                  background
-                  barnesHutTheta={0.5}
-                  easing="quadraticInOut"
-                  edgeWeightInfluence={0}
-                  gravity={1}
-                  linLogMode
-                  randomize="locally"
-                  timeout={1000}
-                  worker
+            <ForceAtlas2
+                worker={false}
+                barnesHutOptimize={true}
+                barnesHutTheta={0.6}
+                adjustSize={true}
+                linLogMode={false}
+                outboundAttractionDistribution={true}
+                edgeWeightInfluence={0}
+                scalingRatio={1}
+                gravity={0}
+                strongGravityMode={true}
+                // iterationsPerRender={10}
+                timeout={2000}
+                easing="quadraticInOut"
+                background={true}
+              >
+                <NOverlap
+                    easing="quadraticInOut"
+                    background={true}
+                    duration={2000}
+                    gridSize={75}
+                    maxIterations={500}
+                    nodeMargin={50}
+                    scaleNodes={5}
+                    speed={5}
                 />
-                <RelativeSize initialSize={100} />
+              </ForceAtlas2>
 
-                <DragNodes
-                  // tslint:disable-next-line:no-empty
-                  onDrag={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onDragend={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onDrop={function noRefCheck() {}}
-                  // tslint:disable-next-line:no-empty
-                  onStartdrag={function noRefCheck() {}}
-                />
-              </RandomizeNodePositions>
+              <RelativeSize initialSize={15} />
+
+              <DragNodes
+                // tslint:disable-next-line:no-empty
+                onDrag={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onDragend={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onDrop={function noRefCheck() {}}
+                // tslint:disable-next-line:no-empty
+                onStartdrag={function noRefCheck() {}}
+              />
             </SigmaLoader>
           </Sigma>
         </Box>
