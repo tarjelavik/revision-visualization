@@ -27,7 +27,7 @@ const parseToGraph = (graphData: any): SigmaGraph => {
                     id: object['o:bookObjectId'],
                     label: object.bookObjectTitle,
                     image: {
-                        url: '',
+                        url: '/icons/book-item-svgrepo.svg',
                     },
                     type: 'square',
                     color: '#D08770',
@@ -94,16 +94,36 @@ const parseToGraph = (graphData: any): SigmaGraph => {
             }
         }
         try {
+            // let redundantEdge = null
             if (object['o:bookObjectId']) {
-                edges.push({
-                    id: generateId(),
-                    source: object['o:creatorId'],
-                    target: object['o:bookObjectId'],
-                    label: object.actionTitle,
-                    type: 'curvedArrow',
-                    size: 4,
-                    actionId: getActionId(object['@id'])
-                });
+                // TODO filter out redundant edges
+                // console.log("current edge source:", object['o:creatorId'])
+                // console.log("current edge target:", object['o:bookObjectId'])
+                // redundantEdge = edges.find(edge => edge.source === object['o:creatorId'] && edge.target === object['o:bookObjectId'])
+                // debug - Rui
+                // if (typeof(redundantEdge) === 'undefined'){
+                // console.log("didn't find redundant edge, so push a new edge ...")
+                    edges.push({
+                        id: generateId(),
+                        source: object['o:creatorId'],
+                        target: object['o:bookObjectId'],
+                        label: object.actionTitle,
+                        type: 'curvedArrow',
+                        size: 4,
+                        actionId: getActionId(object['@id'])
+                    });
+                    // console.log("length of the edges array:", edges.length)
+                // }else {
+                //     console.log("find a redundant edge:", redundantEdge)
+                //     const idxOfRedundantEdge = edges.indexOf(redundantEdge)
+                //     console.log("index of the redundant edge:", idxOfRedundantEdge)
+                //     edges[idxOfRedundantEdge].size += 10
+                //     console.log("modified edge:", edges[idxOfRedundantEdge])
+                //     console.log("length of the edges array without pushing:", edges.length)
+                // }
+                // TODO: empty array:
+                // redundantEdges.splice(0, redundantEdges.length)
+                // console.log("emptyed redundantEdges:", redundantEdges)
                 edges.push({
                     id: generateId(),
                     source: object['locationCreated:Id'],
@@ -179,6 +199,12 @@ const parseToGraph = (graphData: any): SigmaGraph => {
     // We need this filter to remove duplicate associated place ids. We get duplicates because we retrieve
     // the associated place of each person, which is often the same place.
     sigmaGraph.graph.nodes = sigmaGraph.graph.nodes.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i);
+
+    // let nodes to be initialized as a circle on canvas
+    sigmaGraph.graph.nodes.forEach(function(node, i, a){
+        node.x = 1000 * Math.cos(2 * i * Math.PI / a.length);
+        node.y = 1000 * Math.sin(2 * i * Math.PI / a.length);
+    });
 
     // Filter out all spurious edges which either miss target or source
     sigmaGraph.graph.edges = sigmaGraph.graph.edges.filter(edge => typeof (edge.source) !== 'undefined' && typeof (edge.target) !== 'undefined');
