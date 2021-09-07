@@ -105,7 +105,7 @@ const Networks = () => {
   }
 
   const setDisplayClickedNodeInfo = () => {
-    // onToggle(); // TODO: note - the trigger used by Ahl -rui
+    // onToggle(); // TODO: note that this is the trigger used by Ahl -rui
     // call onToggleClickedNode to display the feedback when clicking a node -Rui
     onToggleClickedNode();
   };
@@ -283,7 +283,7 @@ const Networks = () => {
         </SlideFade>
       )}
 
-      {// TODO: commented code by Ahl below -Rui
+      {// TODO: commented code implemented by Ahl below -Rui
       /* {state.nodeData && (
         <Drawer
           placement="right"

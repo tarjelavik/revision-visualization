@@ -114,27 +114,23 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
             onClickEdge={(edgeEvent) => onClickEdgeHandler(edgeEvent)}
             onClickNode={(nodeEvent) => onClickNodeHandler(nodeEvent)}
             // add event for the stage -Rui
-            onClickStage={(stageEvent)=> onClickStageHandler(stageEvent)}
+            onClickStage={(stageEvent) => onClickStageHandler(stageEvent)}
             renderer="canvas"
             settings={{
               // Global settings of the renderer
-              sideMargin: 500,
+              sideMargin: 800,
               scalingMode: "outside",
               font: "arial",
               hoverFontStyle: "bold",
               fontStyle: "bold",
               activeFontStyle: "bold",
               autoRescale: true,
-              autoResize: true,
-              // autoRescale: false,
-              // autoResize: false,
-              nodesPowRatio: 1, // camera setting: nodes size relatively to the zooming level
-              edgesPowRatio: 1,
+              autoResize: false,
               clone: false,
               verbose: true, // log errors and warnings
               // Node
-              minNodeSize: 0.5,
-              maxNodeSize: 25,
+              minNodeSize: 2.5,
+              maxNodeSize: 22,
               defaultNodeColor: '#4C566A',
               nodeHoverColor: "default",
               defaultNodeHoverColor: "#C1BE45",
@@ -166,7 +162,7 @@ const SigmaBox = ({ classes, getClickedNodeDataInfo, setDisplayClickedNodeInfo,
               defaultEdgeHoverColor: "#2775B6",
               minArrowSize: 5,
               minEdgeSize: 1,
-              // maxEdgeSize: 5, // only use it after using edge thickness
+              // maxEdgeSize: 5, // only use it if considering edge thickness
               // Edge label
               drawEdgeLabels: false,
               // drawEdgeLabels: true,
