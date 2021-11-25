@@ -82,7 +82,7 @@ const Networks = () => {
 
   // add another argument nodeInfo and set its state -Rui
   const getClickedNodeDataInfo = async (id, nodeInfo) => {
-    const response = await fetch(`api/graph/node/${id}`);
+    const response = await fetch(`/api/graph/node/${id}`);
     try {
       const body = await response.json();
       console.log('print body when getClickedNodeDataInfo is called', body);
