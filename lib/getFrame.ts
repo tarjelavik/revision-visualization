@@ -46,8 +46,8 @@ export default async function getFrame(type): Promise<JsonLd> {
       hand: {
         '@id': 'http://purl.org/bdm2/hand'
       },
-      containedIn: {
-        '@id': 'http://schema.org/containedIn',
+      carriesWork: {
+        '@id': 'http://purl.org/bdm2/carriesWork',
         '@type': '@id'
       },
       referencesBirgitta: {
@@ -60,8 +60,8 @@ export default async function getFrame(type): Promise<JsonLd> {
       folios: {
         '@id': 'http://purl.org/bdm2/folios'
       },
-      isPartOf: {
-        '@id': 'http://schema.org/isPartOf',
+      formsPartOf: {
+        '@id': 'http://purl.org/bdm2/formsPartOf',
         '@type': '@id'
       },
       created: {
@@ -73,7 +73,7 @@ export default async function getFrame(type): Promise<JsonLd> {
         '@type': 'http://www.w3.org/2001/XMLSchema#integer'
       },
       language: {
-        '@id': 'http://schema.org/language'
+        '@id': 'http://purl.org/bdm2/language'
       },
       modified: {
         '@id': 'http://omeka.org/s/vocabs/o#modified',
@@ -82,31 +82,31 @@ export default async function getFrame(type): Promise<JsonLd> {
       description: {
         '@id': 'http://purl.org/dc/terms/description'
       },
-      includesObject: {
-        '@id': 'http://schema.org/includesObject',
+      composedOf: {
+        '@id': 'http://purl.org/bdm2/composedOf',
         '@type': '@id'
       },
       leafPageDimensions: {
         '@id': 'http://purl.org/bdm2/leafPageDimensions'
       },
       relatedLink: {
-        '@id': 'http://schema.org/relatedLink',
+        '@id': 'http://purl.org/bdm2/relatedLink',
         '@type': '@id'
       },
       productionDate: {
-        '@id': 'http://schema.org/productionDate'
+        '@id': 'http://purl.org/bdm2/productionDate'
       },
       shelfmark: {
         '@id': 'http://purl.org/bdm2/shelfmark'
       },
       comment: {
-        '@id': 'http://schema.org/comment'
+        '@id': 'http://purl.org/bdm2/comment'
       },
       writingSupport: {
         '@id': 'http://purl.org/bdm2/writingSupport'
       },
       location: {
-        '@id': 'http://schema.org/location',
+        '@id': 'http://purl.org/bdm2/location',
         '@type': '@id'
       },
       referenceDetails: {
@@ -116,12 +116,11 @@ export default async function getFrame(type): Promise<JsonLd> {
         '@id': 'http://purl.org/bdm2/hasType',
         '@type': '@id'
       },
-      containedInPlace: {
-        '@id': 'http://schema.org/containedInPlace',
+      ownedBy: {
+        '@id': 'http://purl.org/bdm2/ownedBy',
         '@type': '@id'
       },
       o: 'http://omeka.org/s/vocabs/o#',
-      schema: 'http://schema.org/',
       rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       dcterms: 'http://purl.org/dc/terms/',
       bdm2: 'http://purl.org/bdm2/',

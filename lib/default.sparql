@@ -1,5 +1,4 @@
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX schema: <http://schema.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX bdm2: <http://purl.org/bdm2/>
@@ -19,10 +18,10 @@ WHERE {
   ?s ?p <https://birgitta.uib.no/api/resource_templates/21> . #Action
   ?s bdm2:hasType/o:title ?action .
   ?s bdm2:hasType/o:id ?actionId .
-  ?s schema:creator/o:title ?instigator .
-  ?s schema:creator/o:id ?instigatorId .
-  OPTIONAL { ?s schema:recipient/o:title ?recipient } .
-  OPTIONAL { ?s schema:recipient/o:id ?recipientId } .
-  ?s schema:object/o:title ?bookObject .
-  ?s schema:object/o:id ?bookObjectId .
+  ?s bdm2:carriedOutBy/o:title ?instigator .
+  ?s bdm2:carriedOutBy/o:id ?instigatorId .
+  OPTIONAL { ?s bdm2:recipient/o:title ?recipient } .
+  OPTIONAL { ?s bdm2:recipient/o:id ?recipientId } .
+  ?s bdm2:object/o:title ?bookObject .
+  ?s bdm2:object/o:id ?bookObjectId .
 }

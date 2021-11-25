@@ -9,9 +9,9 @@ export const getConstructInstigatorClause = (): string => {
 
 export const getWhereInstigatorClause = (): string => {
   return `
-    ?s schema:creator/o:title ?instigator .
-    ?s schema:creator/o:id ?instigatorId .
-    OPTIONAL { ?s schema:recipient/o:title ?recipient } .
-    OPTIONAL { ?s schema:recipient/o:id ?recipientId } .
+    ?s bdm2:carriedOutBy/o:title ?instigator .
+    ?s bdm2:carriedOutBy/o:id ?instigatorId .
+    OPTIONAL { ?s bdm2:recipient/o:title ?recipient } .
+    OPTIONAL { ?s bdm2:recipient/o:id ?recipientId } .
   `;
 };

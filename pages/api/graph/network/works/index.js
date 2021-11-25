@@ -4,7 +4,6 @@ const ENDPOINT = process.env.NEXT_PUBLIC_SPARQL_ENDPOINT
 
 const nodesQuery = `
   PREFIX dcterms: <http://purl.org/dc/terms/>
-  PREFIX schema: <http://schema.org/>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX bdm2: <http://purl.org/bdm2/>
@@ -18,14 +17,13 @@ const nodesQuery = `
     OPTIONAL { ?s o:title ?title }
     ?s o:id ?id .
     BIND(COALESCE(?title, ?id) AS ?label)
-    FILTER(EXISTS {?s ^schema:object|schema:object|^schema:includesObject|schema:includesObject|^schema:isPartOf|schema:isPartOf|^schema:containedIn|schema:containedIn ?o .})
+    FILTER(EXISTS {?s ^bdm2:object|bdm2:object|^bdm2:composedOf|bdm2:composedOf|^bdm2:formsPartOf|bdm2:formsPartOf|^bdm2:carriesWork|bdm2:carriesWork ?o .})
     FILTER(?type != o:Item)
   }
 `
 
 const linksQuery = `
   PREFIX dcterms: <http://purl.org/dc/terms/>
-  PREFIX schema: <http://schema.org/>
   PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX bdm2: <http://purl.org/bdm2/>
@@ -37,11 +35,11 @@ const linksQuery = `
     ?s a ?class .
     ?s o:id ?target .
     
-    OPTIONAL { ?s schema:object/o:id ?source } .
-    OPTIONAL { ?s schema:includesObject/o:id ?source } .
-    OPTIONAL { ?s schema:isPartOf/o:id ?source } .
-    OPTIONAL { ?s schema:containedIn/o:id ?source } .
-    OPTIONAL { ?s ^schema:containedIn/o:id ?source } .
+    OPTIONAL { ?s bdm2:object/o:id ?source } .
+    OPTIONAL { ?s bdm2:composedOf/o:id ?source } .
+    OPTIONAL { ?s bdm2:formsPartOf/o:id ?source } .
+    OPTIONAL { ?s bdm2:carriesWork/o:id ?source } .
+    OPTIONAL { ?s ^bdm2:carriesWork/o:id ?source } .
     FILTER(!isBlank(?source))
   }
 `

@@ -7,7 +7,7 @@ export const getConstructBookObjectClause = (): string => {
 
 export const getWhereBookObjectClause = (): string => {
   return `
-    OPTIONAL { ?s schema:object/o:title ?bookObject } .
-    OPTIONAL { ?s schema:object/o:id ?bookObjectId } .
+    OPTIONAL { ?s bdm2:object/o:title ?bookObject } .
+    OPTIONAL { ?s bdm2:object/o:id ?bookObjectId } .
   `;
 };
