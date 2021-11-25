@@ -2,7 +2,7 @@ import { ReactiveBase, DataSearch, SelectedFilters, ReactiveList } from '@appbas
 import { Box, Container, Grid, Heading, OrderedList, ListItem, Tag, Text } from '@chakra-ui/react'
 import Layout from '../../components/Layout'
 import Link from '../../components/Link'
-import Filters from '../../components/search/Filters'
+import Filters from '../../components/Search/Filters'
 
 export default function Search() {
   return (
