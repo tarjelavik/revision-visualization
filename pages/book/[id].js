@@ -72,8 +72,8 @@ export async function getStaticProps({ params }) {
   const framed = jsonld.frame(compacted, frame)
   const book = omit(await framed, ['@context'])
 
-  const index = await axios.put(`${ES_DOMAIN}/all/id/${params.id}`, book, { headers: { 'x-api-key': KEY, 'x-api-id': APP_ID, 'Content-Type': 'application/json' } })
-    .catch(error => console.log(error));
+  /* const index = await axios.put(`${ES_DOMAIN}/all/id/${params.id}`, book, { headers: { 'x-api-key': KEY, 'x-api-id': APP_ID, 'Content-Type': 'application/json' } })
+    .catch(error => console.log(error)); */
 
   return {
     props: {
