@@ -64,7 +64,7 @@ export const constructTemplate = (searchParameter) => {
       ${createConstructClause(searchParameter)}
     }
     WHERE {
-      ?s ?p <https://birgitta.test.uib.no/api/resource_templates/21> .
+      ?s ?p <https://birgitta.uib.no/api/resource_templates/21> .
       ?s bdm2:hasType/o:title ?action .
       ?s bdm2:hasType/o:id ?actionId .
       ${createWhereClause(searchParameter)}

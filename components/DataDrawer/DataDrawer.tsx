@@ -20,7 +20,7 @@ const listStyle = {
 
 const filterProps = (nodeData: any) => {
   // We need to set a guard against a null object here
-  nodeData = nodeData || {foo: 'bar'};
+  nodeData = nodeData || { foo: 'bar' };
   const filteredProps = [];
 
   for (const key in nodeData) {
@@ -34,7 +34,7 @@ const filterProps = (nodeData: any) => {
 
 const getLinkToResource = (nodeData: any) => {
   try {
-    return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`;
+    return `https://birgitta.uib.no/s/birgitta/item/${nodeData['o:id']}`;
   } catch {
     return '';
   }
@@ -60,9 +60,9 @@ const DataDrawer = (props: any) => {
               <DrawerBody>
                 <List style={listStyle}>
                   {nodes.map((element, index) => (
-                    <DataDrawerDisplayProperty key={index} propKey={element.property_label} value={element.display_title || element['@value']}/>
+                    <DataDrawerDisplayProperty key={index} propKey={element.property_label} value={element.display_title || element['@value']} />
                   ))}
-                  <DataDrawerDisplayProperty propKey='Link to Record' value={<a href={linkToResource} target='_blank' rel='noopener noreferrer'>See full resource page</a>}/>
+                  <DataDrawerDisplayProperty propKey='Link to Record' value={<a href={linkToResource} target='_blank' rel='noopener noreferrer'>See full resource page</a>} />
                 </List>
               </DrawerBody>
               <DrawerFooter>

@@ -33,7 +33,7 @@ const linksQuery = `
 
   SELECT DISTINCT ?source ?target
   WHERE {
-    VALUES ?revelation { <https://birgitta.test.uib.no/api/items/224> }
+    VALUES ?revelation { <https://birgitta.uib.no/api/items/224> }
     VALUES ?class {bdm2:Work bdm2:BookObject bdm2:WorkItem bdm2:Institution}
     ?revelation a ?class .
     ?revelation o:id ?target .

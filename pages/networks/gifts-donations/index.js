@@ -51,7 +51,7 @@ const filterProps = (nodeData) => {
 
 const getLinkToResource = (nodeData) => {
   try {
-    return `https://birgitta.test.uib.no/s/birgitta/item/${nodeData['o:id']}`;
+    return `https://birgitta.uib.no/s/birgitta/item/${nodeData['o:id']}`;
   } catch {
     return '';
   }

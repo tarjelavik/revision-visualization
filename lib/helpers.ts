@@ -1,16 +1,14 @@
-// import React from 'react';
-
 export const resetState = () => {
   const state = {
-    resourceTemplates: [{id: String, label: String}] as unknown,
+    resourceTemplates: [{ id: String, label: String }] as unknown,
     isLoading: false,
     displayGraph: false,
     graph: {
-      nodes:[ {
+      nodes: [{
         id: '',
         label: ''
       }],
-      edges:[ {
+      edges: [{
         id: '',
         source: '',
         target: '',
@@ -30,25 +28,25 @@ export const resetState = () => {
 export const getResourceTemplateId = (selectedClass: string): string => {
   switch (selectedClass) {
     case 'Person':
-      return 'https://birgitta.test.uib.no/api/resource_templates/13';
+      return 'https://birgitta.uib.no/api/resource_templates/13';
     case 'Place':
-      return 'https://birgitta.test.uib.no/api/resource_templates/14';
+      return 'https://birgitta.uib.no/api/resource_templates/14';
     case 'Location in Time':
-      return 'https://birgitta.test.uib.no/api/resource_templates/15';
+      return 'https://birgitta.uib.no/api/resource_templates/15';
     case 'Book Object':
-      return 'https://birgitta.test.uib.no/api/resource_templates/16';
+      return 'https://birgitta.uib.no/api/resource_templates/16';
     case 'Institution':
-      return 'https://birgitta.test.uib.no/api/resource_templates/17';
+      return 'https://birgitta.uib.no/api/resource_templates/17';
     case 'Work Item':
-      return 'https://birgitta.test.uib.no/api/resource_templates/18';
+      return 'https://birgitta.uib.no/api/resource_templates/18';
     case 'Work':
-      return 'https://birgitta.test.uib.no/api/resource_templates/19';
+      return 'https://birgitta.uib.no/api/resource_templates/19';
     case 'Non Book Object':
-      return 'https://birgitta.test.uib.no/api/resource_templates/20';
+      return 'https://birgitta.uib.no/api/resource_templates/20';
     case 'Action':
-      return 'https://birgitta.test.uib.no/api/resource_templates/21';
+      return 'https://birgitta.uib.no/api/resource_templates/21';
     case 'Data Source':
-      return 'https://birgitta.test.uib.no/api/resource_templates/22';
+      return 'https://birgitta.uib.no/api/resource_templates/22';
     default:
       return '0';
   }
@@ -56,25 +54,25 @@ export const getResourceTemplateId = (selectedClass: string): string => {
 
 export const getLabel = (resourceTemplate?: string): string => {
   switch (resourceTemplate) {
-    case 'https://birgitta.test.uib.no/api/resource_templates/13':
+    case 'https://birgitta.uib.no/api/resource_templates/13':
       return 'Person';
-    case 'https://birgitta.test.uib.no/api/resource_templates/14':
+    case 'https://birgitta.uib.no/api/resource_templates/14':
       return 'Place';
-    case 'https://birgitta.test.uib.no/api/resource_templates/15':
+    case 'https://birgitta.uib.no/api/resource_templates/15':
       return 'Location in Time';
-    case 'https://birgitta.test.uib.no/api/resource_templates/16':
+    case 'https://birgitta.uib.no/api/resource_templates/16':
       return 'Book Object';
-    case 'https://birgitta.test.uib.no/api/resource_templates/17':
+    case 'https://birgitta.uib.no/api/resource_templates/17':
       return 'Institution';
-    case 'https://birgitta.test.uib.no/api/resource_templates/18':
+    case 'https://birgitta.uib.no/api/resource_templates/18':
       return 'Work Item';
-    case 'https://birgitta.test.uib.no/api/resource_templates/19':
+    case 'https://birgitta.uib.no/api/resource_templates/19':
       return 'Work';
-    case 'https://birgitta.test.uib.no/api/resource_templates/20':
+    case 'https://birgitta.uib.no/api/resource_templates/20':
       return 'Non Book Object';
-    case 'https://birgitta.test.uib.no/api/resource_templates/21':
+    case 'https://birgitta.uib.no/api/resource_templates/21':
       return 'Action';
-    case 'https://birgitta.test.uib.no/api/resource_templates/22':
+    case 'https://birgitta.uib.no/api/resource_templates/22':
       return 'Data Source';
     default:
       return '';
@@ -114,7 +112,7 @@ export const getDisplayType = (dataType: string): string => {
   }
 };
 
-export const getDisplayProperties = (nodeData: any) => {
+export const getDisplayProperties = (nodeData: any): string => {
   if (!nodeData) return null;
   return getDisplayType(nodeData['@type'][1]);
 };
