@@ -26,7 +26,7 @@ const Networks = () => {
         borderBottom="solid 2px"
       >
         <Flex>
-          <Box p="10">
+          {/* <Box p="10">
             <Heading>
               <Link href="/networks/gifts-donations">
                 Build your network
@@ -35,7 +35,7 @@ const Networks = () => {
             <Text>
               Network based on Actions.
             </Text>
-          </Box>
+          </Box> */}
           <Box p="10">
             <Heading>
               <Link href="/networks/works-books">
@@ -48,7 +48,6 @@ const Networks = () => {
           </Box>
         </Flex>
       </Container>
-
     </Layout>
   );
 };
