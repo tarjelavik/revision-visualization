@@ -34,7 +34,7 @@ export default function Search() {
         <Container mt={5} maxW="3xl">
           <Box>
             <DataSearch
-              dataField={['identifier', 'title', 'description', 'comment', 'label', 'location.title', 'includesObject.title']}
+              dataField={['identifier', 'title', 'description', 'comment', 'label', 'location.omeka_title', 'composedOf.omeka_title']}
               fieldWeights={[2, 1, 2, 2]}
               componentId="search"
               autosuggest={false}
@@ -68,27 +68,25 @@ export default function Search() {
                           <Box key={item._id} border="#aaa solid thin" p="3">
                             <Heading><Link href={`/book/${item['o:id']}`}>{item.title ?? item.shelfmark}</Link></Heading>
                             <Tag>{item.type?.[0]}</Tag><Tag>{`ID: ${item['o:id']}`}</Tag>
-                            <Text>{item.referencesBirgitta ? 'References Birgitta' : ''}</Text>
+                            <Text>{item.referencesBirgitta === '1' ? 'References Birgitta' : ''}</Text>
                             <Text>Production date: {item.productionDate ?? 'Unknown'}</Text>
-                            <Text>{item.containedInPlace?.label}</Text>
+                            <Text>{item.ownedby?.label}</Text>
                             <Text>{item.location?.title}</Text>
                             <Text>{item.folios}</Text>
                             <Text>{item.writingSupport}</Text>
                             <Text>{item.leafPageDimensions}</Text>
-                            {item.includesObject && item.includesObject?.length && (
+                            {item.composedOf && item.composedOf?.length && (
                               <OrderedList>
-                                {item.includesObject.map((c) => (
+                                {item.composedOf.map((c) => (
                                   <ListItem>{c.title}</ListItem>
                                 ))}
                               </OrderedList>
                             )}
-                            {item.includesObject && !item.includesObject.length && (
+                            {item.composedOf && !item.composedOf.length && (
                               <OrderedList>
-                                <ListItem>{item.includesObject.title ?? item.includesObject.shelfmark}</ListItem>
+                                <ListItem>{item.composedOf.title ?? item.composedOf.shelfmark}</ListItem>
                               </OrderedList>
                             )}
-
-
                             {/* <pre>{JSON.stringify(item, null, 2)}</pre> */}
                           </Box>
                         ))}

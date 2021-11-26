@@ -2,7 +2,7 @@ import axios from 'axios'
 const jsonld = require('jsonld');
 import omit from 'lodash/omit'
 import getFrame from '../../lib/getFrame'
-import { Box, Container, Heading, Text } from '@chakra-ui/layout';
+import { Box, Container, Heading, OrderedList, ListItem, Text } from '@chakra-ui/layout';
 import Layout from '../../components/Layout'
 import { Tag } from '@chakra-ui/tag';
 
@@ -11,14 +11,33 @@ const ES_DOMAIN = process.env.NEXT_PUBLIC_ES_DOMAIN
 const KEY = process.env.NEXT_PUBLIC_ES_KEY
 const APP_ID = process.env.NEXT_PUBLIC_ES_APP_ID
 
-function Books({ book }) {
+function Book({ book }) {
   return (
     <Layout>
-      <Container maxW="3x" p="10" centerContent >
+      <Container maxW="3x" p="10">
         <Heading>{book.title || book.shelfmark}</Heading>
-        <Tag></Tag>
+        <Tag>{book.type?.[0]}</Tag><Tag>{`ID: ${book['o:id']}`}</Tag>
         <Text>{book.description}</Text>
-        <Container overflow="scroll"><pre>{JSON.stringify(book, null, 2)}</pre></Container>
+        <Text>{book.referencesBirgitta === '1' ? 'References Birgitta' : ''}</Text>
+        <Text>Production date: {book.productionDate ?? 'Unknown'}</Text>
+        <Text>{book.ownedby?.label}</Text>
+        <Text>{book.location?.title}</Text>
+        <Text>{book.folios}</Text>
+        <Text>{book.writingSupport}</Text>
+        <Text>{book.leafPageDimensions}</Text>
+        {book.composedOf && book.composedOf?.length && (
+          <OrderedList>
+            {book.composedOf.map((c) => (
+              <ListItem>{c.title}</ListItem>
+            ))}
+          </OrderedList>
+        )}
+        {book.composedOf && !book.composedOf.length && (
+          <OrderedList>
+            <ListItem>{book.composedOf.title ?? book.composedOf.shelfmark}</ListItem>
+          </OrderedList>
+        )}
+        {/* <pre>{JSON.stringify(book, null, 2)}</pre> */}
       </Container>
     </Layout>
   )
@@ -72,8 +91,10 @@ export async function getStaticProps({ params }) {
   const framed = jsonld.frame(compacted, frame)
   const book = omit(await framed, ['@context'])
 
-  /* const index = await axios.put(`${ES_DOMAIN}/all/id/${params.id}`, book, { headers: { 'x-api-key': KEY, 'x-api-id': APP_ID, 'Content-Type': 'application/json' } })
-    .catch(error => console.log(error)); */
+  setTimeout(async () => {
+    const index = await axios.put(`${ES_DOMAIN}/all/id/${params.id}`, book, { headers: { 'x-api-key': KEY, 'x-api-id': APP_ID, 'Content-Type': 'application/json' } })
+      .catch(error => console.log(error));
+  }, 300)
 
   return {
     props: {
@@ -105,4 +126,4 @@ export async function getStaticPaths() {
   return { paths, fallback: 'blocking' }
 }
 
-export default Books
+export default Book

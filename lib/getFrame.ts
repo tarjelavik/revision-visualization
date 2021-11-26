@@ -37,7 +37,7 @@ export default async function getFrame(type): Promise<JsonLd> {
         '@id': 'http://omeka.org/s/vocabs/o#resource_class',
         '@type': '@id'
       },
-      label: {
+      omeka_title: {
         '@id': 'http://omeka.org/s/vocabs/o#title'
       },
       title: {

@@ -4,9 +4,9 @@ import { MultiList, SingleList, ToggleButton } from '@appbaseio/reactivesearch'
 const AllFilters = () => (
   <>
     <Box border="solid thin #ddd">
-      <SingleList componentId="Location" dataField="location.title" title="Location" />
-      <SingleList componentId="Title" dataField="title" title="Title" loader="Loading ..." showFilter={true} showMissing={true} />
-      <SingleList componentId="Folio" dataField="folios" title="Folio" loader="Loading ..." showFilter={true} showMissing={true} />
+      <SingleList componentId="Location" dataField="location.omeka_title.raw" title="Location" />
+      {/* <SingleList componentId="Title" dataField="title" title="Title" loader="Loading ..." showFilter={true} showMissing={true} />
+      <SingleList componentId="Folio" dataField="folios" title="Folio" loader="Loading ..." showFilter={true} showMissing={true} /> */}
     </Box>
   </>
 )
