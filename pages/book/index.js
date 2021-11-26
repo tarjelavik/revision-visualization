@@ -66,11 +66,9 @@ export async function getStaticProps() {
     ['@context']: frame['@context']
   }
   //const expanded = await jsonld.expand(proto);
-  const compacted = await jsonld.compact(proto, frame['@context']);
-  const framed = jsonld.frame(compacted, frame)
-  const books = omit(await framed, ['@context'])
-  //console.log(books)
-
+  //const compacted = await jsonld.compact(proto, frame['@context']);
+  const framed = jsonld.frame(proto, frame)
+  const books = await framed
 
   return {
     props: {

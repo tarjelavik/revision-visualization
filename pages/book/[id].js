@@ -50,7 +50,6 @@ function sortBy(array, fn) {
 function getIdQuery(id) {
   let query = `
     PREFIX dcterms: <http://purl.org/dc/terms/>
-    PREFIX schema: <http://schema.org/>
     PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX bdm2: <http://purl.org/bdm2/>
