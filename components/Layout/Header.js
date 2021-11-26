@@ -58,7 +58,7 @@ const Header = () => {
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}page/booksmss`} activeClassName="active">
+            <ActiveLink href={`/book`} activeClassName="active">
               <a>Books & Manuscripts</a>
             </ActiveLink>
           </WrapItem>
@@ -92,7 +92,7 @@ const Header = () => {
           </WrapItem>
           <WrapItem pr="4">
             <ActiveLink href={'https://revision-ontodia.vercel.app'} activeClassName="active">
-              <a>Graph</a>
+              <a>Ontodia</a>
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
@@ -101,7 +101,7 @@ const Header = () => {
             </ActiveLink>
           </WrapItem>
           <WrapItem pr="4">
-            <ActiveLink href={`${site}item/search`} activeClassName="active">
+            <ActiveLink href={`/search`} activeClassName="active">
               <a>Search</a>
             </ActiveLink>
           </WrapItem>
