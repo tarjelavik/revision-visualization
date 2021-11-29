@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import Link from '../../components/Link'
 import Filters from '../../components/Search/Filters'
 
-const apiURL = process.env.NEXT_PUBLIC_VERCEL_URL ?? 'http://localhost:3000'
+const apiURL = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : 'http://localhost:3000'
 
 export default function Search() {
   return (
