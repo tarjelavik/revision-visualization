@@ -1,20 +1,17 @@
-import absoluteUrl from 'next-absolute-url'
 import { ReactiveBase, DataSearch, SelectedFilters, ReactiveList } from '@appbaseio/reactivesearch'
 import { Box, Container, Grid, Heading, OrderedList, ListItem, Tag, Text } from '@chakra-ui/react'
 import Layout from '../../components/Layout'
 import Link from '../../components/Link'
 import Filters from '../../components/Search/Filters'
 
-const { origin } = absoluteUrl(req)
-const isProduction = process.env.NODE_ENV === 'production'
-const USE_SEARCH = isProduction ? origin : 'http://localhost:3000'
+const apiURL = process.env.NEXT_PUBLIC_VERCEL_URL ?? 'http://localhost:3000'
 
 export default function Search() {
   return (
     <Layout>
       <ReactiveBase
         app='all'
-        url={`${USE_SEARCH}/api/search`}
+        url={`${apiURL}/api/search`}
         transformRequest={async (props) => ({
           ...props,
           url: props.url.replace('_msearch', '')
