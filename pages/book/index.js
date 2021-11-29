@@ -53,7 +53,7 @@ const getBooks = `
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX bdm2: <http://purl.org/bdm2/>
     PREFIX o: <http://omeka.org/s/vocabs/o#>
-    DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 500
+    DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 50
   `
 export async function getStaticProps() {
   const res = await axios.get(`${ENDPOINT}/query?query=${encodeURIComponent(getBooks)}`, { headers: { 'Accept': 'application/ld+json' } })
@@ -62,7 +62,7 @@ export async function getStaticProps() {
     .catch(error => console.log(error));
   const frame = await getFrame('bdm2:BookObject')
   const proto = {
-    ['@graph']: res['@graph'],
+    ['@graph']: await res['@graph'],
     ['@context']: frame['@context']
   }
   //const expanded = await jsonld.expand(proto);
