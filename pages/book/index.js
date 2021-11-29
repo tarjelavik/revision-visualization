@@ -53,7 +53,7 @@ const getBooks = `
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   PREFIX bdm2: <http://purl.org/bdm2/>
   PREFIX o: <http://omeka.org/s/vocabs/o#>
-  DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 10
+  DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 200
 `
 
 export async function getStaticProps() {
@@ -62,10 +62,8 @@ export async function getStaticProps() {
     .then((res) => { return res.data })
     .catch(error => console.log(error));
   const frame = await getFrame('bdm2:BookObject')
-  const data = await res
-  console.log(JSON.stringify(data, null, 2))
   const proto = {
-    ['@graph']: data['@graph'],
+    ['@graph']: await res['@graph'],
     ['@context']: frame['@context']
   }
   //const expanded = await jsonld.expand(proto);
