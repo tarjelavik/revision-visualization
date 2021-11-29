@@ -48,21 +48,24 @@ export default function Books({ books }) {
 }
 
 const getBooks = `
-    PREFIX dcterms: <http://purl.org/dc/terms/>
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX bdm2: <http://purl.org/bdm2/>
-    PREFIX o: <http://omeka.org/s/vocabs/o#>
-    DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 50
-  `
+  PREFIX dcterms: <http://purl.org/dc/terms/>
+  PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX bdm2: <http://purl.org/bdm2/>
+  PREFIX o: <http://omeka.org/s/vocabs/o#>
+  DESCRIBE ?s ?ow WHERE { ?s a bdm2:BookObject ; bdm2:ownedBy ?ow .} LIMIT 10
+`
+
 export async function getStaticProps() {
   const res = await axios.get(`${ENDPOINT}/query?query=${encodeURIComponent(getBooks)}`, { headers: { 'Accept': 'application/ld+json' } })
     //.then((res) => { console.log(JSON.stringify(res.data, null, 2)) })
     .then((res) => { return res.data })
     .catch(error => console.log(error));
   const frame = await getFrame('bdm2:BookObject')
+  const data = await res
+  console.log(JSON.stringify(data, null, 2))
   const proto = {
-    ['@graph']: await res['@graph'],
+    ['@graph']: data['@graph'],
     ['@context']: frame['@context']
   }
   //const expanded = await jsonld.expand(proto);
