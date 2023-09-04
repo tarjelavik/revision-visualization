@@ -1,5 +1,5 @@
 import axios from 'axios';
-import SigmaGraph from '../../../model/SigmaGraph';
+import SigmaGraph from '../../model/SigmaGraph';
 import { parseToSigmaFormat } from './formatGraphData';
 import { constructTemplate, Query } from './query-templates/constructTemplate';
 

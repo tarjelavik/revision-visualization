@@ -1,6 +1,6 @@
 import { parseToSigmaFormat } from './formatGraphData';
-import RawGraphData from '../../../model/RawGraphData';
-import SigmaGraph from '../../../model/SigmaGraph';
+import RawGraphData from '../../model/RawGraphData';
+import SigmaGraph from '../../model/SigmaGraph';
 
 const dummyGraphData: RawGraphData = {
     head: {

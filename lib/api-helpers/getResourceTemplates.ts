@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { formatResourceTemplate } from './formatResourceTemplate';
-import ResourceTemplate from '../../../model/ResourceTemplate';
+import ResourceTemplate from '../../model/ResourceTemplate';
 
 export const getResourceTemplates = async (): Promise<ResourceTemplate[] | void> => {
     try {

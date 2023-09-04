@@ -1,7 +1,7 @@
-import RawGraphData from '../../../model/RawGraphData';
-import SigmaGraph from '../../../model/SigmaGraph';
-import Node from '../../../model/Node';
-import Edge from '../../../model/Edge';
+import RawGraphData from '../../model/RawGraphData';
+import SigmaGraph from '../../model/SigmaGraph';
+import Node from '../../model/Node';
+import Edge from '../../model/Edge';
 import { generateId } from './generateId';
 import { getActionId } from './helpers';
 

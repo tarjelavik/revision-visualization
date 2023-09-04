@@ -1,4 +1,4 @@
-import { getResourceTemplates } from '../../lib/getResourceTemplates';
+import { getResourceTemplates } from '../../../../lib/api-helpers/getResourceTemplates';
 
 const getTemplateId = thePath => thePath.substring(thePath.lastIndexOf('/') + 1)
 

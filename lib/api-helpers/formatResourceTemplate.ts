@@ -1,5 +1,5 @@
-import ResourceTemplate from '../../../model/ResourceTemplate';
-import RawResourceTemplate from '../../../model/RawResourceTemplate';
+import ResourceTemplate from '../../model/ResourceTemplate';
+import RawResourceTemplate from '../../model/RawResourceTemplate';
 
 export const formatResourceTemplate = (rawResourceTemplate: RawResourceTemplate): ResourceTemplate[] => {
     const resourceTemplates: ResourceTemplate[] = [];

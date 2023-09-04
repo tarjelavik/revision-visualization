@@ -1,4 +1,4 @@
-import { searchHandler } from '../../lib/searchHandler';
+import { searchHandler } from '../../../../lib/api-helpers/searchHandler';
 
 /**
  * Query the SPARQL endpoint for data

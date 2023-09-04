@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Box, Heading, Flex } from '@chakra-ui/react';
 import {
   Sigma,
-  RandomizeNodePositions,
   NOverlap,
   RelativeSize,
   DragNodes,
   ForceAtlas2,
 } from 'react-sigma';
-import ForceLink from 'react-sigma/lib/ForceLink'
 import SigmaLoader from './SigmaLoader';
-import { getConstructLocationClause } from '../../pages/api/lib/query-templates/locationTemplate';
+
 
 const sigmaStyle = {
   height: '100vh',

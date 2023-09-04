@@ -1,4 +1,4 @@
-import { getNodeData } from '../../lib/getNodeData';
+import { getNodeData } from '../../../../lib/api-helpers/getNodeData';
 
 /**
  * Get data about a node, e.g. an instance from Omeka

@@ -19,21 +19,16 @@ const HeaderNetworks = () => {
           alignItems="center"
           fontSize="16px"
         >
-          <WrapItem pr="4">
+          {/* <WrapItem pr="4">
             <ActiveLink href={'/networks/gifts-donations'} activeClassName="active">
               <a>Build your network</a>
             </ActiveLink>
-          </WrapItem>
+          </WrapItem> */}
           <WrapItem pr="4">
             <ActiveLink href={'/networks/works-books'} activeClassName="active">
               <a>Works</a>
             </ActiveLink>
           </WrapItem>
-          {/* <WrapItem pr="4">
-            <ActiveLink href={'/networks/revelations'} activeClassName="active">
-              <a>Revelations</a>
-            </ActiveLink>
-          </WrapItem> */}
         </Wrap>
       </Box>
     </Container>
